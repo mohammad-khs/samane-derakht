@@ -93,9 +93,9 @@ const CustomerReviews: FC<CustomerReviewsProps> = () => {
                             {item.occasion}
                           </div>
                         </div>
-                        <div className="m-2 relative rounded-full border-2 w-14 h-14 border-[#DBDBDB]">
+                        <div className="m-2 relative rounded-full border-2 w-20 h-20 border-[#DBDBDB]">
                           <Image
-                            className="p-2"
+                            className="p-3"
                             src={`/svgs/storySvgs/${item.icon}.svg`}
                             alt={`${item.icon} icon`}
                             fill

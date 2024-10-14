@@ -13,7 +13,8 @@ export default function Home() {
   return (
     <>
       <Hero />
-      <div className="flex flex-col-reverse items-center mx-5 md:flex-row justify-between mt-14">
+      <StoryCarousel />
+      <div className="flex flex-col-reverse items-center mx-10 md:flex-row justify-between mt-14">
         <div className="my-3">
           <Button
             className="justify-self-end md:justify-self-start"
@@ -24,11 +25,11 @@ export default function Home() {
             مشاهده همه
           </Button>
         </div>
-        <h1 className="text-[#383838] text-2xl font-semibold">
+        <h1 className="text-[#383838] text-xl md:text-2xl font-semibold">
           درخت های کاشته شده توسط تیم ما
         </h1>
       </div>
-      <StoryCarousel />
+
       <Carousel hasPrevNextBtn={false} />
       <VideoSection />
       <MapSection />
@@ -40,7 +41,7 @@ export default function Home() {
         <CustomerReviews />
       </div>
       <div className="mx-5 my-3">
-        <div className="flex ">
+        <div className="flex m-4">
           <Button
             className="justify-self-end md:justify-self-start"
             variant={"green"}

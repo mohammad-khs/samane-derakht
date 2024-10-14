@@ -82,15 +82,15 @@ const Carousel: FC<CarouselProps> = ({ hasPrevNextBtn }) => {
   return (
     <div className="relative md:mx-5 lg:mx-8 xl:mx-10">
       <div
-        className="overflow-hidden relative my-12 w-full  flex items-center justify-center"
+        className="overflow-hidden relative my-12 w-full flex items-center justify-center"
         ref={emblaRef}
       >
         <div className="flex h-full w-full ">
           {sliderData?.map((item) => {
             return (
-              <div className="relative mx-5 md:mx-10" key={item.id}>
+              <div className=" relative mx-2" key={item.id}>
                 <div className="flex flex-col rounded-xl bg-[#E7ECEE] justify-center items-center">
-                  <div className=" m-2 w-[275px] md:w-[305px] h-[180px] relative">
+                  <div className="m-2 w-[278px] h-[165px] relative">
                     <Image
                       className="rounded-xl"
                       fill
@@ -102,7 +102,7 @@ const Carousel: FC<CarouselProps> = ({ hasPrevNextBtn }) => {
                     <div className="absolute right-2 top-2 rounded-xl px-2 py-1 text-xs font-semibold flex justify-center items-center bg-[#F0F3F4]">
                       <div>
                         <div className="text-[#242424]">{item.name}</div>
-                        <div className="text-[#393939] text-sm">
+                        <div style={{direction:"rtl"}} className="text-[#393939] text-sm">
                           {item.time}
                         </div>
                       </div>

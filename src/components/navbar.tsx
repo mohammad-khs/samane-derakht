@@ -6,7 +6,7 @@ interface NavbarProps {}
 const Navbar: FC<NavbarProps> = () => {
   return (
     <>
-      <nav className="bg-[#E4E7E5] flex-row py-2 my-5 hidden md:flex rounded-xl">
+      <nav className="bg-[#E4E7E5] flex-row py-2 my-5 mx-2 hidden md:flex rounded-xl">
         <div className="flex justify-start items-center gap-4 ms-5 basis-1/3">
           <Button size={"resizble"} variant={"green"}>
             ثبت نام/ورود

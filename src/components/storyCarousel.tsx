@@ -1,6 +1,6 @@
 "use client";
 
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import Image from "next/image";
 
@@ -52,22 +52,67 @@ const sliderData = [
     icon: "parentsBirthday",
     occasion: "تولد پدرومادر",
   },
+  {
+    id: 10,
+    icon: "parentsBirthday",
+    occasion: "تولد پدرومادر",
+  },
 ];
 
 const StoryCarousel: FC<StoryCarouselProps> = () => {
-  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true });
+  type WindowDimentions = {
+    width: number | undefined;
+    height: number | undefined;
+  };
+
+  const useWindowDimensions = (): WindowDimentions => {
+    const [windowDimensions, setWindowDimensions] = useState<WindowDimentions>({
+      width: undefined,
+      height: undefined,
+    });
+    useEffect(() => {
+      function handleResize(): void {
+        setWindowDimensions({
+          width: window.innerWidth,
+          height: window.innerHeight,
+        });
+      }
+      handleResize();
+      window.addEventListener("resize", handleResize);
+      return (): void => window.removeEventListener("resize", handleResize);
+    }, []); // Empty array ensures that effect is only run on mount
+
+    return windowDimensions;
+  };
+
+  const handleCarouselActive = (storyWidth: number | undefined): boolean => {
+    if (storyWidth !== undefined) {
+      if (storyWidth >= 1024) {
+        return false;
+      }
+      return true;
+    }
+    return false;
+  };
+
+  const storyWidth = useWindowDimensions().width;
+
+  const [emblaRef] = useEmblaCarousel({
+    loop: true,
+    active: handleCarouselActive(storyWidth),
+  });
 
   return (
     <>
       <div className="relative md:mx-5 lg:mx-8 xl:mx-10  mb-12">
         <div
-          className="overflow-hidden relative my-12 w-full  flex items-center justify-center"
+          className="overflow-hidden relative my-12 w-full flex items-center justify-center"
           ref={emblaRef}
         >
           <div className="flex h-full w-full">
             {sliderData?.map((item) => {
               return (
-                <div className="relative mx-5 md:mx-10 xl:mx-14" key={item.id}>
+                <div className="relative mx-3  lg:w-full" key={item.id}>
                   <div className="flex flex-col justify-center items-center">
                     <div className="border-4 border-[#E3E5E9] w-16 h-16 rounded-full relative">
                       <Image

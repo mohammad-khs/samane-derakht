@@ -95,9 +95,9 @@ const VideoCarousel: FC<VideoCarouselProps> = ({ hasPrevNextBtn }) => {
     useDotButton(emblaApi);
   return (
     <>
-      <div className="relative md:mx-5 lg:mx-8 xl:mx-10  mb-12">
+      <div className="relative md:mx-5 lg:mx-8 xl:mx-10  mb-14">
         <div
-          className="overflow-hidden relative my-12 w-full  flex items-center justify-center"
+          className="overflow-hidden relative w-full  flex items-center justify-center"
           ref={emblaRef}
         >
           <div className="flex h-full w-full ">
@@ -144,7 +144,7 @@ const VideoCarousel: FC<VideoCarouselProps> = ({ hasPrevNextBtn }) => {
           ""
         )}
 
-        <div className="embla__dots flex gap-3 justify-center items-center">
+        <div className="embla__dots flex gap-3 mt-4 justify-center items-center">
           {scrollSnaps.map((_, index) => (
             <DotButton
               key={index}

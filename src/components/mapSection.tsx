@@ -23,7 +23,7 @@ const MapSection: FC<MapSectionProps> = () => {
     <>
       <section className="flex flex-col md:flex-row justify-center mx-5 md:mx-10 items-center my-20">
         <div className="w-full border-2 p-3 rounded-[40px]">
-          <DynamicCustomLeafletMap />
+          <DynamicCustomLeafletMap zoom={11} />
         </div>
         <div className="w-3/4 flex flex-col mt-5 ms-10 gap-8 lg:ms-20 lg:mr-10">
           <h1 className="font-semibold text-2xl md:text-xl lg:text-2xl xl:text-3xl">
