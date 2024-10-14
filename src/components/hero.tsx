@@ -13,7 +13,7 @@ const Hero: FC<HeroProps> = () => {
           alt="hero city"
           width={0}
           height={0}
-          style={{ width: "100%", height: "auto" }}
+          className="w-full h-auto"
         />
 
         <h1 className="md:absolute w-full md:top-20 font-semibold -order-10 text-2xl md:text-3xl  text-center lg:text-4xl text-[#363636]">
