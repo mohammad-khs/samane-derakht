@@ -69,12 +69,12 @@ const StoryModal: FC<StoryModalProps> = ({
 
         <div className="absolute left-0 h-full flex md:-left-28 px-2 my-auto items-center">
           <button className="text-white" onClick={prevStory}>
-          <CaretLeftIcon className="h-12 w-12  text-[#999999]" />
+            <CaretLeftIcon className="h-12 w-12  text-[#999999]" />
           </button>
         </div>
         <div className="absolute right-0 h-full flex md:-right-28 px-2 my-auto items-center">
           <button className="text-white" onClick={nextStory}>
-          <CaretRightIcon className="h-12 w-12  text-[#999999]" />
+            <CaretRightIcon className="h-12 w-12  text-[#999999]" />
           </button>
         </div>
       </div>

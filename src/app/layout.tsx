@@ -5,13 +5,13 @@ import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
 import MobileNav from "@/components/mobile-nav";
 
-const bYekan = localFont({
-  src: "./fonts/BYekan.ttf",
-  weight: "100 900",
+const YekanBakhBlack = localFont({
+  src: "./fonts/YekanBakh-Black.woff",
+
 });
-const bYekanBold = localFont({
-  src: "./fonts/BYekanBold.ttf",
-  weight: "100 900",
+const YekanBakhRegular = localFont({
+  src: "./fonts/YekanBakh-Regular.woff",
+
 });
 
 export const metadata: Metadata = {
@@ -26,7 +26,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${bYekan.className} ${bYekanBold.className} antialiased`}>
+      <body className={`${YekanBakhBlack.className} ${YekanBakhRegular.className} antialiased`}>
         <div className="md:container md:mx-auto">
           <Navbar />
           <MobileNav />
