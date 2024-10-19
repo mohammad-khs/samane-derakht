@@ -1,7 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ["cdn.pixabay.com"],
+    domains: ["cdn.pixabay.com", "treeone.liara.run"],
+  },
+
+  reactStrictMode: true,
+  eslint: {
+    ignoreDuringBuilds: true,
   },
 };
 

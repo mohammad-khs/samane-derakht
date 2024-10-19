@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Button } from "./ui/button";
+import { Button } from "../components/ui/button";
 import Image from "next/image";
 import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
 interface HeroProps {}

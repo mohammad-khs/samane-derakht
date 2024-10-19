@@ -1,10 +1,9 @@
-"use client";
 import { FC } from "react";
 import { Button } from "@/components/ui/button";
 import { Loader2Icon } from "lucide-react";
 import { CaretLeftIcon } from "@radix-ui/react-icons";
 import dynamic from "next/dynamic";
-import { latLng } from "leaflet";
+
 const DynamicCustomLeafletMap = dynamic(
   () => import("@/components/customLeafletMap"),
   {
@@ -18,12 +17,24 @@ const DynamicCustomLeafletMap = dynamic(
 );
 interface MapSectionProps {}
 
-const MapSection: FC<MapSectionProps> = () => {
+export type MainMapType = {
+  id: string;
+  title: string;
+  city_name: string;
+  longtitud: string;
+  latitud: string;
+  theme_tree: string;
+};
+
+const MapSection: FC<MapSectionProps> = async () => {
+  const req = await fetch("https://treeone.liara.run/api/map/");
+  const data: MainMapType[] = await req.json();
+
   return (
     <>
       <section className="flex flex-col md:flex-row justify-center mx-5 md:mx-10 items-center my-20">
         <div className="w-full border-2 p-3 rounded-[40px]">
-          <DynamicCustomLeafletMap zoom={11} />
+          <DynamicCustomLeafletMap mapMarkerData={data} zoom={10} />
         </div>
         <div className="w-3/4 flex flex-col mt-5 ms-10 gap-8 lg:ms-20 lg:mr-10">
           <h1 className="font-semibold text-2xl md:text-xl lg:text-2xl xl:text-3xl">

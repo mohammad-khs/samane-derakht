@@ -1,76 +1,23 @@
 "use client";
 
-import { FC, Suspense, useCallback, useState } from "react";
+import { FC, Suspense, useCallback } from "react";
 import Autoplay from "embla-carousel-autoplay";
 import useEmblaCarousel from "embla-carousel-react";
-import Image from "next/image";
 import { CaretLeftIcon, CaretRightIcon } from "@radix-ui/react-icons";
-import { DotButton, useDotButton } from "./ui/emblaCarouselDotButton";
+import { DotButton, useDotButton } from "../emblaCarouselDotButton";
 import { Loader2Icon } from "lucide-react";
-import Video from "./ui/video";
+import Video from "../video";
+import { videoCarouselCardData } from "@/types/mainCarousels";
 
 interface VideoCarouselProps {
   hasPrevNextBtn: boolean;
+  videoCarouselData: videoCarouselCardData[];
 }
 
-const sliderData = [
-  {
-    id: 1,
-    title:
-      " و با استفاده از طراحان گرافیک است، و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله",
-    name: "رضا محمدی پور",
-    icon: "love",
-    time: "10 مرداد 1403",
-    occasion: "به مناسبت نامزدی",
-  },
-  {
-    id: 2,
-    title:
-      " و با استفاده از طراحان گرافیک است، و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله",
-    name: "رضا محمدی پور",
-    icon: "marriage",
-    time: "10 مرداد 1403",
-    occasion: "به مناسبت نامزدی",
-  },
-  {
-    id: 3,
-    title:
-      " و با استفاده از طراحان گرافیک است، و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله",
-    name: "علی رضا مرتضوی",
-    icon: "childBirth",
-    time: "10 مرداد 1403 ",
-    occasion: "به مناسبت تولد نوزاد",
-  },
-  {
-    id: 4,
-    title:
-      " و با استفاده از طراحان گرافیک است، و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله",
-    name: "رضا صادقی",
-    icon: "celebration",
-    time: "10 مرداد 1403 ",
-    occasion: "به مناسبت روز طبیعت",
-  },
-  {
-    id: 5,
-    title:
-      " و با استفاده از طراحان گرافیک است، و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله",
-    name: "محمد کشاورزی",
-    icon: "birthDay",
-    time: "10 مرداد 1403 ",
-    occasion: "به مناسبت تولد",
-  },
-  {
-    id: 6,
-    title:
-      " و با استفاده از طراحان گرافیک است، و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله",
-    name: "محمد رضایی",
-    icon: "deathAnniversary",
-    time: "10 مرداد 1403 ",
-    occasion: "به مناسبت تولد نوزاد",
-  },
-];
-
-const VideoCarousel: FC<VideoCarouselProps> = ({ hasPrevNextBtn }) => {
+const VideoCarousel: FC<VideoCarouselProps> = ({
+  hasPrevNextBtn,
+  videoCarouselData,
+}) => {
   const [emblaRef, emblaApi] = useEmblaCarousel(
     { loop: true, slidesToScroll: "auto" },
     [
@@ -101,7 +48,7 @@ const VideoCarousel: FC<VideoCarouselProps> = ({ hasPrevNextBtn }) => {
           ref={emblaRef}
         >
           <div className="flex h-full w-full ">
-            {sliderData?.map((item) => {
+            {videoCarouselData?.map((item) => {
               return (
                 <div className="relative mx-2 md:mx-5 " key={item.id}>
                   <div className="flex flex-col w-[280px] md:w-[320px]   justify-center items-center">
@@ -109,12 +56,14 @@ const VideoCarousel: FC<VideoCarouselProps> = ({ hasPrevNextBtn }) => {
                       <div className="flex flex-col justify-center items-center">
                         <div className="m-2 border-2 border-[#E3E5E9] p-1 rounded-3xl relative">
                           <Suspense fallback={<Loader2Icon />}>
-                            <Video vidoAddress="/sampleVideo.mp4" />
+                            <Video
+                              vidoAddress={`https://treeone.liara.run/${item.film}`}
+                            />
                           </Suspense>
                         </div>
                         <div className="m-3">
                           <div className="text-sm mx-2 font-semibold">
-                            <span className="">{item.title}</span>
+                            <span className="">{item.source}</span>
                           </div>
                         </div>
                       </div>

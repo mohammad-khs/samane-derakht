@@ -1,9 +1,16 @@
 import Image from "next/image";
 import { FC } from "react";
 
-interface FeatureSectionProps {}
+interface FeatureSectionProps {
+  all: number;
+  air: number;
+  green_land: number;
+}
 
-const FeatureSection: FC<FeatureSectionProps> = () => {
+const FeatureSection = async () => {
+  const res = await fetch("https://treeone.liara.run/api/tree_data/");
+  const data: FeatureSectionProps = await res.json();
+
   return (
     <>
       <section className="relative mx-5 md:mx-10">
@@ -52,7 +59,7 @@ const FeatureSection: FC<FeatureSectionProps> = () => {
                   <Image
                     src={"/svgs/main_feature_section/sixteenKindOfTrees.svg"}
                     fill
-                    alt="۱۶ نوع درخت"
+                    alt={`${data.air} نوع درخت`}
                     className="p-1"
                   />
                 </div>
@@ -60,7 +67,7 @@ const FeatureSection: FC<FeatureSectionProps> = () => {
                   className="text-center mx-auto md:mx-0  md:ml-0 text-lg font-semibold md:text-base"
                   style={{ direction: "rtl" }}
                 >
-                  16 نوع درخت
+                  {data.air} نوع درخت
                 </p>
               </div>
               <div className="h-[60%]  border-r-[3px] hidden sm:block rounded-lg  border-[#B9B9B9]" />
@@ -83,12 +90,12 @@ const FeatureSection: FC<FeatureSectionProps> = () => {
                   <Image
                     src={"/svgs/storySvgs/nature.svg"}
                     fill
-                    alt="بیش از ۵۳۲ درخت کاشته شده"
+                    alt={`بیش از ${data.green_land} درخت کاشته شده`}
                     className="p-1"
                   />
                 </div>
                 <p className="text-center mx-auto md:mx-0 md:ml-0 text-lg font-semibold md:text-base">
-                  بیش از ۵۳۲ درخت کاشته شده
+                  بیش از {data.green_land} درخت کاشته شده
                 </p>
               </div>
             </div>

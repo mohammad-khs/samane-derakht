@@ -1,19 +1,38 @@
-import Carousel from "@/components/carousel";
-import CustomerReviews from "@/components/customerReviews";
-import FeatureSection from "@/components/featureSection";
-import Hero from "@/components/hero";
+import Carousel from "@/components/mainCarousel";
+import CustomerReviews from "@/components/customerReviewsSection";
+import FeatureSection from "@/app/featureSection";
+import Hero from "@/app/hero";
 import MapSection from "@/components/mapSection";
-import StoryCarousel from "@/components/storyCarousel";
+import StorySection from "@/components/storySection";
 import { Button } from "@/components/ui/button";
-import VideoCarousel from "@/components/videoCarousel";
 import VideoSection from "@/components/videoSection";
 import { CaretLeftIcon } from "@radix-ui/react-icons";
+import { Loader2 } from "lucide-react";
+import { Suspense } from "react";
+import VideoCarouselSection from "@/components/videoCarouselSection"
+import MainCarousel from "@/components/mainCarousel";
 
 export default function Home() {
   return (
     <>
-      <Hero />
-      <StoryCarousel />
+      <Suspense
+        fallback={
+          <div className="h-80 flex flex-col relative w-full z-50 bg-yellow-500">
+            <Loader2 className="animate-spin z-50 flex justify-center items-center h-20 w-20 relative" />
+          </div>
+        }
+      >
+        <Hero />
+      </Suspense>
+      <Suspense
+        fallback={
+          <div className="h-20 z-50 w-full bg-red-800">
+            <Loader2 className="animate-spin z-50 flex justify-center items-center h-20 w-20 relative" />
+          </div>
+        }
+      >
+        <StorySection  />
+      </Suspense>
       <div className="flex flex-col-reverse items-center mx-10 md:flex-row justify-between mt-14">
         <div className="my-3">
           <Button
@@ -30,7 +49,7 @@ export default function Home() {
         </h1>
       </div>
 
-      <Carousel hasPrevNextBtn={false} />
+      <MainCarousel />
       <VideoSection />
       <MapSection />
       <FeatureSection />
@@ -51,7 +70,7 @@ export default function Home() {
             مشاهده همه
           </Button>
         </div>
-        <VideoCarousel hasPrevNextBtn />
+        <VideoCarouselSection />
       </div>
     </>
   );
