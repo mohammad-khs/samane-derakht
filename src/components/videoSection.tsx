@@ -17,8 +17,11 @@ const VideoSection: FC<VideoSectionProps> = () => {
           </div>
         </div>
         <div className="w-3/4 flex flex-col mt-10 md:mt-5 ms-10 gap-8 lg:ms-20 lg:mr-10">
-          <h1 className="relative flex justify-end items-center font-semibold text-2xl md:text-xl lg:text-2xl xl:text-3xl">
-            <span className="mx-2">سامانه کاشت درخت آنلاین</span>
+          <h1 className="relative flex justify-end items-center  text-2xl md:text-xl lg:text-2xl xl:text-3xl">
+            <span className="mx-2">
+              <span>سامانه کاشت </span>
+              <span className="font-semibold">درخت آنلاین</span>
+            </span>
             <div className="absolute -right-10">
               <div className="relative">
                 <Image

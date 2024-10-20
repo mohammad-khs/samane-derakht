@@ -25,19 +25,19 @@ const Navbar: FC<NavbarProps> = () => {
           </Button>
         </div>
         <div className="w-full flex gap-1 lg:gap-4 justify-center items-center basis-1/3">
-          <Button size={"resizble"} variant={"ghost"}>
+          <Button className="font-semibold" size={"resizble"} variant={"ghost"}>
             پشتیبانی
           </Button>
-          <Button size={"resizble"} variant={"ghost"}>
+          <Button className="font-semibold" size={"resizble"} variant={"ghost"}>
             تماس با ما
           </Button>
-          <Button size={"resizble"} variant={"ghost"}>
+          <Button className="font-semibold" size={"resizble"} variant={"ghost"}>
             سوالات متداول
           </Button>
-          <Button size={"resizble"} variant={"ghost"}>
+          <Button className="font-semibold" size={"resizble"} variant={"ghost"}>
             درباره ما
           </Button>
-          <Button size={"resizble"} variant={"ghost"}>
+          <Button className="font-semibold" size={"resizble"} variant={"ghost"}>
             محصولات
           </Button>
         </div>

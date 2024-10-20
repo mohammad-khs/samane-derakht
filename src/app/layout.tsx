@@ -5,13 +5,9 @@ import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
 import MobileNav from "@/components/mobile-nav";
 
-const YekanBakhBlack = localFont({
-  src: "./fonts/YekanBakh-Black.woff",
-
-});
-const YekanBakhRegular = localFont({
-  src: "./fonts/YekanBakh-Regular.woff",
-
+const YekanBakh = localFont({
+  src: "./fonts/YekanBakh-VF.woff",
+  weight: "400",
 });
 
 export const metadata: Metadata = {
@@ -26,7 +22,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${YekanBakhBlack.className} ${YekanBakhRegular.className} antialiased`}>
+      <body
+        className={`antialiased`}
+        style={{
+          fontFamily: YekanBakh.style.fontFamily,
+          fontVariationSettings: '"DOTS" 1',
+        }}
+      >
         <div className="md:container md:mx-auto">
           <Navbar />
           <MobileNav />

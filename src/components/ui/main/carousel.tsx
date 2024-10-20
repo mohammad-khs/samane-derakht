@@ -9,6 +9,7 @@ import { CaretLeftIcon, CaretRightIcon } from "@radix-ui/react-icons";
 import { mainCarouselCardData } from "@/types/mainCarousels";
 import { apiNameToIconName } from "@/helper/nameToIcon";
 import { Frown } from "lucide-react";
+import { DateFormatDMY, monthNumToMonthName } from "@/helper/dateHandler";
 
 interface CarouselProps {
   hasPrevNextBtn: boolean;
@@ -60,16 +61,18 @@ const Carousel: FC<CarouselProps> = ({ hasPrevNextBtn, cardsData }) => {
                           <Frown className="h-10 w-10" />
                         </div>
                       )}
-                      <div className="absolute right-2 top-2 rounded-xl px-2 py-1 text-xs font-semibold flex justify-center items-center bg-[#F0F3F4]">
+                      <div className="absolute right-2 top-2 rounded-xl px-2 py-1 text-sm font-semibold flex justify-center items-center bg-[#F0F3F4]">
                         <div>
                           <div className="text-[#242424]">{item.title}</div>
                           <div
                             style={{ direction: "rtl" }}
-                            className="text-[#393939] text-sm"
+                            className="text-[#393939] text-xs font-thin"
                           >
-                            {/* this is time section */}
-                            {/* {item.time} */}
-                            10 مرداد 1403
+                            {DateFormatDMY(item.irani).year}{" "}
+                            {monthNumToMonthName(
+                              DateFormatDMY(item.irani).month
+                            )}{" "}
+                            {DateFormatDMY(item.irani).day}
                           </div>
                         </div>
                         <div className="relative h-5 w-5 ml-1">

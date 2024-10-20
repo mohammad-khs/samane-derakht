@@ -17,7 +17,7 @@ const Hero: FC<HeroProps> = () => {
         />
 
         <h1 className="md:absolute w-full md:top-20 font-semibold -order-10 text-2xl md:text-3xl  text-center lg:text-4xl text-[#363636]">
-          هر نفر یک درخت،هردرخت یک داستان
+          هر نفر یک درخت، هر درخت یک داستان
         </h1>
         <div className="lg:absolute justify-center w-full  lg:top-28 flex gap-5 flex-col">
           <div className="relative w-3/5 lg:w-2/5 mx-auto my-4">

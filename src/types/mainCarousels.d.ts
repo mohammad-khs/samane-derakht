@@ -8,6 +8,8 @@ export interface mainCarouselCardData {
   location_name: string;
   theme_name: string;
   desc: string;
+  created: string;
+  irani: string;
 }
 
 export interface Story {
