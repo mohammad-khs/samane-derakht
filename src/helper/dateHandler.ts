@@ -49,14 +49,16 @@ export const monthNumToMonthName = (name: string) => {
   }
 };
 
-
 export const DateFormatDMY = (date: string) => {
-  const fullDate = date.split(" ");
-  const dMY = fullDate[0].split("-");
+  if (date) {
+    const fullDate = date?.split(" ");
+    const dMY = fullDate[0]?.split("-");
 
-  return {
-    day: dMY[0],
-    month: dMY[1],
-    year: dMY[2],
-  };
+    return {
+      day: dMY[0],
+      month: dMY[1],
+      year: dMY[2],
+    };
+  }
+  return;
 };

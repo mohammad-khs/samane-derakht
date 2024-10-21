@@ -68,11 +68,23 @@ const Carousel: FC<CarouselProps> = ({ hasPrevNextBtn, cardsData }) => {
                             style={{ direction: "rtl" }}
                             className="text-[#393939] text-xs font-thin"
                           >
-                            {DateFormatDMY(item.irani).year}{" "}
-                            {monthNumToMonthName(
-                              DateFormatDMY(item.irani).month
-                            )}{" "}
-                            {DateFormatDMY(item.irani).day}
+                            {item.irani && (
+                              <div>
+                                {(() => {
+                                  const dateInfo = DateFormatDMY(item.irani);
+                                  if (dateInfo) {
+                                    return (
+                                      <>
+                                        {dateInfo.year}{" "}
+                                        {monthNumToMonthName(dateInfo.month)}{" "}
+                                        {dateInfo.day}
+                                      </>
+                                    );
+                                  }
+                                  return null;
+                                })()}
+                              </div>
+                            )}
                           </div>
                         </div>
                         <div className="relative h-5 w-5 ml-1">
