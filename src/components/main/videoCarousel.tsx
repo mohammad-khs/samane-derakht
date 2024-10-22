@@ -4,9 +4,9 @@ import { FC, Suspense, useCallback } from "react";
 import Autoplay from "embla-carousel-autoplay";
 import useEmblaCarousel from "embla-carousel-react";
 import { CaretLeftIcon, CaretRightIcon } from "@radix-ui/react-icons";
-import { DotButton, useDotButton } from "../emblaCarouselDotButton";
+import { DotButton, useDotButton } from "../ui/emblaCarouselDotButton";
 import { Loader2Icon } from "lucide-react";
-import Video from "../video";
+import Video from "../ui/video";
 import { videoCarouselCardData } from "@/types/mainCarousels";
 
 interface VideoCarouselProps {

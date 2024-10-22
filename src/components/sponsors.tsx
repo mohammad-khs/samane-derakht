@@ -3,9 +3,9 @@ import { FC } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import AutoScroll from "embla-carousel-auto-scroll";
 import Image from "next/image";
-interface SponSorsProps {}
+interface SponsorsProps {}
 
-const SponSors: FC<SponSorsProps> = () => {
+const Sponsors: FC<SponsorsProps> = () => {
   const [emblaRef] = useEmblaCarousel({ loop: true }, [
     AutoScroll({ stopOnInteraction: false }),
   ]);
@@ -84,4 +84,4 @@ const SponSors: FC<SponSorsProps> = () => {
   );
 };
 
-export default SponSors;
+export default Sponsors;

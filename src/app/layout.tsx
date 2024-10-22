@@ -29,12 +29,7 @@ export default function RootLayout({
           fontVariationSettings: '"DOTS" 1',
         }}
       >
-        <div className="md:container md:mx-auto">
-          <Navbar />
-          <MobileNav />
-          {children}
-        </div>
-        <Footer />
+        {children}
       </body>
     </html>
   );

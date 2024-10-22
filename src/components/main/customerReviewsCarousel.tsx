@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import { FC } from "react";
-import { DotButton, useDotButton } from "../emblaCarouselDotButton";
+import { DotButton, useDotButton } from "../ui/emblaCarouselDotButton";
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
 import { CommentCarouselCardData } from "@/types/mainCarousels";

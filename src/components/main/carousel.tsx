@@ -3,7 +3,7 @@
 import Autoplay from "embla-carousel-autoplay";
 import useEmblaCarousel from "embla-carousel-react";
 import { FC, useCallback } from "react";
-import { DotButton, useDotButton } from "../emblaCarouselDotButton";
+import { DotButton, useDotButton } from "../ui/emblaCarouselDotButton";
 import Image from "next/image";
 import { CaretLeftIcon, CaretRightIcon } from "@radix-ui/react-icons";
 import { mainCarouselCardData } from "@/types/mainCarousels";

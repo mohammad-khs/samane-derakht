@@ -5,7 +5,7 @@ import Image from "next/image";
 import { StoryImageId } from "./storyCarousel";
 import { ArrowRight, EyeIcon, FrownIcon, MapPin } from "lucide-react";
 import { CaretLeftIcon, CaretRightIcon } from "@radix-ui/react-icons";
-import TreeIcon from "../treeIcon";
+import TreeIcon from "../ui/treeIcon";
 
 interface ImageData {
   id: string;
@@ -135,7 +135,9 @@ const StoryModal: React.FC<StoryModalProps> = ({
                     aria-label={imageData?.address}
                     className="text-white absolute w-3/4 flex justify-end items-center gap-2 bottom-6 right-4"
                   >
-                    <span className="truncate" style={{direction: "rtl"}}>{imageData?.address}</span>
+                    <span className="truncate" style={{ direction: "rtl" }}>
+                      {imageData?.address}
+                    </span>
                     {imageData?.address && <MapPin className="w-8" />}
                   </div>
                 </div>
@@ -147,6 +149,12 @@ const StoryModal: React.FC<StoryModalProps> = ({
                   {/* <div className="absolute top-0 left-0 mx-2 z-50 h-full flex items-end">
                     <EyeIcon className="text-white mb-36" />
                   </div> */}
+                  <button
+                    className="absolute z-50 right-4 top-4 text-white"
+                    onClick={onClose}
+                  >
+                    <ArrowRight className="h-8 w-8" />
+                  </button>
                 </div>
               </>
             )}

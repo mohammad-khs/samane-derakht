@@ -9,14 +9,16 @@ import {
   FaWhatsapp,
   FaYoutube,
 } from "react-icons/fa";
-import SponSors from "./sponsors";
-interface FooterProps {}
+import Sponsors from "./sponsors";
+interface FooterProps {
+  sponsors?: boolean;
+}
 
-const Footer: FC<FooterProps> = () => {
+const Footer: FC<FooterProps> = ({ sponsors = true }) => {
   return (
     <>
       <footer>
-        <SponSors />
+        {sponsors && <Sponsors />}
         <div className="relative bg-[#20AC58] pt-10 pb-5">
           <div className="absolute bottom-0 left-0">
             <div className="relative w-36 h-36">
@@ -30,11 +32,11 @@ const Footer: FC<FooterProps> = () => {
 
           <div className="absolute bottom-0 right-0">
             <div className="relative w-40 h-40 md:w-48 md:h-48 lg:h-52 lg:w-52">
-            <Image
-              fill
-              src={"/svgs/treesBottomRightFooter.svg"}
-              alt="bottom right trees in footer"
-            />
+              <Image
+                fill
+                src={"/svgs/treesBottomRightFooter.svg"}
+                alt="bottom right trees in footer"
+              />
             </div>
           </div>
           <div className="flex flex-col-reverse md:flex-row text-white px-10">

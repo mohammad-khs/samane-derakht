@@ -1,7 +1,7 @@
 import { FC } from "react";
 
-import CustomerReviewsCarousel from "./ui/main/customerReviewsCarousel";
-import VideoCarousel from "./ui/main/videoCarousel";
+import CustomerReviewsCarousel from "./main/customerReviewsCarousel";
+import VideoCarousel from "./main/videoCarousel";
 
 interface VideoCarouselSectionProps {}
 

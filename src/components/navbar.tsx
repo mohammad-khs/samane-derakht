@@ -1,12 +1,13 @@
 import { FC } from "react";
 import { Button } from "./ui/button";
 import Image from "next/image";
+import Link from "next/link";
 interface NavbarProps {}
 
 const Navbar: FC<NavbarProps> = () => {
   return (
     <>
-      <nav className="bg-[#E4E7E5] flex-row py-2 my-5 mx-2 hidden md:flex rounded-xl">
+      <nav className="bg-[#E4E7E5] flex-row py-2 mx-2 hidden md:flex rounded-xl">
         <div className="flex justify-start items-center gap-4 ms-5 basis-1/3">
           <Button size={"resizble"} variant={"green"}>
             ثبت نام/ورود
@@ -37,13 +38,21 @@ const Navbar: FC<NavbarProps> = () => {
           <Button className="font-semibold" size={"resizble"} variant={"ghost"}>
             درباره ما
           </Button>
-          <Button className="font-semibold" size={"resizble"} variant={"ghost"}>
-            محصولات
-          </Button>
+          <Link href={"products"}>
+            <Button
+              className="font-semibold"
+              size={"resizble"}
+              variant={"ghost"}
+            >
+              محصولات
+            </Button>
+          </Link>
         </div>
-        <div className="flex justify-end items-center me-5 gap-3 basis-1/3">
-          <span className="text-sm  font-semibold">سامانه درخت</span>
-          <Button size={"icon"} variant={"green"}></Button>
+        <div className=" me-5 basis-1/3">
+          <Link href={"/"} className="flex justify-end  gap-3 items-center">
+            <span className="text-sm font-semibold">سامانه درخت</span>
+            <Button size={"icon"} variant={"green"}></Button>
+          </Link>
         </div>
       </nav>
     </>

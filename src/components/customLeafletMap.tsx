@@ -9,31 +9,7 @@ import { Icon, latLng, LatLng } from "leaflet";
 import { MainMapType } from "./mapSection";
 import { apiNameToIconName } from "@/helper/nameToIcon";
 
-const geojson = {
-  features: [
-    {
-      id: 1,
-      geometry: {
-        coordinates: latLng(35.699736, 51.338057),
-        icon: "loveD",
-      },
-    },
-    {
-      id: 2,
-      geometry: {
-        coordinates: latLng(35.74472, 51.375265),
-        icon: "babysBirthD",
-      },
-    },
-    {
-      id: 3,
-      geometry: {
-        coordinates: latLng(35.70019216, 51.4055941),
-        icon: "funeralD",
-      },
-    },
-  ],
-};
+
 interface CustomMapboxProps {
   zoom?: number;
   initialPostion?: LatLng;
