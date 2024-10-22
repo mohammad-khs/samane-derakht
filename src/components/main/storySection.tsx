@@ -1,5 +1,5 @@
 import { Story } from "@/types/mainCarousels";
-import StoryCarousel from "./main/storyCarousel";
+import StoryCarousel from "./storyCarousel";
 
 const StorySection = async () => {
   const res = await fetch("https://treeone.liara.run/api/stories/");

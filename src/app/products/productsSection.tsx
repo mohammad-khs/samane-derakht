@@ -7,6 +7,7 @@ import { FC } from "react";
 import useSWRInfinite from "swr/infinite";
 import Loading from "./loading";
 import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 import axios from "axios";
 interface ProductsSectionProps {}
 
@@ -34,7 +35,7 @@ const ProductsSection: FC<ProductsSectionProps> = () => {
   if (error) {
     return (
       <div className="text-red-500 py-10 text-center text-2xl h-full">
-        لطفا دوباره صفحه را رفرش کنید
+        لطفا چند لحظه صبر کنید
       </div>
     );
   }
@@ -65,8 +66,9 @@ const ProductsSection: FC<ProductsSectionProps> = () => {
                   />
                 </div>
               ))
-            : previousPageData && previousPageData.length > 0
-            ? previousPageData.map((product: Tree) => (
+            : previousPageData &&
+              previousPageData.length > 0 &&
+              previousPageData.map((product: Tree) => (
                 <div
                   className="flex justify-center items-center"
                   key={product.id}
@@ -83,17 +85,20 @@ const ProductsSection: FC<ProductsSectionProps> = () => {
                     stock_number={product?.stock_number}
                   />
                 </div>
-              ))
-            : isLoading && (
-                <Skeleton
-                  width={233}
-                  baseColor="#00000047"
-                  height={274}
-                  highlightColor="#D9D9D9"
-                  count={1}
-                />
-              )}
+              ))}
+          {/* {isLoading && (
+            <div className="flex justify-center items-center">
+              <Skeleton
+                width={233}
+                baseColor="#00000047"
+                height={274}
+                highlightColor="#D9D9D9"
+                count={1}
+              />
+            </div>
+          )} */}
         </div>
+
         {error && <div>{error.message}</div>}
         <div className="w-full my-4 mb-8 flex justify-center items-center">
           <Button

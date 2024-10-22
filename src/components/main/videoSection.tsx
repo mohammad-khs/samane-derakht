@@ -1,5 +1,5 @@
 import { FC, Suspense } from "react";
-import Video from "./ui/video";
+import Video from "../ui/video";
 import Image from "next/image";
 import { Loader2Icon } from "lucide-react";
 

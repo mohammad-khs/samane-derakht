@@ -95,7 +95,7 @@ const StoryModal: React.FC<StoryModalProps> = ({
               <CaretLeftIcon className="h-12 w-12 rounded-full text-[#999999]" />
             </button>
           </div>
-          <div className="relative rounded-lg carousel-item text-center py-2 h-[650px] w-[360px]">
+          <div className="relative rounded-lg carousel-item text-center h-[650px] w-[360px]">
             {isLoading ? (
               <></>
             ) : imageData.image ? (
@@ -109,7 +109,7 @@ const StoryModal: React.FC<StoryModalProps> = ({
                   </button>
                   <Image
                     fill
-                    className="rounded-lg animate-in fade-in"
+                    className="rounded-lg animate-in fade-in duration-300"
                     src={`https://treeone.liara.run/${imageData.image}`}
                     alt={imageData.title}
                   />
@@ -144,7 +144,7 @@ const StoryModal: React.FC<StoryModalProps> = ({
               </>
             ) : (
               <>
-                <div className="w-full h-full rounded-lg z-40 bg-slate-600 flex justify-center items-center">
+                <div className="w-full h-full rounded-lg z-40 bg-slate-600 flex justify-center items-center animate-in fade-in duration-300">
                   <FrownIcon className="h-20 text-white w-20" />
                   {/* <div className="absolute top-0 left-0 mx-2 z-50 h-full flex items-end">
                     <EyeIcon className="text-white mb-36" />

@@ -1,5 +1,5 @@
 import { FC } from "react";
-import Carousel from "./main/carousel";
+import Carousel from "./carousel";
 import { mainCarouselCardData } from "@/types/mainCarousels";
 
 interface MainCarouselProps {}

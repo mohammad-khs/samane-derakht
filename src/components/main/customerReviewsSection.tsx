@@ -1,5 +1,5 @@
 import { FC } from "react";
-import CustomerReviewsCarousel from "./main/customerReviewsCarousel";
+import CustomerReviewsCarousel from "./customerReviewsCarousel";
 import { CommentCarouselCardData } from "@/types/mainCarousels";
 
 interface CustomerReviewsProps {}

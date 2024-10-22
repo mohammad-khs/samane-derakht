@@ -3,7 +3,6 @@ import { FC } from "react";
 import Footer from "@/components/footer";
 import Navbar from "@/components/navbar";
 import MobileNav from "@/components/mobile-nav";
-import dynamic from "next/dynamic";
 import ProductsSection from "./productsSection";
 
 interface ProductsProps {}
