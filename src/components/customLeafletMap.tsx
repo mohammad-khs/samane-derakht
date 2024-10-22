@@ -23,7 +23,7 @@ const CustomMapbox: FC<CustomMapboxProps> = ({
 }) => {
   return (
     <MapContainer
-      className="rounded-3xl w-full h-80"
+      className="rounded-3xl w-full z-40 h-80"
       center={initialPostion}
       zoom={zoom}
       minZoom={10}
