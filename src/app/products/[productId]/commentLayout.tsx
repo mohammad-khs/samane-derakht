@@ -93,7 +93,7 @@ const CommentLayout: FC<CommentLayoutProps> = ({
           <div className="text-xl sm:text-2xl font-semibold">
             {childComment?.user_username ? (
               <>
-                <div className="flex gap-2 justify-center items-center">
+                <div className="flex gap-2 justify-end items-center">
                   <span className="text-xs text-[##3D3D3D]">
                     ( در پاسخ به کاربر {replyedTo})
                   </span>

@@ -29,7 +29,7 @@ export function useProducts() {
     }`;
   };
 
-  return useSWRInfinite(getKey, fetcher, { revalidateOnFocus: false });
+  return useSWRInfinite(getKey, fetcher, { revalidateOnFocus: false ,revalidateIfStale:false });
 }
 
 const ProductsSection: FC<ProductsSectionProps> = () => {
