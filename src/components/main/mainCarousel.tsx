@@ -2,15 +2,42 @@ import { FC } from "react";
 import Carousel from "./carousel";
 import { mainCarouselCardData } from "@/types/mainCarousels";
 
-interface MainCarouselProps {}
+interface MainCarouselProps {
+  data?: mainCarouselCardData[];
+  hasPrevNextBtn?: boolean;
+  background?: string;
+}
 
-const MainCarousel: FC<MainCarouselProps> = async ({}) => {
-  const res = await fetch("https://treeone.liara.run/api/");
-  const data: mainCarouselCardData[] = await res.json();
+const MainCarousel: FC<MainCarouselProps> = async ({
+  data,
+  hasPrevNextBtn = false,
+  background,
+}) => {
+  if (!data) {
+    const res = await fetch("https://treeone.liara.run/api/");
+    const fetchedData: mainCarouselCardData[] = await res.json();
+
+    return (
+      <>
+        <section>
+          <Carousel
+            background={background}
+            cardsData={fetchedData}
+            hasPrevNextBtn={hasPrevNextBtn}
+          />
+        </section>
+      </>
+    );
+  }
+
   return (
     <>
       <section>
-        <Carousel cardsData={data} hasPrevNextBtn={false} />
+        <Carousel
+          background={background}
+          cardsData={data}
+          hasPrevNextBtn={hasPrevNextBtn}
+        />
       </section>
     </>
   );

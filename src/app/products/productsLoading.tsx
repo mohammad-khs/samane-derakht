@@ -1,9 +1,9 @@
 import { FC } from "react";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-interface LoadingProps {}
+interface ProductsLoadingProps {}
 
-const Loading: FC<LoadingProps> = () => {
+const ProductsLoading: FC<ProductsLoadingProps> = () => {
   const length = Array(16).fill(0);
   return (
     <>
@@ -26,4 +26,4 @@ const Loading: FC<LoadingProps> = () => {
   );
 };
 
-export default Loading;
+export default ProductsLoading;

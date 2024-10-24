@@ -1,16 +1,17 @@
 import Image from "next/image";
-import { FC } from "react";
+import { FC, Suspense } from "react";
 import Footer from "@/components/footer";
 import Navbar from "@/components/navbar";
 import MobileNav from "@/components/mobile-nav";
 import ProductsSection from "./productsSection";
+import ProductsLoading from "./productsLoading";
 
 interface ProductsProps {}
 
 const Products: FC<ProductsProps> = () => {
   return (
     <>
-      <div className="bg-[#EBEBEB]  ">
+      <div className="bg-[#EBEBEB]">
         <main className="md:container md:mx-auto pt-5 min-h-[65vh]">
           <Navbar />
           <MobileNav />
@@ -40,7 +41,9 @@ const Products: FC<ProductsProps> = () => {
             </div>
           </div>
 
-          <ProductsSection />
+          <Suspense fallback={<ProductsLoading />}>
+            <ProductsSection />
+          </Suspense>
         </main>
         <Footer sponsors={false} />
       </div>

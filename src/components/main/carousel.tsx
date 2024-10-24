@@ -14,9 +14,14 @@ import { DateFormatDMY, monthNumToMonthName } from "@/helper/dateHandler";
 interface CarouselProps {
   hasPrevNextBtn: boolean;
   cardsData: mainCarouselCardData[];
+  background?: string;
 }
 
-const Carousel: FC<CarouselProps> = ({ hasPrevNextBtn, cardsData }) => {
+const Carousel: FC<CarouselProps> = ({
+  hasPrevNextBtn,
+  cardsData,
+  background = "bg-[#E7ECEE]",
+}) => {
   const [emblaRef, emblaApi] = useEmblaCarousel(
     { loop: true, slidesToScroll: "auto" },
     [Autoplay({ active: true, delay: 3000 })]
@@ -34,7 +39,7 @@ const Carousel: FC<CarouselProps> = ({ hasPrevNextBtn, cardsData }) => {
     useDotButton(emblaApi);
   return (
     <>
-      <div className="relative md:mx-5 lg:mx-8 xl:mx-10">
+      <div className="relative md:mx-5  lg:mx-8 xl:mx-10">
         <div
           className="overflow-hidden relative my-12 w-full flex items-center justify-center"
           ref={emblaRef}
@@ -43,7 +48,9 @@ const Carousel: FC<CarouselProps> = ({ hasPrevNextBtn, cardsData }) => {
             {cardsData?.map((item) => {
               return (
                 <div className=" relative mx-2" key={item.id}>
-                  <div className="flex flex-col rounded-xl bg-[#E7ECEE] justify-center items-center">
+                  <div
+                    className={`flex flex-col rounded-xl ${background} justify-center items-center`}
+                  >
                     <div className="m-2 w-[278px] h-[165px] relative">
                       {item.image ? (
                         <Image
@@ -140,13 +147,13 @@ const Carousel: FC<CarouselProps> = ({ hasPrevNextBtn, cardsData }) => {
         {hasPrevNextBtn ? (
           <>
             <button
-              className="embla__prev absolute left-[-50px] top-32 z-40  hidden md:block"
+              className="embla__prev absolute  bg-white rounded-full left-[-50px] top-32 z-50  hidden md:block"
               onClick={scrollPrev}
             >
               <CaretLeftIcon className="h-12 w-12  text-[#999999]" />
             </button>
             <button
-              className="embla__next absolute right-[-50px] top-32 hidden md:block"
+              className="embla__next absolute bg-white rounded-full right-[-50px] top-32 hidden md:block"
               onClick={scrollNext}
             >
               <CaretRightIcon className="h-12 w-12  text-[#999999]" />

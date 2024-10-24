@@ -38,7 +38,7 @@ const Navbar: FC<NavbarProps> = () => {
           <Button className="font-semibold" size={"resizble"} variant={"ghost"}>
             درباره ما
           </Button>
-          <Link href={"products"}>
+          <Link href={"/products"}>
             <Button
               className="font-semibold"
               size={"resizble"}
