@@ -2,6 +2,7 @@ import { FC } from "react";
 import { Button } from "./ui/button";
 import Image from "next/image";
 import Link from "next/link";
+import SignInModalParent from "./authentication/signInModalParent";
 interface NavbarProps {}
 
 const Navbar: FC<NavbarProps> = () => {
@@ -9,9 +10,7 @@ const Navbar: FC<NavbarProps> = () => {
     <>
       <nav className="bg-[#E4E7E5] flex-row py-2 mx-2 hidden md:flex rounded-xl">
         <div className="flex justify-start items-center gap-4 ms-5 basis-1/3">
-          <Button size={"resizble"} variant={"green"}>
-            ثبت نام/ورود
-          </Button>
+          <SignInModalParent>ثبت نام/ورود</SignInModalParent>
           <Button
             className="relative p-2"
             size={"resizbleIcon"}
