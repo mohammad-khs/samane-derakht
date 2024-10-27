@@ -39,7 +39,7 @@ const Product: FC<ProductProps> = async ({ params }) => {
           <main>
             <TreeMainInfo
               avg={treeData?.avg}
-              chatId={""}
+              productId={params.productId}
               comments={treeData.comments}
             />
             <div className="mb-8">

@@ -28,5 +28,6 @@ export interface Comment {
   text: string;
   user_username: string;
   user_profileimage: string | null;
-  children: Comment[]; // Recursive definition to support nested comments
+  child: Comment[]; // Recursive definition to support nested comments
+  irani: string;
 }

@@ -5,13 +5,10 @@ import { TreeCard } from "@/types/products";
 import { FC } from "react";
 import useSWRInfinite from "swr/infinite";
 import Loading from "./productsLoading";
-// import Skeleton from "react-loading-skeleton";
-// import "react-loading-skeleton/dist/skeleton.css";
 import axios from "axios";
 import ProductCard from "@/components/products/productCard";
+import { fetcher } from "@/lib/utils";
 interface ProductsSectionProps {}
-
-const fetcher = (url: string) => axios.get(url).then((res) => res.data);
 
 export function useProducts() {
   const getKey = (pageIndex: number, previousPageData: any) => {
@@ -29,7 +26,10 @@ export function useProducts() {
     }`;
   };
 
-  return useSWRInfinite(getKey, fetcher, { revalidateOnFocus: false ,revalidateIfStale:false });
+  return useSWRInfinite(getKey, fetcher, {
+    revalidateOnFocus: false,
+    revalidateIfStale: false,
+  });
 }
 
 const ProductsSection: FC<ProductsSectionProps> = () => {

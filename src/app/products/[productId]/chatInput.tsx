@@ -8,10 +8,10 @@ import { FC, useRef, useState } from "react";
 import TextareaAutosize from "react-textarea-autosize";
 
 interface ChatInputProps {
-  chatId: string;
+  productId: string;
 }
 
-const ChatInput: FC<ChatInputProps> = ({ chatId }) => {
+const ChatInput: FC<ChatInputProps> = ({ productId }) => {
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [input, setInput] = useState<string>("");
@@ -21,7 +21,7 @@ const ChatInput: FC<ChatInputProps> = ({ chatId }) => {
     setIsLoading(true);
 
     try {
-      await axios.post("/api/message/send", { text: input, chatId });
+      await axios.post("/api/message/send", { text: input, productId });
       setInput("");
       textareaRef.current?.focus();
     } catch {
@@ -64,8 +64,14 @@ const ChatInput: FC<ChatInputProps> = ({ chatId }) => {
       </div>
       <div className="flex py-4">
         <div className="flex-shrin-0">
-          <Button disabled={isLoading} onClick={sendMessage} variant={"green"} size={"resizble"} type="submit">
-            <CaretLeftIcon className="h-8 w-8"/> <span> ارسال نظر</span>
+          <Button
+            disabled={isLoading}
+            onClick={sendMessage}
+            variant={"green"}
+            size={"resizble"}
+            type="submit"
+          >
+            <CaretLeftIcon className="h-8 w-8" /> <span> ارسال نظر</span>
           </Button>
         </div>
       </div>

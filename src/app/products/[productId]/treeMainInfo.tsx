@@ -6,10 +6,11 @@ import ChatInput from "./chatInput";
 interface TreeMainInfoProps {
   comments?: Comment[];
   avg?: number | null;
-  chatId: string;
+
+  productId: string;
 }
 
-const TreeMainInfo: FC<TreeMainInfoProps> = ({ comments, avg, chatId }) => {
+const TreeMainInfo: FC<TreeMainInfoProps> = ({ comments, avg, productId }) => {
   return (
     <>
       <div className="bg-white m-5 p-5 md:p-10 rounded-xl">
@@ -48,9 +49,9 @@ const TreeMainInfo: FC<TreeMainInfoProps> = ({ comments, avg, chatId }) => {
           </div>
         </div>
         <div className="md:w-3/4 ms-auto">
-          <ChatInput chatId={chatId} />
+          <ChatInput productId={productId} />
         </div>
-        <CommentSection comments={comments} />
+        <CommentSection productId={productId} comments={comments} />
       </div>
     </>
   );

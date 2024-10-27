@@ -26,11 +26,27 @@ const CommentLayout: FC<CommentLayoutProps> = ({
     return (
       <>
         <div
-          className="flex items-start gap-4 justify-end my-5"
+          className="flex flex-col-reverse sm:flex-row items-start gap-4 justify-end my-5"
           key={comment.id}
         >
-          <div className="flex flex-col gap-10 items-start me-auto justify-between h-full">
-            <div className="text-sm">1403/5/11</div>
+          <div className="flex flex-col gap-6 items-start me-auto justify-between h-full">
+            <div className="text-sm">
+              {comment?.irani && (
+                <div>
+                  {(() => {
+                    const dateInfo = DateFormatDMY(comment.irani);
+                    if (dateInfo) {
+                      return (
+                        <>
+                          {dateInfo.day}/{dateInfo.month}/{dateInfo.year}
+                        </>
+                      );
+                    }
+                    return null;
+                  })()}
+                </div>
+              )}
+            </div>
             <div className="mt-auto flex gap-4">
               <ThumbsDown className="text-[#909090] w-5 h-5" />
               <ThumbsUp className="text-[#909090] w-5 h-5" />
@@ -60,16 +76,18 @@ const CommentLayout: FC<CommentLayoutProps> = ({
               </Button>
             </div>
           </div>
-          <div className="relative rounded-full p-2 sm:p-4 bg-[#EAEAEA]">
-            {comment.user_profileimage ? (
-              <Image
-                alt={`پروفایل ${comment.user_username}`}
-                fill
-                src={`${comment.user_profileimage}`}
-              />
-            ) : (
-              <FaUser className="h-7 w-7 text-[#5F6368]" />
-            )}
+          <div className="justify-end flex w-full sm:block sm:w-auto">
+            <div className="relative  rounded-full p-2 sm:p-4 bg-[#EAEAEA]">
+              {comment.user_profileimage ? (
+                <Image
+                  alt={`پروفایل ${comment.user_username}`}
+                  fill
+                  src={`${comment.user_profileimage}`}
+                />
+              ) : (
+                <FaUser className="h-7 w-7 text-[#5F6368]" />
+              )}
+            </div>
           </div>
         </div>
       </>
@@ -78,18 +96,34 @@ const CommentLayout: FC<CommentLayoutProps> = ({
   return (
     <>
       <div
-        className="flex items-start gap-4 justify-end my-5 rounded-lg"
+        className="flex flex-col-reverse ms-4 sm:flex-row items-start gap-4 justify-end my-5 rounded-lg"
         key={childComment?.id}
       >
-        <div className="flex flex-col gap-10 items-start me-auto justify-between h-full ms-5">
-          <div className="text-sm">1403/5/11</div>
+        <div className="flex flex-col gap-6 items-start me-auto justify-between h-full">
+          <div className="text-sm">
+            {childComment?.irani && (
+              <div>
+                {(() => {
+                  const dateInfo = DateFormatDMY(childComment.irani);
+                  if (dateInfo) {
+                    return (
+                      <>
+                        {dateInfo.day}/{dateInfo.month}/{dateInfo.year}
+                      </>
+                    );
+                  }
+                  return null;
+                })()}
+              </div>
+            )}
+          </div>
           <div className="mt-auto flex gap-4">
             <ThumbsDown className="text-[#909090] w-5 h-5" />
             <ThumbsUp className="text-[#909090] w-5 h-5" />
             <AlertOctagonIcon className="text-[#909090] w-5 h-5" />
           </div>
         </div>
-        <div className="flex flex-col">
+        <div className="flex flex-col w-full">
           <div className="text-xl sm:text-2xl font-semibold">
             {childComment?.user_username ? (
               <>
@@ -116,16 +150,18 @@ const CommentLayout: FC<CommentLayoutProps> = ({
             </Button>
           </div>
         </div>
-        <div className="relative rounded-full p-2 sm:p-4 bg-[#EAEAEA]">
-          {childComment?.user_profileimage ? (
-            <Image
-              alt={`پروفایل ${childComment?.user_username}`}
-              fill
-              src={`${childComment?.user_profileimage}`}
-            />
-          ) : (
-            <FaUser className="h-7 w-7 text-[#5F6368]" />
-          )}
+        <div className="justify-end flex w-full sm:block sm:w-auto">
+          <div className="relative rounded-full p-2 sm:p-4 bg-[#EAEAEA]">
+            {childComment?.user_profileimage ? (
+              <Image
+                alt={`پروفایل ${childComment?.user_username}`}
+                fill
+                src={`${childComment?.user_profileimage}`}
+              />
+            ) : (
+              <FaUser className="h-7 w-7 text-[#5F6368]" />
+            )}
+          </div>
         </div>
       </div>
     </>
