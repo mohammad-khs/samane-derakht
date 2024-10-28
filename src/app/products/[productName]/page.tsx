@@ -5,19 +5,43 @@ import { FC } from "react";
 import TreeHeadInfo from "./treeheadInfo";
 import Footer from "@/components/footer";
 import MainCarousel from "@/components/main/mainCarousel";
-import CommentSection from "./commentSection";
 import TreeMainInfo from "./treeMainInfo";
+import { redirect } from "next/navigation";
+import NotFound from "./not-found";
 
 interface ProductProps {
   params: {
-    productId: string;
+    productName: string;
   };
 }
 
 const Product: FC<ProductProps> = async ({ params }) => {
-  const res = await fetch(
-    `https://treeone.liara.run/order/api/tree/${params.productId}`
+  const decodedProductName = decodeURIComponent(
+    params.productName.replace(/-/g, " ")
   );
+
+  const allProductsRes = await fetch(
+    `https://treeone.liara.run/order/api/trees/?offset=100`
+  );
+  const products = await allProductsRes.json();
+
+  const product = products?.data.find((p: { name: string }) => {
+    console.log(p.name, " and this is decoded v : ", decodedProductName);
+
+    return p.name === decodedProductName;
+  });
+
+  if (!product) {
+    return (
+      <div className="text-green-500 py-5 text-center text-xl">
+        <NotFound />
+      </div>
+    );
+  }
+  const res = await fetch(
+    `https://treeone.liara.run/order/api/tree/${product.id}`
+  );
+
   const data = await res.json();
   const treeData: TreeData = {
     tree: data[0]?.tree,
@@ -39,7 +63,7 @@ const Product: FC<ProductProps> = async ({ params }) => {
           <main>
             <TreeMainInfo
               avg={treeData?.avg}
-              productId={params.productId}
+              productId={product.id}
               comments={treeData.comments}
             />
             <div className="mb-8">

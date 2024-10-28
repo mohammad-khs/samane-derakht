@@ -9,20 +9,16 @@ import { formatNumberWithCommas } from "@/helper/formatNumberWithCommas";
 interface ProductCardProps extends TreeCard {}
 
 const ProductCard: FC<ProductCardProps> = ({
-  avg,
-  count,
-  id,
   image,
   in_stock,
   name,
   price,
   price_off,
-  stock_number,
 }) => {
   return (
     <>
       <Link
-        href={`products/${id}`}
+        href={`products/${encodeURIComponent(name).replace(/%20/g, "-")}`}
         aria-disabled={!in_stock}
         className="relative rounded-lg bg-white hover:bg-[#20AC58CC] transition-colors aria-disabled:bg-[#00000047] aria-disabled:opacity-80 group"
       >
@@ -35,7 +31,7 @@ const ProductCard: FC<ProductCardProps> = ({
             {image ? (
               <Image
                 className="rounded-lg"
-                alt={`تصویر ${name}`}
+                alt={`تصویر ${encodeURIComponent(name)}`}
                 fill
                 src={`${image}`}
               />
