@@ -1,8 +1,10 @@
 import { FC } from "react";
-import CommentSection from "./commentSection";
+import CommentSection from "../../../components/products/product/commentSection";
 import { Comment } from "@/types/products";
 import { FaComment, FaRegCommentAlt, FaStar } from "react-icons/fa";
-import ChatInput from "./chatInput";
+import ChatInput from "@/components/ui/chatInput";
+import CommentAndChatSection from "./commentAndChatSection";
+
 interface TreeMainInfoProps {
   comments?: Comment[];
   avg?: number | null;
@@ -48,10 +50,10 @@ const TreeMainInfo: FC<TreeMainInfoProps> = ({ comments, avg, productId }) => {
             </div>
           </div>
         </div>
-        <div className="md:w-3/4 ms-auto">
-          <ChatInput productId={productId} />
+
+        <div>
+          <CommentAndChatSection comments={comments} productId={productId} />
         </div>
-        <CommentSection productId={productId} comments={comments} />
       </div>
     </>
   );

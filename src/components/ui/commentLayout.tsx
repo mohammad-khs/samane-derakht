@@ -54,7 +54,7 @@ const CommentLayout: FC<CommentLayoutProps> = ({
             </div>
           </div>
 
-          <div className="flex flex-col">
+          <div className="flex w-full flex-col">
             <div className="text-xl sm:text-2xl font-semibold">
               {comment.user_username ? (
                 <div>{comment.user_username}</div>
@@ -62,7 +62,7 @@ const CommentLayout: FC<CommentLayoutProps> = ({
                 <div className="">کاربر ناشناس</div>
               )}
             </div>
-            <div className="text-[#757575] text-xs sm:text-sm">
+            <div className="text-[#757575] overflow-x-auto overflow-clip text-xs sm:text-sm">
               {comment.text}
             </div>
             <div>

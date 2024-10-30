@@ -1,33 +1,51 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { Comment } from "@/types/products";
 import { CaretLeftIcon } from "@radix-ui/react-icons";
-import axios from "axios";
-import { FC, useRef, useState } from "react";
-// import { toast } from "react-hot-toast";
+import axios, { AxiosError } from "axios";
+import { Dispatch, FC, SetStateAction, useRef, useState } from "react";
+import toast from "react-hot-toast";
 import TextareaAutosize from "react-textarea-autosize";
+import SignInModal from "../authentication/signInModal";
 
 interface ChatInputProps {
   productId: string;
+  setUserComment: Dispatch<SetStateAction<Comment | undefined>>;
 }
 
-const ChatInput: FC<ChatInputProps> = ({ productId }) => {
+const ChatInput: FC<ChatInputProps> = ({ productId, setUserComment }) => {
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [input, setInput] = useState<string>("");
-
+  const randomUUID = () => Math.random().toString(36).substring(2, 15);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const sendMessage = async () => {
     if (!input) return;
     setIsLoading(true);
 
     try {
-      await axios.post("/api/message/send", { text: input, productId });
+      await axios.post(`/api/proxy/comment?productId=${productId}`, {
+        text: input,
+      });
+      setUserComment({
+        child: [],
+        created: new Date().toISOString(),
+        id: randomUUID(),
+        irani: "",
+        text: input,
+        user_profileimage: "",
+        user_username: "شما",
+      });
       setInput("");
-      textareaRef.current?.focus();
-    } catch {
-      console.log("Something went wrong. Please try again later.");
-
-      //   toast.error("Something went wrong. Please try again later.");
+      toast.success("پیام شما با موفقیت ثبت شد");
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error) && error.response?.status === 401) {
+        toast.error("لطفا احراز هویت فرمایید");
+        setIsModalOpen(true);
+      } else {
+        toast.error("مشکلی پیش آمد. لطفاً بعداً دوباره تلاش کنید");
+      }
     } finally {
       setIsLoading(false);
     }
@@ -71,10 +89,16 @@ const ChatInput: FC<ChatInputProps> = ({ productId }) => {
             size={"resizble"}
             type="submit"
           >
-            <CaretLeftIcon className="h-8 w-8" /> <span> ارسال نظر</span>
+            <CaretLeftIcon className="h-8 w-8" /> <span>ارسال نظر</span>
           </Button>
         </div>
       </div>
+      {isModalOpen && (
+        <SignInModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+        />
+      )}
     </div>
   );
 };

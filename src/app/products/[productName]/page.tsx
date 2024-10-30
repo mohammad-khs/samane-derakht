@@ -6,7 +6,6 @@ import TreeHeadInfo from "./treeheadInfo";
 import Footer from "@/components/footer";
 import MainCarousel from "@/components/main/mainCarousel";
 import TreeMainInfo from "./treeMainInfo";
-import { redirect } from "next/navigation";
 import NotFound from "./not-found";
 
 interface ProductProps {
@@ -26,8 +25,6 @@ const Product: FC<ProductProps> = async ({ params }) => {
   const products = await allProductsRes.json();
 
   const product = products?.data.find((p: { name: string }) => {
-    console.log(p.name, " and this is decoded v : ", decodedProductName);
-
     return p.name === decodedProductName;
   });
 

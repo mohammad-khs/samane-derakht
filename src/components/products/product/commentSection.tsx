@@ -1,13 +1,15 @@
 "use client";
 import { Comment, TreeData } from "@/types/products";
 import { FC } from "react";
-import CommentLayout from "./commentLayout";
+
 import useSWRInfinite from "swr/infinite";
 import { fetcher } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import CommentLayout from "@/components/ui/commentLayout";
 
 interface CommentSectionProps {
   comments?: Comment[];
+  userComment?: Comment;
   productId: string;
 }
 
@@ -33,7 +35,11 @@ export function useComments(productId: string) {
   });
 }
 
-const CommentSection: FC<CommentSectionProps> = ({ comments, productId }) => {
+const CommentSection: FC<CommentSectionProps> = ({
+  comments,
+  productId,
+  userComment,
+}) => {
   const { data, setSize, size, isLoading, error } = useComments(productId);
   const currentPageData = data ? data[size - 1] : [];
   const previousPageData = data ? data[size - 2] : [];
@@ -48,6 +54,19 @@ const CommentSection: FC<CommentSectionProps> = ({ comments, productId }) => {
   if (size === 1) {
     return (
       <>
+        {userComment && (
+          <div className="relative">
+            <div className="opacity-40">
+              <CommentLayout comment={userComment} />
+            </div>
+
+            <div className="absolute top-0 flex justify-center items-center w-full h-full">
+              <p className="text-[#28D16C] text-xs sm:text-sm md:text-base text-center ">
+                کامنت شما پس از بررسی توسط ادمین منتشر خواهد شد
+              </p>
+            </div>
+          </div>
+        )}
         {comments?.map((comment: Comment) => (
           <div key={comment.id}>
             <CommentLayout comment={comment} />
@@ -78,13 +97,25 @@ const CommentSection: FC<CommentSectionProps> = ({ comments, productId }) => {
       </>
     );
   } else if (data && size > 1) {
-    console.log("in new fetched data :");
-    console.log(size, ": ", currentPageData?.[2]);
-    console.log(size, ": ", previousPageData?.[2]);
+
+    // this is how i access the comments in data
     const comments = data[0][2].comments;
 
     return (
       <>
+        {userComment && (
+          <div className="relative">
+            <div className="opacity-40">
+              <CommentLayout comment={userComment} />
+            </div>
+
+            <div className="absolute top-0 flex justify-center items-center w-full h-full">
+              <p className="text-[#28D16C] text-xs sm:text-sm md:text-base text-center ">
+                کامنت شما پس از بررسی توسط ادمین منتشر خواهد شد
+              </p>
+            </div>
+          </div>
+        )}
         {comments?.map((comment: Comment) => (
           <div key={comment.id}>
             <CommentLayout comment={comment} />

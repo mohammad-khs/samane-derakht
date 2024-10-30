@@ -98,14 +98,17 @@ const SignInModal: FC<SignInModalProps> = ({ isOpen, onClose }) => {
         {
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Token ${authResponse.token}`, // Use authResponse.token here
+            Authorization: `Token ${authResponse.token}`,
           },
         }
       );
 
       if (response.status === 200) {
-        const data = response.data;
-        console.log("Login successful:", data);
+        const { access, refresh, token } = response.data;
+
+        await axios.post("/api/auth", { access, refresh, token });
+
+        console.log("Login successful:", response.data);
         onClose();
       } else {
         toast.error(
