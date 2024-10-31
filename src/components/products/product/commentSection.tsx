@@ -1,17 +1,14 @@
 "use client";
-import { Comment, TreeData } from "@/types/products";
+import { TreeComment } from "@/types/products";
 import { FC } from "react";
 
 import useSWRInfinite from "swr/infinite";
 import { fetcher } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import CommentLayout from "@/components/ui/commentLayout";
+import { useCommentAndChatSectionContext } from "@/app/products/[productName]/commentAndChatSection";
 
-interface CommentSectionProps {
-  comments?: Comment[];
-  userComment?: Comment;
-  productId: string;
-}
+interface CommentSectionProps {}
 
 export function useComments(productId: string) {
   const getKey = (pageIndex: number, previousPageData: any) => {
@@ -35,11 +32,9 @@ export function useComments(productId: string) {
   });
 }
 
-const CommentSection: FC<CommentSectionProps> = ({
-  comments,
-  productId,
-  userComment,
-}) => {
+const CommentSection: FC<CommentSectionProps> = ({}) => {
+  const { comments, userComment, productId, textareaRef } =
+    useCommentAndChatSectionContext();
   const { data, setSize, size, isLoading, error } = useComments(productId);
   const currentPageData = data ? data[size - 1] : [];
   const previousPageData = data ? data[size - 2] : [];
@@ -67,13 +62,13 @@ const CommentSection: FC<CommentSectionProps> = ({
             </div>
           </div>
         )}
-        {comments?.map((comment: Comment) => (
+        {comments?.map((comment: TreeComment) => (
           <div key={comment.id}>
             <CommentLayout comment={comment} />
             {comment.child && comment.child.length > 0 && (
               <div className="relative border-2 z-10 mr-11 sm:mx-20 rounded-xl pe-3 bg-white border-[#EAEAEA]">
                 <div className="border-r-2 -top-12 w-[40px] -right-10 sm:-right-14 border-dashed border-b-2 absolute border-[#EAEAEA] h-1/3"></div>
-                {comment.child.map((childComment: Comment) => (
+                {comment.child.map((childComment: TreeComment) => (
                   <div className="" key={childComment.id}>
                     <CommentLayout
                       replyedTo={comment.user_username}
@@ -97,7 +92,6 @@ const CommentSection: FC<CommentSectionProps> = ({
       </>
     );
   } else if (data && size > 1) {
-
     // this is how i access the comments in data
     const comments = data[0][2].comments;
 
@@ -116,13 +110,13 @@ const CommentSection: FC<CommentSectionProps> = ({
             </div>
           </div>
         )}
-        {comments?.map((comment: Comment) => (
+        {comments?.map((comment: TreeComment) => (
           <div key={comment.id}>
             <CommentLayout comment={comment} />
             {comment.child && comment.child.length > 0 && (
               <div className="relative border-2 z-10 mr-11 sm:mx-20 rounded-xl pe-3 bg-white border-[#EAEAEA]">
                 <div className="border-r-2 -top-12 w-[40px] -right-10 sm:-right-14 border-dashed border-b-2 absolute border-[#EAEAEA] h-1/3"></div>
-                {comment.child.map((childComment: Comment) => (
+                {comment.child.map((childComment: TreeComment) => (
                   <div className="" key={childComment.id}>
                     <CommentLayout
                       replyedTo={comment.user_username}

@@ -1,6 +1,7 @@
+import { useCommentAndChatSectionContext } from "@/app/products/[productName]/commentAndChatSection";
 import { Button } from "@/components/ui/button";
 import { DateFormatDMY } from "@/helper/dateHandler";
-import { Comment } from "@/types/products";
+import { TreeComment } from "@/types/products";
 import {
   AlertOctagonIcon,
   ReplyIcon,
@@ -8,12 +9,13 @@ import {
   ThumbsUp,
 } from "lucide-react";
 import Image from "next/image";
-import { FC } from "react";
+import Link from "next/link";
+import { FC, MutableRefObject } from "react";
 import { FaUser } from "react-icons/fa";
 
 interface CommentLayoutProps {
-  comment?: Comment;
-  childComment?: Comment;
+  comment?: TreeComment;
+  childComment?: TreeComment;
   replyedTo?: string;
 }
 
@@ -22,6 +24,8 @@ const CommentLayout: FC<CommentLayoutProps> = ({
   childComment,
   replyedTo,
 }) => {
+  const { textareaRef } = useCommentAndChatSectionContext();
+
   if (comment) {
     return (
       <>
@@ -70,6 +74,7 @@ const CommentLayout: FC<CommentLayoutProps> = ({
                 className="text-[#757575] gap-1 my-3"
                 size={"sm"}
                 variant={"secondary"}
+                onClick={() => textareaRef.current?.focus()}
               >
                 <ReplyIcon className="text-[#22C563]" />
                 پاسخ به کاربر
@@ -140,14 +145,17 @@ const CommentLayout: FC<CommentLayoutProps> = ({
           </div>
           <div className="text-[#757575] text-sm">{childComment?.text}</div>
           <div>
-            <Button
-              className="text-[#757575] gap-1 my-3"
-              size={"sm"}
-              variant={"secondary"}
-            >
-              <ReplyIcon className="text-[#22C563]" />
-              پاسخ به کاربر
-            </Button>
+            <Link href={``}>
+              <Button
+                className="text-[#757575] gap-1 my-3"
+                size={"sm"}
+                variant={"secondary"}
+                onClick={() => textareaRef.current?.focus()}
+              >
+                <ReplyIcon className="text-[#22C563]" />
+                پاسخ به کاربر
+              </Button>
+            </Link>
           </div>
         </div>
         <div className="justify-end flex w-full sm:block sm:w-auto">

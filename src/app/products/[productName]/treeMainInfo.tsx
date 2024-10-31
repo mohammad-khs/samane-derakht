@@ -1,12 +1,12 @@
 import { FC } from "react";
 import CommentSection from "../../../components/products/product/commentSection";
-import { Comment } from "@/types/products";
+import { TreeComment } from "@/types/products";
 import { FaComment, FaRegCommentAlt, FaStar } from "react-icons/fa";
 import ChatInput from "@/components/ui/chatInput";
 import CommentAndChatSection from "./commentAndChatSection";
 
 interface TreeMainInfoProps {
-  comments?: Comment[];
+  comments?: TreeComment[];
   avg?: number | null;
 
   productId: string;

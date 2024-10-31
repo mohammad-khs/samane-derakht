@@ -30,7 +30,7 @@ const Video: FC<VideoProps> = ({ vidoAddress }) => {
           preload="metadata"
         >
           <source src={vidoAddress} type="video/mp4" />
-          Your browser does not support the video tag.
+          مرورگر شما این ویدیو را ساپورت نمیکند
         </video>
       </div>
       {/* <button

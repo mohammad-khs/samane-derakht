@@ -1,21 +1,19 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Comment } from "@/types/products";
 import { CaretLeftIcon } from "@radix-ui/react-icons";
-import axios, { AxiosError } from "axios";
-import { Dispatch, FC, SetStateAction, useRef, useState } from "react";
+import axios from "axios";
+import { FC, useState } from "react";
 import toast from "react-hot-toast";
 import TextareaAutosize from "react-textarea-autosize";
 import SignInModal from "../authentication/signInModal";
+import { useCommentAndChatSectionContext } from "@/app/products/[productName]/commentAndChatSection";
 
-interface ChatInputProps {
-  productId: string;
-  setUserComment: Dispatch<SetStateAction<Comment | undefined>>;
-}
+interface ChatInputProps {}
 
-const ChatInput: FC<ChatInputProps> = ({ productId, setUserComment }) => {
-  const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+const ChatInput: FC<ChatInputProps> = () => {
+  const { productId, setUserComment, textareaRef } =
+    useCommentAndChatSectionContext();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [input, setInput] = useState<string>("");
   const randomUUID = () => Math.random().toString(36).substring(2, 15);
@@ -25,9 +23,11 @@ const ChatInput: FC<ChatInputProps> = ({ productId, setUserComment }) => {
     setIsLoading(true);
 
     try {
-      await axios.post(`/api/proxy/comment?productId=${productId}`, {
-        text: input,
-      });
+      await axios.post(
+        `https://treeone.liara.run/order/api/addComment/${productId}/`,
+        { text: input },
+        { withCredentials: true }
+      );
       setUserComment({
         child: [],
         created: new Date().toISOString(),

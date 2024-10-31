@@ -15,19 +15,19 @@ export interface TreeCard {
 export interface TreeData {
   tree?: TreeCard;
   images?: { image: string; id: string }[];
-  comments?: Comment[];
+  comments?: TreeComment[];
   related?: mainCarouselCardData[];
   commnet_count?: number;
   avg?: number | null;
   comment_offset?: number;
 }
 
-export interface Comment {
+export interface TreeComment {
   id: string;
   created: string; // Date in ISO format
   text: string;
   user_username: string;
   user_profileimage: string | null;
-  child: Comment[]; // Recursive definition to support nested comments
+  child: TreeComment[]; // Recursive definition to support nested comments
   irani: string;
 }
