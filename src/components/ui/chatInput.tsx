@@ -12,7 +12,7 @@ import { useCommentAndChatSectionContext } from "@/app/products/[productName]/co
 interface ChatInputProps {}
 
 const ChatInput: FC<ChatInputProps> = () => {
-  const { productId, setUserComment, textareaRef } =
+  const { productId, setUserComment, textareaRef, commentToreplyId } =
     useCommentAndChatSectionContext();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [input, setInput] = useState<string>("");
@@ -23,11 +23,21 @@ const ChatInput: FC<ChatInputProps> = () => {
     setIsLoading(true);
 
     try {
+      const access = localStorage.getItem("access");
+      const token = localStorage.getItem("token");
       await axios.post(
-        `https://treeone.liara.run/order/api/addComment/${productId}/`,
+        `https://treeone.liara.run/order/api/${
+          commentToreplyId ? `replyComment` : `addComment`
+        }/${productId}/${commentToreplyId ? `${commentToreplyId}/` : ""}`,
         { text: input },
-        { withCredentials: true }
+        {
+          headers: {
+            Authorization: `Bearer ${access}`,
+            TOKEN: token,
+          },
+        }
       );
+
       setUserComment({
         child: [],
         created: new Date().toISOString(),

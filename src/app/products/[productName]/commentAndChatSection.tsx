@@ -22,6 +22,8 @@ interface CommentAndChatSectionContext extends CommentAndChatSectionProps {
   userComment: TreeComment | undefined;
   setUserComment: Dispatch<SetStateAction<TreeComment | undefined>>;
   textareaRef: MutableRefObject<HTMLTextAreaElement | null>;
+  commentToreplyId: string | undefined;
+  setcommentToreplyId: Dispatch<SetStateAction<string | undefined>>;
 }
 const commentAndChatSectionContext = createContext<
   CommentAndChatSectionContext | undefined
@@ -32,6 +34,9 @@ const CommentAndChatSection: FC<CommentAndChatSectionProps> = ({
   comments,
 }) => {
   const [userComment, setUserComment] = useState<TreeComment | undefined>();
+  const [commentToreplyId, setcommentToreplyId] = useState<string | undefined>(
+    undefined
+  );
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
 
   return (
@@ -43,6 +48,8 @@ const CommentAndChatSection: FC<CommentAndChatSectionProps> = ({
           setUserComment,
           productId,
           comments,
+          commentToreplyId,
+          setcommentToreplyId,
         }}
       >
         <div className="md:w-3/4 ms-auto">

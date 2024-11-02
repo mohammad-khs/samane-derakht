@@ -15,28 +15,28 @@ interface ProductProps {
 }
 
 const Product: FC<ProductProps> = async ({ params }) => {
-  const decodedProductName = decodeURIComponent(
-    params.productName.replace(/-/g, " ")
-  );
+  // const decodedProductName = decodeURIComponent(
+  //   params.productName.replace(/-/g, " ")
+  // );
 
-  const allProductsRes = await fetch(
-    `https://treeone.liara.run/order/api/trees/?offset=100`
-  );
-  const products = await allProductsRes.json();
+  // const allProductsRes = await fetch(
+  //   `https://treeone.liara.run/order/api/trees/?offset=100`
+  // );
+  // const products = await allProductsRes.json();
 
-  const product = products?.data.find((p: { name: string }) => {
-    return p.name === decodedProductName;
-  });
+  // const product = products?.data.find((p: { name: string }) => {
+  //   return p.name === decodedProductName;
+  // });
 
-  if (!product) {
-    return (
-      <div className="text-green-500 py-5 text-center text-xl">
-        <NotFound />
-      </div>
-    );
-  }
+  // if (!product) {
+  //   return (
+  //     <div className="text-green-500 py-5 text-center text-xl">
+  //       <NotFound />
+  //     </div>
+  //   );
+  // }
   const res = await fetch(
-    `https://treeone.liara.run/order/api/tree/${product.id}`
+    `https://treeone.liara.run/order/api/tree/${params.productName}`
   );
 
   const data = await res.json();
@@ -60,7 +60,8 @@ const Product: FC<ProductProps> = async ({ params }) => {
           <main>
             <TreeMainInfo
               avg={treeData?.avg}
-              productId={product.id}
+              productId={params.productName}
+              // productId={product.id}
               comments={treeData.comments}
             />
             <div className="mb-8">

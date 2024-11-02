@@ -8,6 +8,7 @@ import Loading from "./productsLoading";
 import axios from "axios";
 import ProductCard from "@/components/products/productCard";
 import { fetcher } from "@/lib/utils";
+import { Loader2 } from "lucide-react";
 interface ProductsSectionProps {}
 
 export function useProducts() {
@@ -96,19 +97,26 @@ const ProductsSection: FC<ProductsSectionProps> = () => {
 
         {error && <div>{error.message}</div>}
         <div className="w-full my-4 mb-8 flex justify-center items-center">
-          <Button
-            disabled={
-              !currentPageData ||
-              (data &&
-                data[size - 2]?.data?.length === data[size - 1]?.data?.length)
-            }
-            onClick={() => setSize(size + 1)}
-            variant={"green"}
-            size={"lg"}
-            className="disabled:opacity-50 disabled:bg-gray-800"
-          >
-            نمایش بیشتر
-          </Button>
+          {isLoading ? (
+            <Loader2 className="text-white animate-spin" />
+          ) : (
+            <Button
+              disabled={
+                !currentPageData ||
+                (data &&
+                  data[size - 2]?.data?.length === data[size - 1]?.data?.length)
+              }
+              onClick={() => setSize(size + 1)}
+              variant={"green"}
+              size={"lg"}
+              className="disabled:opacity-50 disabled:bg-gray-800"
+            >
+              {data &&
+              data[size - 2]?.data?.length === data[size - 1]?.data?.length
+                ? "چیزی برای نمایش نیست"
+                : "نمایش بیشتر"}
+            </Button>
+          )}
         </div>
       </div>
     </>

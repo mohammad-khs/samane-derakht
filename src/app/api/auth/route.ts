@@ -9,17 +9,19 @@ export async function POST(req: NextRequest) {
 
     // Set cookies for access and token tokens as a single string
     const cookies = [
-      `access=${access}; HttpOnly; Secure; Path=/; SameSite=Strict; Max-Age=86400`, // Expires in 1 day
-      `token=${token}; HttpOnly; Secure; Path=/; SameSite=Strict; Max-Age=604800`, // Expires in 7 days
-    ].join(", ");
+      `access=${access}; HttpOnly; Secure; Path=/; SameSite=None; Max-Age=86400`, // Expires in 1 day
+      `token=${token}; HttpOnly; Secure; Path=/; SameSite=None; Max-Age=604800`, // Expires in 7 days
+    ];
+
+    // Create a new Headers instance
+    const headers = new Headers();
+    cookies.forEach((cookie) => headers.append("Set-Cookie", cookie));
 
     return NextResponse.json(
       { message: "Cookies set" },
       {
         status: 200,
-        headers: {
-          "Set-Cookie": cookies,
-        },
+        headers: headers,
       }
     );
   } catch (error) {

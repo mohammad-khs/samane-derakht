@@ -3,7 +3,6 @@ import axios from "axios";
 import { useState, useEffect, FC } from "react";
 import toast from "react-hot-toast";
 import { Button } from "../ui/button";
-import { ArrowRight } from "lucide-react";
 import { CaretLeftIcon } from "@radix-ui/react-icons";
 import { stringIsNotNumber } from "@/helper/validateNumber";
 
@@ -16,6 +15,11 @@ interface AuthResponse {
   token: string;
   accessToken: string;
 }
+
+export const storeTokensInLocalStorage = (access: string, token: string) => {
+  localStorage.setItem("access", access);
+  localStorage.setItem("token", token);
+};
 
 const SignInModal: FC<SignInModalProps> = ({ isOpen, onClose }) => {
   const [step, setStep] = useState<"phone" | "otp">("phone");
@@ -49,7 +53,7 @@ const SignInModal: FC<SignInModalProps> = ({ isOpen, onClose }) => {
   };
 
   const handlePhoneSubmit = async () => {
-    if (phone.length < 10 || phone.length > 10 || stringIsNotNumber(phone)) {
+    if (phone.length < 10 || phone.length > 11 || stringIsNotNumber(phone)) {
       setError(Error("شماره تلفن وارد شده دارای فرمت صحیح نمی‌باشد"));
       return;
     } else {
@@ -58,7 +62,9 @@ const SignInModal: FC<SignInModalProps> = ({ isOpen, onClose }) => {
         const response = await fetch("https://treeone.liara.run/account/api/", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ phone: `0${phone}` }),
+          body: JSON.stringify({
+            phone: phone[0] === "0" ? `${phone}` : `0${phone}`,
+          }),
         });
 
         if (response.ok) {
@@ -105,8 +111,8 @@ const SignInModal: FC<SignInModalProps> = ({ isOpen, onClose }) => {
 
       if (response.status === 200) {
         const { access, refresh, token } = response.data;
-
-        await axios.post("/api/auth", { access, refresh, token });
+        storeTokensInLocalStorage(access, token);
+        // await axios.post("/api/auth", { access, refresh, token });
 
         console.log("Login successful:", response.data);
         onClose();
@@ -181,7 +187,7 @@ const SignInModal: FC<SignInModalProps> = ({ isOpen, onClose }) => {
                 `${timer} زمان باقی مانده تا ارسال کد جدید`
               ) : (
                 <div className="flex justify-center items-center text-sm">
-                  <CaretLeftIcon className="h-8 w-8" /> مرحله بعدی
+                  <CaretLeftIcon className="h-8 w-8" /> ارسال کد
                 </div>
               )}
             </Button>
@@ -200,15 +206,7 @@ const SignInModal: FC<SignInModalProps> = ({ isOpen, onClose }) => {
                   : "border-gray-300 "
               } rounded mb-4`}
             />
-            <div className="w-full flex justify-center items-center mb-4">
-              <button
-                onClick={() => setStep("phone")}
-                className="flex gap-2 justify-center items-center  underline text-sm text-[#1F1F1F]"
-              >
-                <span>تغییر شماره همراه </span>
-                <ArrowRight className="text-[#949494]" />
-              </button>
-            </div>
+
             {otp.length > 0 && error?.message && (
               <div className="text-red-600 text-sm">{error?.message}</div>
             )}
@@ -233,7 +231,7 @@ const SignInModal: FC<SignInModalProps> = ({ isOpen, onClose }) => {
                 `${timer} زمان باقی مانده تا ارسال کد جدید`
               ) : (
                 <div className="flex justify-center items-center text-sm">
-                  <CaretLeftIcon className="h-8 w-8" /> مرحله بعدی
+                  <CaretLeftIcon className="h-8 w-8" /> ارسال کد
                 </div>
               )}
             </Button>

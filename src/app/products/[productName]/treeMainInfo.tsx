@@ -8,7 +8,6 @@ import CommentAndChatSection from "./commentAndChatSection";
 interface TreeMainInfoProps {
   comments?: TreeComment[];
   avg?: number | null;
-
   productId: string;
 }
 

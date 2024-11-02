@@ -14,11 +14,13 @@ const ProductCard: FC<ProductCardProps> = ({
   name,
   price,
   price_off,
+  id,
 }) => {
+  // href={`products/${encodeURIComponent(name).replace(/%20/g, "-")}`}
   return (
     <>
       <Link
-        href={`products/${encodeURIComponent(name).replace(/%20/g, "-")}`}
+        href={`products/${id}`}
         aria-disabled={!in_stock}
         className="relative rounded-lg bg-white hover:bg-[#20AC58CC] transition-colors aria-disabled:bg-[#00000047] aria-disabled:opacity-80 group"
       >

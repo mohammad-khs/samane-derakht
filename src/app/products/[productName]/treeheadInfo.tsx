@@ -1,10 +1,15 @@
+import SignInModal from "@/components/authentication/signInModal";
+import HeaderImages from "@/components/products/product/headerImages";
 import { Button } from "@/components/ui/button";
 import { formatNumberWithCommas } from "@/helper/formatNumberWithCommas";
 import { TreeData } from "@/types/products";
+import axios from "axios";
 import { BellIcon, Frown, PlusCircleIcon } from "lucide-react";
-import Image from "next/image";
-import { FC } from "react";
+import Link from "next/link";
+import { FC, useState } from "react";
+import toast from "react-hot-toast";
 import { FaCommentAlt, FaShareAlt, FaStar, FaTruck } from "react-icons/fa";
+import AddToCardButton from "./addToCardButton";
 
 interface TreeHeadInfoProps {
   treeData: TreeData;
@@ -84,15 +89,7 @@ const TreeHeadInfo: FC<TreeHeadInfoProps> = ({ treeData }) => {
                 )}
               </div>
               <div className="flex justify-center mb-5 sm:mb-0">
-                <Button
-                  disabled={!treeData.tree?.in_stock}
-                  className="disabled:bg-slate-600"
-                  variant={"green"}
-                  size={"resizble"}
-                >
-                  افزودن به سبد خرید
-                  <PlusCircleIcon className="ms-2" />
-                </Button>
+                <AddToCardButton treeData={treeData} />
               </div>
             </div>
             <div className="flex justify-between gap-4">
@@ -117,68 +114,7 @@ const TreeHeadInfo: FC<TreeHeadInfoProps> = ({ treeData }) => {
             </div>
           </div>
         </div>
-        <div className="grid gap-2 grid-flow-row">
-          <div className="flex justify-center">
-            <div className="border-2 border-[#D2D2D2] p-1 rounded-lg w-full sm:w-[400px] h-[300px]">
-              {treeData.tree?.image ? (
-                <div className="relative w-full h-full ">
-                  <Image
-                    alt={`تصویر ${treeData.tree?.name}`}
-                    fill
-                    className="rounded-lg"
-                    src={`https://treeone.liara.run/${treeData.tree?.image}`}
-                  />
-                </div>
-              ) : (
-                <div className="bg-slate-600 w-full rounded-lg h-full items-center justify-center flex">
-                  <Frown className="text-white h-14 w-14" />
-                </div>
-              )}
-            </div>
-          </div>
-
-          <div className="flex justify-evenly items-center">
-            {treeData.images && treeData.images.length > 0
-              ? treeData.images.map((image) => (
-                  <div
-                    className="relative w-[94px] h-[94px] rounded-lg border"
-                    key={image.id}
-                  >
-                    {image ? (
-                      <Image
-                        fill
-                        className="rounded-lg"
-                        alt={`${treeData.tree?.name} تصویر ${image.id}`}
-                        src={`https://treeone.liara.run/${image.image}`}
-                      />
-                    ) : (
-                      <div className="bg-slate-600 w-full rounded-lg h-full items-center justify-center flex">
-                        <Frown className="text-white" />
-                      </div>
-                    )}
-                  </div>
-                ))
-              : Array(4)
-                  .fill(0)
-                  ?.map((image, index) => (
-                    <div
-                      className="relative col-span-1 w-full sm:w-[94px] h-[94px] rounded-lg border"
-                      key={index}
-                    >
-                      {image ? (
-                        <Image
-                          alt={`${treeData.tree?.name} ${index} تصویر`}
-                          src={""}
-                        />
-                      ) : (
-                        <div className="bg-slate-600 w-full rounded-lg h-full items-center justify-center flex">
-                          <Frown className="text-white" />
-                        </div>
-                      )}
-                    </div>
-                  ))}
-          </div>
-        </div>
+        <HeaderImages treeData={treeData} />
       </section>
     </>
   );

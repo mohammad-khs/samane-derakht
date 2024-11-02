@@ -139,7 +139,10 @@ const CommentSection: FC<CommentSectionProps> = ({}) => {
           size={"lg"}
           className="disabled:opacity-50 disabled:bg-gray-800"
         >
-          نمایش بیشتر
+          {!currentPageData ||
+          currentPageData[2].length === previousPageData[2].length
+            ? "پیغامی نیست"
+            : "نمایش بیشتر"}
         </Button>
       </>
     );

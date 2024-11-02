@@ -11,18 +11,20 @@ const Navbar: FC<NavbarProps> = () => {
       <nav className="bg-[#E4E7E5] flex-row py-2 mx-2 hidden md:flex rounded-xl">
         <div className="flex justify-start items-center gap-4 ms-5 basis-1/3">
           <SignInModalParent>ثبت نام/ورود</SignInModalParent>
-          <Button
-            className="relative p-2"
-            size={"resizbleIcon"}
-            variant={"icon"}
-          >
-            <Image
-              className="p-1"
-              alt="سبد فروشگاهی"
-              fill
-              src={"/svgs/shoppingCart.svg"}
-            />
-          </Button>
+          <Link href={'/shopping-cart'}>
+            <Button
+              className="relative p-2"
+              size={"resizbleIcon"}
+              variant={"icon"}
+            >
+              <Image
+                className="p-1"
+                alt="سبد فروشگاهی"
+                fill
+                src={"/svgs/shoppingCart.svg"}
+              />
+            </Button>
+          </Link>
         </div>
         <div className="w-full flex gap-1 lg:gap-4 justify-center items-center basis-1/3">
           <Button className="font-semibold" size={"resizble"} variant={"ghost"}>

@@ -71,7 +71,7 @@ export default function MobileNav() {
             درباره ما
           </Link>
           <Link
-            href="#"
+            href="/shopping-cart"
             className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
           >
             <ShoppingCart className="h-5 w-5" />
