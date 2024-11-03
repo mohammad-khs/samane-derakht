@@ -1,46 +1,38 @@
 "use client";
-import { storeTokensInLocalStorage } from "@/components/authentication/signInModal";
 import Footer from "@/components/footer";
 import MobileNav from "@/components/mobile-nav";
 import Navbar from "@/components/navbar";
+import { Button } from "@/components/ui/button";
 import axios from "axios";
 import { FC, useEffect } from "react";
+import { FaTruck } from "react-icons/fa";
+import LeftSideShoppingCart from "./leftSideShoppingCart";
+import RightSideShoppingCart from "./rightSideShoppingCart";
 
 interface ShoppingCartProps {}
 
-const ShoppingCart: FC<ShoppingCartProps> = async () => {
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const access = localStorage.getItem("access");
-        const token = localStorage.getItem("token");
-
-        const response = await axios.get(
-          "https://treeone.liara.run/cart/api/cartcount/",
-          {
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${access}`,
-              TOKEN: token ?? "",
-            },
-            withCredentials: true, // Include cookies if needed
-          }
-        );
-      } catch (error) {
-        console.error("Failed to fetch cart count:", error);
-      }
-    };
-
-    fetchData();
-  }, []);
+const ShoppingCart: FC<ShoppingCartProps> = () => {
+  const array = Array(4).fill("");
   return (
     <>
       <div className="bg-[#EBEBEB]">
         <div className="md:container md:mx-auto md:pt-5 min-h-[65vh]">
           <Navbar />
           <MobileNav />
-
-          <main></main>
+          <main>
+            <div className="flex flex-col justify-center sm:flex-row gap-3 text-[#1F1F1F] p-4">
+              <div>
+                <LeftSideShoppingCart />
+              </div>
+              <div>
+                <div className="rounded-lg bg-white p-3">
+                  {array.map((each, index) => (
+                    <RightSideShoppingCart key={index} />
+                  ))}
+                </div>
+              </div>
+            </div>
+          </main>
         </div>
         <Footer sponsors={false} />
       </div>

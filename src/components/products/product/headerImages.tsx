@@ -9,7 +9,7 @@ interface HeaderImagesProps {
   treeData: TreeData;
 }
 
-const FallbackImage = () => (
+export const FallbackImage = () => (
   <div className="bg-slate-600 w-full rounded-lg h-full items-center justify-center flex">
     <Frown className="text-white h-14 w-14" />
   </div>
