@@ -12,19 +12,18 @@ import { useCommentAndChatSectionContext } from "@/app/products/[productName]/co
 interface ChatInputProps {}
 
 const ChatInput: FC<ChatInputProps> = () => {
-  const { productId, setUserComment, textareaRef, commentToreplyId } =
+  const { productId, setUserComment, textareaRef, commentToreplyId, session } =
     useCommentAndChatSectionContext();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [input, setInput] = useState<string>("");
   const randomUUID = () => Math.random().toString(36).substring(2, 15);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
   const sendMessage = async () => {
     if (!input) return;
     setIsLoading(true);
 
     try {
-      const access = localStorage.getItem("access");
-      const token = localStorage.getItem("token");
       await axios.post(
         `https://treeone.liara.run/order/api/${
           commentToreplyId ? `replyComment` : `addComment`
@@ -32,8 +31,8 @@ const ChatInput: FC<ChatInputProps> = () => {
         { text: input },
         {
           headers: {
-            Authorization: `Bearer ${access}`,
-            TOKEN: token,
+            Authorization: `Bearer ${session?.access}`,
+            TOKEN: session?.token,
           },
         }
       );

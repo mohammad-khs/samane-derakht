@@ -1,21 +1,19 @@
-import SignInModal from "@/components/authentication/signInModal";
 import HeaderImages from "@/components/products/product/headerImages";
-import { Button } from "@/components/ui/button";
 import { formatNumberWithCommas } from "@/helper/formatNumberWithCommas";
 import { TreeData } from "@/types/products";
-import axios from "axios";
-import { BellIcon, Frown, PlusCircleIcon } from "lucide-react";
-import Link from "next/link";
-import { FC, useState } from "react";
-import toast from "react-hot-toast";
+import { BellIcon } from "lucide-react";
+import { FC } from "react";
 import { FaCommentAlt, FaShareAlt, FaStar, FaTruck } from "react-icons/fa";
 import AddToCardButton from "./addToCardButton";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/pages/api/auth/[...nextauth]";
 
 interface TreeHeadInfoProps {
   treeData: TreeData;
 }
 
-const TreeHeadInfo: FC<TreeHeadInfoProps> = ({ treeData }) => {
+const TreeHeadInfo: FC<TreeHeadInfoProps> = async ({ treeData }) => {
+  const session = await getServerSession(authOptions);
   return (
     <>
       <section className="bg-white rounded-xl flex flex-col-reverse lg:flex-row justify-between p-5 mx-5 my-10">
@@ -89,7 +87,7 @@ const TreeHeadInfo: FC<TreeHeadInfoProps> = ({ treeData }) => {
                 )}
               </div>
               <div className="flex justify-center mb-5 sm:mb-0">
-                <AddToCardButton treeData={treeData} />
+                <AddToCardButton session={session} treeData={treeData} />
               </div>
             </div>
             <div className="flex justify-between gap-4">

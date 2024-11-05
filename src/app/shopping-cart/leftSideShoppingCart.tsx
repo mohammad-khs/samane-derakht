@@ -1,9 +1,36 @@
 import { Button } from "@/components/ui/button";
+import { formatNumberWithCommas } from "@/helper/formatNumberWithCommas";
+import { Session } from "next-auth";
 import { FC } from "react";
 import { FaTruck } from "react-icons/fa";
-interface LeftSideShoppingCartProps {}
+interface LeftSideShoppingCartProps {
+  allPrice: {
+    all_price: number;
+  };
+  allPriceWithOff: {
+    all_price_off: number;
+  };
+  session: Session | null;
+}
 
-const LeftSideShoppingCart: FC<LeftSideShoppingCartProps> = () => {
+const LeftSideShoppingCart: FC<LeftSideShoppingCartProps> = async ({
+  allPrice,
+  allPriceWithOff,
+  session,
+}) => {
+  const response = await fetch(
+    "https://treeone.liara.run/cart/api/cartcount/",
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: session?.access ? `Bearer ${session.access}` : "",
+        TOKEN: session?.token ?? "",
+      },
+    }
+  );
+  const data = await response.json();
+
   return (
     <>
       <div className="rounded-lg bg-white p-4">
@@ -13,10 +40,10 @@ const LeftSideShoppingCart: FC<LeftSideShoppingCartProps> = () => {
         >
           <div className="flex flex-col">
             <h3 className="text-sm">مجموع کالا ها:</h3>
-            <div className="text-xs text-[#9F9F9F]">کالا 4</div>
+            <div className="text-xs text-[#9F9F9F]">{data.count} کالا </div>
           </div>
           <div className="flex justify-center items-center gap-1">
-            2,000,000
+            {formatNumberWithCommas(allPrice?.all_price)}
             <span className="text-[#9F9F9F] text-xs">تومان</span>{" "}
           </div>
         </div>
@@ -28,7 +55,9 @@ const LeftSideShoppingCart: FC<LeftSideShoppingCartProps> = () => {
             <h3 className="text-sm">تخفیف:</h3>
           </div>
           <div className="flex justify-center items-center gap-1">
-            100,000
+            {formatNumberWithCommas(
+              allPrice?.all_price - allPriceWithOff?.all_price_off
+            )}
             <span className="text-[#9F9F9F] text-xs">تومان</span>{" "}
           </div>
         </div>
@@ -41,7 +70,7 @@ const LeftSideShoppingCart: FC<LeftSideShoppingCartProps> = () => {
             <h3 className="font-semibold">مبلغ نهایی:</h3>
           </div>
           <div className="flex justify-center items-center gap-1">
-            1,900,000
+            {formatNumberWithCommas(allPriceWithOff?.all_price_off)}
             <span className="text-[#28D16C] text-xs">تومان</span>{" "}
           </div>
         </div>

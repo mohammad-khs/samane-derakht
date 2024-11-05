@@ -4,30 +4,31 @@ import { Button } from "@/components/ui/button";
 import { TreeData } from "@/types/products";
 import axios from "axios";
 import { PlusCircleIcon } from "lucide-react";
+import { Session } from "next-auth";
 import { useRouter } from "next/navigation";
 import { FC, useState } from "react";
 import toast from "react-hot-toast";
 
 interface AddToCardButtonProps {
+  session: Session | null;
   treeData: TreeData;
 }
 
-const AddToCardButton: FC<AddToCardButtonProps> = ({ treeData }) => {
+const AddToCardButton: FC<AddToCardButtonProps> = ({ treeData, session }) => {
   const router = useRouter();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const handleAddProduct = async () => {
     try {
       setIsLoading(true);
-      const access = localStorage.getItem("access");
-      const token = localStorage.getItem("token");
+
       await axios.post(
         `https://treeone.liara.run/cart/api/add/${treeData.tree?.id}/`,
         {},
         {
           headers: {
-            Authorization: `Bearer ${access}`,
-            TOKEN: token,
+            Authorization: `Bearer ${session?.access}`,
+            TOKEN: session?.token,
           },
         }
       );

@@ -4,29 +4,28 @@ import { FC, useEffect, useState } from "react";
 import { Button } from "./button";
 import Image from "next/image";
 import axios from "axios";
+import { Session } from "next-auth";
 
-interface ShoppingCartButtonProps {}
+interface ShoppingCartButtonProps {
+  session: Session | null;
+}
 
-const ShoppingCartButton: FC<ShoppingCartButtonProps> = () => {
+const ShoppingCartButton: FC<ShoppingCartButtonProps> = ({ session }) => {
   const [count, setCount] = useState(0);
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const access = localStorage.getItem("access");
-        const token = localStorage.getItem("token");
-
         const response = await axios.get(
           "https://treeone.liara.run/cart/api/cartcount/",
           {
             headers: {
               "Content-Type": "application/json",
-              Authorization: access ? `Bearer ${access}` : "",
-              TOKEN: token ?? "",
+              Authorization: session?.access ? `Bearer ${session.access}` : "",
+              TOKEN: session?.token ?? "",
             },
           }
         );
         setCount(response.data.count);
-        console.log(response.data.count);
       } catch (error) {
         console.error("Failed to fetch cart count:", error);
       }

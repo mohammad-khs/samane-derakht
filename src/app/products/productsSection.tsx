@@ -5,7 +5,6 @@ import { TreeCard } from "@/types/products";
 import { FC } from "react";
 import useSWRInfinite from "swr/infinite";
 import Loading from "./productsLoading";
-import axios from "axios";
 import ProductCard from "@/components/products/productCard";
 import { fetcher } from "@/lib/utils";
 import { Loader2 } from "lucide-react";

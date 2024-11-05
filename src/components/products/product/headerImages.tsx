@@ -16,7 +16,7 @@ export const FallbackImage = () => (
 );
 
 const FallbackThumbnail = () => (
-  <div className="relative w-[94px] h-[94px] rounded-lg border bg-slate-600 items-center justify-center flex">
+  <div className="relative h-[73px] w-full sm:w-[94px] sm:h-[94px] rounded-lg border bg-slate-600 items-center justify-center flex">
     <Frown className="text-white h-6 w-6" />
   </div>
 );
@@ -67,7 +67,7 @@ const HeaderImages: FC<HeaderImagesProps> = ({ treeData }) => {
           {thumbnailImages && thumbnailImages.length > 0
             ? thumbnailImages.map((image) => (
                 <div
-                  className="relative w-[94px] h-[94px] rounded-lg border cursor-pointer"
+                  className="relative h-[72px] w-[72px] sm:w-[94px] sm:h-[94px] rounded-lg border cursor-pointer"
                   key={image.id}
                   onClick={() => handleThumbnailClick(image.id, image.url)}
                 >

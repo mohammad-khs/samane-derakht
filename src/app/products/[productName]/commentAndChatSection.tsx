@@ -2,6 +2,7 @@
 import CommentSection from "@/components/products/product/commentSection";
 import ChatInput from "@/components/ui/chatInput";
 import { TreeComment } from "@/types/products";
+import { Session } from "next-auth";
 import {
   createContext,
   Dispatch,
@@ -16,6 +17,7 @@ import {
 interface CommentAndChatSectionProps {
   productId: string;
   comments?: TreeComment[];
+  session?: Session | null;
 }
 
 interface CommentAndChatSectionContext extends CommentAndChatSectionProps {
@@ -32,6 +34,7 @@ const commentAndChatSectionContext = createContext<
 const CommentAndChatSection: FC<CommentAndChatSectionProps> = ({
   productId,
   comments,
+  session,
 }) => {
   const [userComment, setUserComment] = useState<TreeComment | undefined>();
   const [commentToreplyId, setcommentToreplyId] = useState<string | undefined>(
@@ -50,6 +53,7 @@ const CommentAndChatSection: FC<CommentAndChatSectionProps> = ({
           comments,
           commentToreplyId,
           setcommentToreplyId,
+          session,
         }}
       >
         <div className="md:w-3/4 ms-auto">
