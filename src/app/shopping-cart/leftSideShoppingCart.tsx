@@ -1,7 +1,9 @@
+"use client"
 import { Button } from "@/components/ui/button";
 import { formatNumberWithCommas } from "@/helper/formatNumberWithCommas";
+import axios from "axios";
 import { Session } from "next-auth";
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 import { FaTruck } from "react-icons/fa";
 interface LeftSideShoppingCartProps {
   allPrice: {
@@ -13,23 +15,29 @@ interface LeftSideShoppingCartProps {
   session: Session | null;
 }
 
-const LeftSideShoppingCart: FC<LeftSideShoppingCartProps> = async ({
+const LeftSideShoppingCart: FC<LeftSideShoppingCartProps> = ({
   allPrice,
   allPriceWithOff,
   session,
 }) => {
-  const response = await fetch(
-    "https://treeone.liara.run/cart/api/cartcount/",
-    {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: session?.access ? `Bearer ${session.access}` : "",
-        TOKEN: session?.token ?? "",
-      },
-    }
-  );
-  const data = await response.json();
+  const [totalCount, setTotalCount] = useState<any>();
+  useEffect(() => {
+    const fetchTotal = async () => {
+      const response = await axios.get(
+        "https://treeone.liara.run/cart/api/cartcount/",
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: session?.access ? `Bearer ${session.access}` : "",
+            TOKEN: session?.token ?? "",
+          },
+        }
+      );
+      setTotalCount(response.data);
+    };
+    fetchTotal();
+  }, []);
 
   return (
     <>
@@ -40,7 +48,9 @@ const LeftSideShoppingCart: FC<LeftSideShoppingCartProps> = async ({
         >
           <div className="flex flex-col">
             <h3 className="text-sm">مجموع کالا ها:</h3>
-            <div className="text-xs text-[#9F9F9F]">{data.count} کالا </div>
+            <div className="text-xs text-[#9F9F9F]">
+              {totalCount?.count} کالا{" "}
+            </div>
           </div>
           <div className="flex justify-center items-center gap-1">
             {formatNumberWithCommas(allPrice?.all_price)}

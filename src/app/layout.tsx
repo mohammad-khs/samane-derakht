@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import { Toaster } from "react-hot-toast";
+import AuthProvider from "./authProvider";
+
 const YekanBakh = localFont({
   src: "./fonts/YekanBakh-VF.woff",
   weight: "400",
@@ -26,8 +28,10 @@ export default function RootLayout({
           fontVariationSettings: '"DOTS" 1',
         }}
       >
-        <Toaster position="top-center" />
-        {children}
+        <AuthProvider>
+          <Toaster position="top-center" />
+          {children}
+        </AuthProvider>
       </body>
     </html>
   );

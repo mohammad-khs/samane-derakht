@@ -2,26 +2,65 @@
 import { FallbackImage } from "@/components/products/product/headerImages";
 import { Minus, Plus } from "lucide-react";
 import Image from "next/image";
-import { FC, useEffect, useState } from "react";
+import { FC } from "react";
 import { FaCommentAlt, FaStar } from "react-icons/fa";
 import { TreeItem } from "./page";
 import Link from "next/link";
 import { formatNumberWithCommas } from "@/helper/formatNumberWithCommas";
+import { Session } from "next-auth";
+import toast from "react-hot-toast";
 
 interface RightSideShoppingCartProps {
   treeItem: TreeItem;
+  session: Session | null;
+  onQuantityChange: () => void;
 }
 
 const RightSideShoppingCart: FC<RightSideShoppingCartProps> = ({
   treeItem,
+  session,
+  onQuantityChange,
 }) => {
-  const [count, setCount] = useState(treeItem.quantity);
-
-  const handleIncrement = () => {
-    setCount((prev) => (prev += 1));
+  const handleDecrement = async () => {
+    try {
+      const response = await fetch(
+        `https://treeone.liara.run/cart/api/reduce/${treeItem.id}/`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: session?.access ? `Bearer ${session.access}` : "",
+            TOKEN: session?.token ?? "",
+          },
+        }
+      );
+      if (response.ok) {
+        onQuantityChange(); // trigger re-fetch on successful decrement
+      }
+    } catch {
+      toast.error("مشکلی پیش آمد لطفا دوباره تلاش کنید");
+    }
   };
-  const handleDecrement = () => {
-    setCount((prev) => (prev -= 1));
+
+  const handleIncrement = async () => {
+    try {
+      const response = await fetch(
+        `https://treeone.liara.run/cart/api/increase/${treeItem.id}/`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: session?.access ? `Bearer ${session.access}` : "",
+            TOKEN: session?.token ?? "",
+          },
+        }
+      );
+      if (response.ok) {
+        onQuantityChange(); // trigger re-fetch on successful increment
+      }
+    } catch {
+      toast.error("مشکلی پیش آمد لطفا دوباره تلاش کنید");
+    }
   };
 
   return (
@@ -71,7 +110,7 @@ const RightSideShoppingCart: FC<RightSideShoppingCartProps> = ({
               <button onClick={handleIncrement}>
                 <Plus className="text-[#848484]" />
               </button>
-              <div className="mx-5">{count}</div>
+              <div className="mx-5">{treeItem.quantity}</div>
               <button onClick={handleDecrement}>
                 <Minus className="text-[#848484]" />
               </button>

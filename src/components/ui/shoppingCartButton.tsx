@@ -4,13 +4,13 @@ import { FC, useEffect, useState } from "react";
 import { Button } from "./button";
 import Image from "next/image";
 import axios from "axios";
-import { Session } from "next-auth";
+import { useSession } from "next-auth/react";
 
-interface ShoppingCartButtonProps {
-  session: Session | null;
-}
+interface ShoppingCartButtonProps {}
 
-const ShoppingCartButton: FC<ShoppingCartButtonProps> = ({ session }) => {
+const ShoppingCartButton: FC<ShoppingCartButtonProps> = () => {
+  const session = useSession();
+
   const [count, setCount] = useState(0);
   useEffect(() => {
     const fetchData = async () => {
@@ -20,8 +20,10 @@ const ShoppingCartButton: FC<ShoppingCartButtonProps> = ({ session }) => {
           {
             headers: {
               "Content-Type": "application/json",
-              Authorization: session?.access ? `Bearer ${session.access}` : "",
-              TOKEN: session?.token ?? "",
+              Authorization: session?.data?.access
+                ? `Bearer ${session.data.access}`
+                : "",
+              TOKEN: session?.data?.token ?? "",
             },
           }
         );
@@ -32,7 +34,7 @@ const ShoppingCartButton: FC<ShoppingCartButtonProps> = ({ session }) => {
     };
 
     fetchData();
-  }, []);
+  }, [session, count]);
   return (
     <>
       <Link href={"/shopping-cart"}>
