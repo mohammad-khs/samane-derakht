@@ -1,10 +1,11 @@
+"use client"
 import { FC } from "react";
 import { TreeComment } from "@/types/products";
 import { FaRegCommentAlt, FaStar } from "react-icons/fa";
 import CommentAndChatSection from "./commentAndChatSection";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
-import { getSession } from "next-auth/react";
+import { getSession, useSession } from "next-auth/react";
 
 interface TreeMainInfoProps {
   comments?: TreeComment[];
@@ -12,12 +13,12 @@ interface TreeMainInfoProps {
   productId: string;
 }
 
-const TreeMainInfo: FC<TreeMainInfoProps> = async ({
+const TreeMainInfo: FC<TreeMainInfoProps> = ({
   comments,
   avg,
   productId,
 }) => {
-  const session = await getServerSession(authOptions);
+  const session = useSession();
   return (
     <>
       <div className="bg-white m-5 p-5 md:p-10 rounded-xl">
@@ -58,7 +59,7 @@ const TreeMainInfo: FC<TreeMainInfoProps> = async ({
 
         <div>
           <CommentAndChatSection
-            session={session}
+            session={session.data}
             comments={comments}
             productId={productId}
           />

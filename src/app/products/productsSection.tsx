@@ -8,7 +8,7 @@ import Loading from "./productsLoading";
 import ProductCard from "@/components/products/productCard";
 import { fetcher } from "@/lib/utils";
 import { Loader2 } from "lucide-react";
-interface ProductsSectionProps {}
+interface ProductsSectionProps { }
 
 export function useProducts() {
   const getKey = (pageIndex: number, previousPageData: any) => {
@@ -21,9 +21,8 @@ export function useProducts() {
     if (previousPageData && previousPageData.length === 0) return null;
 
     // For subsequent pages, fetch 4 items
-    return `https://treeone.liara.run/order/api/trees/?offset=${
-      12 + pageIndex * 4
-    }`;
+    return `https://treeone.liara.run/order/api/trees/?offset=${12 + pageIndex * 4
+      }`;
   };
 
   return useSWRInfinite(getKey, fetcher, {
@@ -34,6 +33,8 @@ export function useProducts() {
 
 const ProductsSection: FC<ProductsSectionProps> = () => {
   const { data, setSize, size, isLoading, error } = useProducts();
+
+  console.log("data in each tree :", data)
 
   if (isLoading && !data) {
     return <Loading />;
@@ -56,42 +57,44 @@ const ProductsSection: FC<ProductsSectionProps> = () => {
         <div className="grid lg:grid-cols-4 gap-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1">
           {currentPageData && currentPageData.length > 0
             ? currentPageData.map((product: TreeCard) => (
-                <div
-                  className="flex justify-center items-center"
-                  key={product.id}
-                >
-                  <ProductCard
-                    id={product?.id}
-                    image={product?.image}
-                    name={product?.name}
-                    price={product?.price}
-                    avg={product?.avg}
-                    count={product?.count}
-                    in_stock={product?.in_stock}
-                    price_off={product?.price_off}
-                    stock_number={product?.stock_number}
-                  />
-                </div>
-              ))
+              <div
+                className="flex justify-center items-center"
+                key={product.id}
+              >
+                <ProductCard
+                  slug={product?.slug}
+                  id={product?.id}
+                  image={product?.image}
+                  name={product?.name}
+                  price={product?.price}
+                  avg={product?.avg}
+                  count={product?.count}
+                  in_stock={product?.in_stock}
+                  price_off={product?.price_off}
+                  stock_number={product?.stock_number}
+                />
+              </div>
+            ))
             : previousPageData &&
-              previousPageData.map((product: TreeCard) => (
-                <div
-                  className="flex justify-center items-center"
-                  key={product.id}
-                >
-                  <ProductCard
-                    id={product?.id}
-                    image={product?.image}
-                    name={product?.name}
-                    price={product?.price}
-                    avg={product?.avg}
-                    count={product?.count}
-                    in_stock={product?.in_stock}
-                    price_off={product?.price_off}
-                    stock_number={product?.stock_number}
-                  />
-                </div>
-              ))}
+            previousPageData.map((product: TreeCard) => (
+              <div
+                className="flex justify-center items-center"
+                key={product.id}
+              >
+                <ProductCard
+                  slug={product?.slug}
+                  id={product?.id}
+                  image={product?.image}
+                  name={product?.name}
+                  price={product?.price}
+                  avg={product?.avg}
+                  count={product?.count}
+                  in_stock={product?.in_stock}
+                  price_off={product?.price_off}
+                  stock_number={product?.stock_number}
+                />
+              </div>
+            ))}
         </div>
 
         {error && <div>{error.message}</div>}
@@ -111,7 +114,7 @@ const ProductsSection: FC<ProductsSectionProps> = () => {
               className="disabled:opacity-50 disabled:bg-gray-800"
             >
               {data &&
-              data[size - 2]?.data?.length === data[size - 1]?.data?.length
+                data[size - 2]?.data?.length === data[size - 1]?.data?.length
                 ? "چیزی برای نمایش نیست"
                 : "نمایش بیشتر"}
             </Button>

@@ -6,7 +6,7 @@ import { Frown } from "lucide-react";
 import Link from "next/link";
 import { formatNumberWithCommas } from "@/helper/formatNumberWithCommas";
 
-interface ProductCardProps extends TreeCard {}
+interface ProductCardProps extends TreeCard { }
 
 const ProductCard: FC<ProductCardProps> = ({
   image,
@@ -15,19 +15,19 @@ const ProductCard: FC<ProductCardProps> = ({
   price,
   price_off,
   id,
+  slug
 }) => {
   // href={`products/${encodeURIComponent(name).replace(/%20/g, "-")}`}
   return (
     <>
       <Link
-        href={`products/${id}`}
+        href={`products/${slug}`}
         aria-disabled={!in_stock}
         className="relative rounded-lg bg-white hover:bg-[#20AC58CC] transition-colors aria-disabled:bg-[#00000047] aria-disabled:opacity-80 group"
       >
         <div
-          className={`w-[233px] rounded-lg h-[274px] px-2 flex flex-col ${
-            in_stock && `group-hover:opacity-60`
-          }`}
+          className={`w-[233px] rounded-lg h-[274px] px-2 flex flex-col ${in_stock && `group-hover:opacity-60`
+            }`}
         >
           <div className="relative w-full h-full mt-2 flex justify-center items-center rounded-lg bg-slate-600">
             {image ? (

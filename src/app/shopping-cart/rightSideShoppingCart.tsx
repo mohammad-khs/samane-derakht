@@ -107,11 +107,11 @@ const RightSideShoppingCart: FC<RightSideShoppingCartProps> = ({
           </div>
           <div className="flex gap-2 md:gap-28 lg:gap-36 mt-5 justify-between">
             <div className="flex gap-3 justify-around items-center text-lg  px-2 py-1 rounded-lg border-2 border-[#28D16C]">
-              <button onClick={handleIncrement}>
+              <button title="increase" type="button" onClick={handleIncrement}>
                 <Plus className="text-[#848484]" />
               </button>
               <div className="mx-5">{treeItem.quantity}</div>
-              <button onClick={handleDecrement}>
+              <button title="decrease" type="button" onClick={handleDecrement}>
                 <Minus className="text-[#848484]" />
               </button>
             </div>

@@ -55,11 +55,7 @@ const CommentSection: FC<CommentSectionProps> = ({}) => {
               <CommentLayout comment={userComment} />
             </div>
 
-            <div className="absolute top-0 flex justify-center items-center w-full h-full">
-              <p className="text-[#28D16C] text-xs sm:text-sm md:text-base text-center ">
-                کامنت شما پس از بررسی توسط ادمین منتشر خواهد شد
-              </p>
-            </div>
+            
           </div>
         )}
         {comments?.map((comment: TreeComment) => (
@@ -103,11 +99,7 @@ const CommentSection: FC<CommentSectionProps> = ({}) => {
               <CommentLayout comment={userComment} />
             </div>
 
-            <div className="absolute top-0 flex justify-center items-center w-full h-full">
-              <p className="text-[#28D16C] text-xs sm:text-sm md:text-base text-center ">
-                کامنت شما پس از بررسی توسط ادمین منتشر خواهد شد
-              </p>
-            </div>
+            
           </div>
         )}
         {comments?.map((comment: TreeComment) => (

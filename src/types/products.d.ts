@@ -10,6 +10,7 @@ export interface TreeCard {
   image: string | null;
   avg: number | null;
   count: number | null;
+  slug: string | null;
 }
 
 export interface TreeData {

@@ -1,3 +1,4 @@
+"use client"
 import HeaderImages from "@/components/products/product/headerImages";
 import { formatNumberWithCommas } from "@/helper/formatNumberWithCommas";
 import { TreeData } from "@/types/products";
@@ -7,13 +8,16 @@ import { FaCommentAlt, FaShareAlt, FaStar, FaTruck } from "react-icons/fa";
 import AddToCardButton from "./addToCardButton";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
+import { useSession } from "next-auth/react";
 
 interface TreeHeadInfoProps {
   treeData: TreeData;
 }
 
-const TreeHeadInfo: FC<TreeHeadInfoProps> = async ({ treeData }) => {
-  const session = await getServerSession(authOptions);
+const TreeHeadInfo: FC<TreeHeadInfoProps> = ({ treeData }) => {
+  const { data: session } = useSession();
+
+
   return (
     <>
       <section className="bg-white rounded-xl flex flex-col-reverse lg:flex-row justify-between p-5 mx-5 my-10">
