@@ -5,7 +5,9 @@ import { CommentCarouselCardData } from "@/types/mainCarousels";
 interface CustomerReviewsProps {}
 
 const CustomerReviews: FC<CustomerReviewsProps> = async () => {
-  const res = await fetch("https://treeone.liara.run/api/comments");
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/comments`
+  );
   const data: CommentCarouselCardData[] = await res.json();
   return (
     <>

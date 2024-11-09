@@ -7,7 +7,9 @@ interface FeatureSectionProps {
 }
 
 const FeatureSection = async () => {
-  const res = await fetch("https://treeone.liara.run/api/tree_data/");
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/tree_data/`
+  );
   const data: FeatureSectionProps = await res.json();
 
   return (

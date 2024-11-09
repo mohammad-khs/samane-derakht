@@ -21,6 +21,7 @@ export interface TreeData {
   commnet_count?: number;
   avg?: number | null;
   comment_offset?: number;
+  in_cart: boolean;
 }
 
 export interface TreeComment {

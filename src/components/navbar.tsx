@@ -1,12 +1,19 @@
+"use client";
+
 import { FC } from "react";
 import { Button } from "./ui/button";
 import Link from "next/link";
 import SignInModalParent from "./authentication/signInModalParent";
 import ShoppingCartButton from "./ui/shoppingCartButton";
+import { usePathname } from "next/navigation";
 
 interface NavbarProps {}
 
 const Navbar: FC<NavbarProps> = () => {
+  const pathName = usePathname();
+
+  const isActive = (path: string) => pathName === path;
+
   return (
     <>
       <nav className="bg-[#E4E7E5] flex-row py-2 mx-2 hidden md:flex rounded-xl">
@@ -15,21 +22,43 @@ const Navbar: FC<NavbarProps> = () => {
           <ShoppingCartButton />
         </div>
         <div className="w-full flex gap-1 lg:gap-4 justify-center items-center basis-1/3">
-          <Button className="font-semibold" size={"resizble"} variant={"ghost"}>
+          <Button
+            className={`font-semibold ${
+              isActive("/support") ? "bg-white" : ""
+            }`}
+            size={"resizble"}
+            variant={"ghost"}
+          >
             پشتیبانی
           </Button>
-          <Button className="font-semibold" size={"resizble"} variant={"ghost"}>
+          <Button
+            className={`font-semibold ${
+              isActive("/contact") ? "bg-white" : ""
+            }`}
+            size={"resizble"}
+            variant={"ghost"}
+          >
             تماس با ما
           </Button>
-          <Button className="font-semibold" size={"resizble"} variant={"ghost"}>
+          <Button
+            className={`font-semibold ${isActive("/faq") ? "bg-white" : ""}`}
+            size={"resizble"}
+            variant={"ghost"}
+          >
             سوالات متداول
           </Button>
-          <Button className="font-semibold" size={"resizble"} variant={"ghost"}>
+          <Button
+            className={`font-semibold ${isActive("/about") ? "bg-white" : ""}`}
+            size={"resizble"}
+            variant={"ghost"}
+          >
             درباره ما
           </Button>
-          <Link href={"/products"}>
+          <Link href="/products">
             <Button
-              className="font-semibold"
+              className={`font-semibold ${
+                isActive("/products") ? "bg-white" : ""
+              }`}
               size={"resizble"}
               variant={"ghost"}
             >
@@ -37,8 +66,8 @@ const Navbar: FC<NavbarProps> = () => {
             </Button>
           </Link>
         </div>
-        <div className=" me-5 basis-1/3">
-          <Link href={"/"} className="flex justify-end  gap-3 items-center">
+        <div className="me-5 basis-1/3">
+          <Link href="/" className="flex justify-end gap-3 items-center">
             <span className="text-sm font-semibold">سامانه درخت</span>
             <Button size={"icon"} variant={"green"}></Button>
           </Link>

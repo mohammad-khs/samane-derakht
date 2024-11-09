@@ -20,6 +20,7 @@ export interface TreeType {
   comments: number;
   rate_avg: number;
   stock_number: number;
+  slug: string;
 }
 export interface TreeItem {
   id: string;
@@ -42,7 +43,7 @@ const ShoppingCart: FC<ShoppingCartProps> = () => {
         setIsloading(true);
         if (session.status === "loading") return;
         const response = await axios.get(
-          "https://treeone.liara.run/cart/api/mycart/",
+          `${process.env.NEXT_PUBLIC_API_BASE_URL}/cart/api/mycart/`,
           {
             headers: {
               "Content-Type": "application/json",
@@ -90,16 +91,22 @@ const ShoppingCart: FC<ShoppingCartProps> = () => {
                   />
                 </div>
                 <div>
-                  <div className="rounded-lg bg-white p-3">
-                    {cartData?.items?.map((item: TreeItem) => (
-                      <RightSideShoppingCart
-                        session={session?.data}
-                        treeItem={item}
-                        key={item.id}
-                        onQuantityChange={triggerRefresh}
-                      />
-                    ))}
-                  </div>
+                  {cartData && cartData?.items?.length > 0 ? (
+                    <div className="rounded-lg bg-white p-3">
+                      {cartData?.items?.map((item: TreeItem) => (
+                        <RightSideShoppingCart
+                          session={session?.data}
+                          treeItem={item}
+                          key={item.id}
+                          onQuantityChange={triggerRefresh}
+                        />
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="justify-center h-full items-center flex text-[#28D16C]">
+                      در سبد خرید شما آیتمی وجود ندارد
+                    </div>
+                  )}
                 </div>
               </div>
             ) : (

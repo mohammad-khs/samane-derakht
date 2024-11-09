@@ -86,7 +86,7 @@ const CustomMapbox: FC<CustomMapboxProps> = ({
               className="w-full h-full z-40"
               center={initialPostion}
               zoom={zoom}
-              minZoom={10}
+              minZoom={7}
               scrollWheelZoom={true}
               zoomControl={false}
             >

@@ -27,7 +27,7 @@ export type MainMapType = {
 };
 
 const MapSection: FC<MapSectionProps> = async () => {
-  const req = await fetch("https://treeone.liara.run/api/map/");
+  const req = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/map/`);
   const data: MainMapType[] = await req.json();
 
   return (

@@ -17,7 +17,7 @@ export const authOptions: AuthOptions = {
         const otp = credentials?.otp;
         try {
           const otpResponse = await axios.post(
-            "https://treeone.liara.run/account/api/verify/",
+            `${process.env.NEXT_PUBLIC_API_BASE_URL}/account/api/verify/`,
             { otp },
             {
               headers: {

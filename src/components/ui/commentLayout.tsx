@@ -9,7 +9,6 @@ import {
   ThumbsUp,
 } from "lucide-react";
 import Image from "next/image";
-import Link from "next/link";
 import { FC } from "react";
 import { FaUser } from "react-icons/fa";
 
@@ -24,7 +23,7 @@ const CommentLayout: FC<CommentLayoutProps> = ({
   childComment,
   replyedTo,
 }) => {
-  const { textareaRef, setcommentToreplyId } =
+  const { textareaRef, setcommentToreplyId, setCommentToReplyUsername } =
     useCommentAndChatSectionContext();
 
   const handleReply = () => {
@@ -38,8 +37,10 @@ const CommentLayout: FC<CommentLayoutProps> = ({
     }, 1000);
 
     if (comment) {
+      setCommentToReplyUsername(comment.user_username);
       setcommentToreplyId(comment?.id);
     } else if (childComment) {
+      setCommentToReplyUsername(childComment.user_username);
       setcommentToreplyId(childComment?.id);
     }
   };

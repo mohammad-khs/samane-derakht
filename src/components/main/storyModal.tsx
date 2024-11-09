@@ -38,7 +38,7 @@ const StoryModal: React.FC<StoryModalProps> = ({
     setIsLoading(true);
     try {
       const res = await fetch(
-        `https://treeone.liara.run/api/image/${storyId}/${currentImageId.id}`
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/image/${storyId}/${currentImageId.id}`
       );
       const data = await res.json();
       setImageData(data);

@@ -13,7 +13,7 @@ export async function POST(req: NextRequest) {
 
   // Forward the request to the external API
   const response = await fetch(
-    `https://treeone.liara.run/order/api/addComment/${productId}/`,
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/order/api/addComment/${productId}/`,
     {
       method: "POST",
       headers: {

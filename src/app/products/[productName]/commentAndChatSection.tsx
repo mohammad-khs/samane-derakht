@@ -15,9 +15,10 @@ import {
 } from "react";
 
 interface CommentAndChatSectionProps {
-  productId: string;
+  productId?: string;
   comments?: TreeComment[];
   session?: Session | null;
+  productSlug?: string;
 }
 
 interface CommentAndChatSectionContext extends CommentAndChatSectionProps {
@@ -26,12 +27,15 @@ interface CommentAndChatSectionContext extends CommentAndChatSectionProps {
   textareaRef: MutableRefObject<HTMLTextAreaElement | null>;
   commentToreplyId: string | undefined;
   setcommentToreplyId: Dispatch<SetStateAction<string | undefined>>;
+  commentToReplyUsername: string | null;
+  setCommentToReplyUsername: Dispatch<SetStateAction<string | null>>;
 }
 const commentAndChatSectionContext = createContext<
   CommentAndChatSectionContext | undefined
 >(undefined);
 
 const CommentAndChatSection: FC<CommentAndChatSectionProps> = ({
+  productSlug,
   productId,
   comments,
   session,
@@ -40,12 +44,16 @@ const CommentAndChatSection: FC<CommentAndChatSectionProps> = ({
   const [commentToreplyId, setcommentToreplyId] = useState<string | undefined>(
     undefined
   );
+  const [commentToReplyUsername, setCommentToReplyUsername] = useState<
+    string | null
+  >(null);
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
 
   return (
     <>
       <commentAndChatSectionContext.Provider
         value={{
+          productSlug,
           textareaRef,
           userComment,
           setUserComment,
@@ -54,6 +62,8 @@ const CommentAndChatSection: FC<CommentAndChatSectionProps> = ({
           commentToreplyId,
           setcommentToreplyId,
           session,
+          commentToReplyUsername,
+          setCommentToReplyUsername,
         }}
       >
         <div className="md:w-3/4 ms-auto">

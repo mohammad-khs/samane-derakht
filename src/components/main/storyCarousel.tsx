@@ -35,7 +35,7 @@ const StoryCarousel: FC<StoryCarouselProps> = ({ stories }) => {
     setIsModalOpen(false);
     try {
       const res = await fetch(
-        `https://treeone.liara.run/api/story/${story.id}/`
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/story/${story.id}/`
       );
       if (res.status === 429) {
         console.log("Rate limit exceeded. Please try again later.");

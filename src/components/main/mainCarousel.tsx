@@ -14,7 +14,7 @@ const MainCarousel: FC<MainCarouselProps> = async ({
   background,
 }) => {
   if (!data) {
-    const res = await fetch("https://treeone.liara.run/api/");
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/`);
     const fetchedData: mainCarouselCardData[] = await res.json();
 
     return (

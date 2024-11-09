@@ -10,18 +10,12 @@ import { useCommentAndChatSectionContext } from "@/app/products/[productName]/co
 
 interface CommentSectionProps {}
 
-export function useComments(productId: string) {
+export function useComments(productSlug: string) {
   const getKey = (pageIndex: number, previousPageData: any) => {
-    // If no previous data (initial fetch), fetch 12 items
-    // if (pageIndex === 0 && previousPageData === null) {
-    //   return null;
-    // }
-
     // If no more data to fetch
     if (previousPageData && previousPageData.length === 0) return null;
 
-    // For subsequent pages, fetch 4 items
-    return `https://treeone.liara.run/order/api/tree/${productId}/?comment_offset=${
+    return `${process.env.NEXT_PUBLIC_API_BASE_URL}/order/api/tree/${productSlug}/?comment_offset=${
       (1 + pageIndex) * 10
     }`;
   };
@@ -33,9 +27,11 @@ export function useComments(productId: string) {
 }
 
 const CommentSection: FC<CommentSectionProps> = ({}) => {
-  const { comments, userComment, productId, textareaRef } =
+  const { comments, userComment, productId, productSlug, textareaRef } =
     useCommentAndChatSectionContext();
-  const { data, setSize, size, isLoading, error } = useComments(productId);
+  const { data, setSize, size, isLoading, error } = useComments(
+    productSlug || ""
+  );
   const currentPageData = data ? data[size - 1] : [];
   const previousPageData = data ? data[size - 2] : [];
   if (isLoading) {
@@ -54,8 +50,6 @@ const CommentSection: FC<CommentSectionProps> = ({}) => {
             <div className="opacity-40">
               <CommentLayout comment={userComment} />
             </div>
-
-            
           </div>
         )}
         {comments?.map((comment: TreeComment) => (
@@ -98,8 +92,6 @@ const CommentSection: FC<CommentSectionProps> = ({}) => {
             <div className="opacity-40">
               <CommentLayout comment={userComment} />
             </div>
-
-            
           </div>
         )}
         {comments?.map((comment: TreeComment) => (

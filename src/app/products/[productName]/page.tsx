@@ -20,7 +20,7 @@ const Product: FC<ProductProps> = async ({ params }) => {
   // );
 
   // const allProductsRes = await fetch(
-  //   `https://treeone.liara.run/order/api/trees/?offset=100`
+  //   `${process.env.NEXT_PUBLIC_API_BASE_URL}/order/api/trees/?offset=100`
   // );
   // const products = await allProductsRes.json();
 
@@ -36,10 +36,12 @@ const Product: FC<ProductProps> = async ({ params }) => {
   //   );
   // }
   const res = await fetch(
-    `https://treeone.liara.run/order/api/tree/${params.productName}`
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/order/api/tree/${params.productName}`
   );
 
   const data = await res.json();
+  //this is the data that made app crash if i would have disabled cash
+  
   const treeData: TreeData = {
     tree: data[0]?.tree,
     images: data[1]?.images,
@@ -48,6 +50,7 @@ const Product: FC<ProductProps> = async ({ params }) => {
     commnet_count: data[4]?.commnet_count,
     avg: data[5]?.avg,
     comment_offset: data[6]?.comment_offset,
+    in_cart: data[7]?.in_cart,
   };
 
   return (
@@ -60,8 +63,8 @@ const Product: FC<ProductProps> = async ({ params }) => {
           <main>
             <TreeMainInfo
               avg={treeData?.avg}
-              productId={params.productName}
-              // productId={product.id}
+              productId={treeData?.tree?.id}
+              productSlug={params.productName}
               comments={treeData.comments}
             />
             <div className="mb-8">

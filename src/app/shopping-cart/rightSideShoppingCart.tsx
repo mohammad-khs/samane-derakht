@@ -24,7 +24,7 @@ const RightSideShoppingCart: FC<RightSideShoppingCartProps> = ({
   const handleDecrement = async () => {
     try {
       const response = await fetch(
-        `https://treeone.liara.run/cart/api/reduce/${treeItem.id}/`,
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/cart/api/reduce/${treeItem.id}/`,
         {
           method: "POST",
           headers: {
@@ -45,7 +45,7 @@ const RightSideShoppingCart: FC<RightSideShoppingCartProps> = ({
   const handleIncrement = async () => {
     try {
       const response = await fetch(
-        `https://treeone.liara.run/cart/api/increase/${treeItem.id}/`,
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/cart/api/increase/${treeItem.id}/`,
         {
           method: "POST",
           headers: {
@@ -70,7 +70,7 @@ const RightSideShoppingCart: FC<RightSideShoppingCartProps> = ({
           <div className="relative w-[188px] h-[140px]  border-2 rounded-lg border-[#D2D2D2]">
             {treeItem.tree_type.image ? (
               <Image
-                src={`https://treeone.liara.run/${treeItem.tree_type.image}`}
+                src={`${process.env.NEXT_PUBLIC_API_BASE_URL}/${treeItem.tree_type.image}`}
                 alt={`عکس درخت ${treeItem.tree_type.image}`}
                 fill
                 className="rounded-lg"
@@ -84,7 +84,7 @@ const RightSideShoppingCart: FC<RightSideShoppingCartProps> = ({
           <h1 className="text-xl mt-3 font-semibold">
             نحال درخت {treeItem?.tree_type?.name}{" "}
             <span className="text-[#247C48] underline text-xs">
-              <Link href={`/products/${treeItem?.tree_type.id}`}>
+              <Link href={`/products/${treeItem?.tree_type.slug}`}>
                 مشاهده محصول
               </Link>
             </span>

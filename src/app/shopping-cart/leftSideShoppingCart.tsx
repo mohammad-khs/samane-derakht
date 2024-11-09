@@ -24,7 +24,7 @@ const LeftSideShoppingCart: FC<LeftSideShoppingCartProps> = ({
   useEffect(() => {
     const fetchTotal = async () => {
       const response = await axios.get(
-        "https://treeone.liara.run/cart/api/cartcount/",
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/cart/api/cartcount/`,
         {
           method: "GET",
           headers: {
@@ -37,7 +37,7 @@ const LeftSideShoppingCart: FC<LeftSideShoppingCartProps> = ({
       setTotalCount(response.data);
     };
     fetchTotal();
-  }, []);
+  }, [allPrice]);
 
   return (
     <>

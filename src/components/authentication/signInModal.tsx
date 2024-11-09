@@ -54,13 +54,16 @@ const SignInModal: FC<SignInModalProps> = ({ isOpen, onClose }) => {
     }
     setLoading(true);
     try {
-      const response = await fetch("https://treeone.liara.run/account/api/", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          phone: phone[0] === "0" ? `${phone}` : `0${phone}`,
-        }),
-      });
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/account/api/`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            phone: phone[0] === "0" ? `${phone}` : `0${phone}`,
+          }),
+        }
+      );
 
       if (response.ok) {
         const data = await response.json();
@@ -178,7 +181,7 @@ const SignInModal: FC<SignInModalProps> = ({ isOpen, onClose }) => {
               } rounded mb-4`}
             />
             {otp.length > 0 && error?.message && (
-              <div className="text-red-600 text-sm">{error?.message}</div>
+              <div className="text-red-600  mb-5 text-sm">{error?.message}</div>
             )}
             <Button
               style={{ direction: "rtl" }}
