@@ -30,6 +30,6 @@ export interface TreeComment {
   text: string;
   user_username: string;
   user_profileimage: string | null;
-  child: TreeComment[]; // Recursive definition to support nested comments
+  child_count: number; // Recursive definition to support nested comments
   irani: string;
 }

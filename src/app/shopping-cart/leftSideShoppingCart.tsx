@@ -13,31 +13,15 @@ interface LeftSideShoppingCartProps {
     all_price_off: number;
   };
   session: Session | null;
+  allProductsCount: number;
 }
 
 const LeftSideShoppingCart: FC<LeftSideShoppingCartProps> = ({
+  allProductsCount,
   allPrice,
   allPriceWithOff,
   session,
 }) => {
-  const [totalCount, setTotalCount] = useState<any>();
-  useEffect(() => {
-    const fetchTotal = async () => {
-      const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/cart/api/cartcount/`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: session?.access ? `Bearer ${session.access}` : "",
-            TOKEN: session?.token ?? "",
-          },
-        }
-      );
-      setTotalCount(response.data);
-    };
-    fetchTotal();
-  }, [allPrice]);
 
   return (
     <>
@@ -49,7 +33,7 @@ const LeftSideShoppingCart: FC<LeftSideShoppingCartProps> = ({
           <div className="flex flex-col">
             <h3 className="text-sm">مجموع کالا ها:</h3>
             <div className="text-xs text-[#9F9F9F]">
-              {totalCount?.count} کالا{" "}
+              {allProductsCount} کالا{" "}
             </div>
           </div>
           <div className="flex justify-center items-center gap-1">

@@ -66,6 +66,8 @@ const ChatInput: FC<ChatInputProps> = () => {
         user_username: "شما",
       });
       setInput("");
+      setCommentToReplyUsername(null);
+      setcommentToreplyId(undefined);
       toast.success("پیام شما با موفقیت ثبت شد");
     } catch (error: unknown) {
       if (

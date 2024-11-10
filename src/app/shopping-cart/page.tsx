@@ -88,6 +88,7 @@ const ShoppingCart: FC<ShoppingCartProps> = () => {
                     session={session?.data}
                     allPrice={cartData?.all_price}
                     allPriceWithOff={cartData?.all_price_with_off}
+                    allProductsCount={cartData?.all_products_count}
                   />
                 </div>
                 <div>
