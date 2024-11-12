@@ -58,7 +58,7 @@ const CommentSection: FC<CommentSectionProps> = ({}) => {
         {currentPageData?.[2]?.comments?.map((comment: TreeComment) => (
           <div key={comment.id}>
             <CommentLayout comment={comment} />
-            {comment?.child_count > 0 && (
+            {comment?.count_of_child > 0 && (
               <div className="relative border-2 z-10 mr-11 sm:mx-20 rounded-xl pe-3 bg-white border-[#EAEAEA]">
                 <div className="border-r-2 -top-12 w-[40px] -right-10 sm:-right-14 border-dashed border-b-2 absolute border-[#EAEAEA] h-1/3"></div>
                 <div>

@@ -1,9 +1,9 @@
 "use client"
 import { Button } from "@/components/ui/button";
 import { formatNumberWithCommas } from "@/helper/formatNumberWithCommas";
-import axios from "axios";
 import { Session } from "next-auth";
-import { FC, useEffect, useState } from "react";
+import Link from "next/link";
+import { FC } from "react";
 import { FaTruck } from "react-icons/fa";
 interface LeftSideShoppingCartProps {
   allPrice: {
@@ -20,8 +20,10 @@ const LeftSideShoppingCart: FC<LeftSideShoppingCartProps> = ({
   allProductsCount,
   allPrice,
   allPriceWithOff,
-  session,
 }) => {
+  if (allProductsCount <= 0) {
+    return;
+  }
 
   return (
     <>
@@ -68,9 +70,11 @@ const LeftSideShoppingCart: FC<LeftSideShoppingCartProps> = ({
             <span className="text-[#28D16C] text-xs">تومان</span>{" "}
           </div>
         </div>
-        <Button className="w-full my-3" variant={"green"} size={"default"}>
-          تایید فاکتور و پرداخت
-        </Button>
+        <Link href={"/complete-info/buyer-info"}>
+          <Button className="w-full my-3" variant={"green"} size={"default"}>
+            تایید فاکتور و پرداخت
+          </Button>
+        </Link>
         <div
           className="flex gap-2 text-sm  items-center"
           style={{ direction: "rtl" }}

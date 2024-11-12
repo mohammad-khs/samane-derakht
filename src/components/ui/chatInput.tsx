@@ -57,7 +57,7 @@ const ChatInput: FC<ChatInputProps> = () => {
       );
 
       setUserComment({
-        child: [],
+        count_of_child: 0,
         created: new Date().toISOString(),
         id: randomUUID(),
         irani: "",

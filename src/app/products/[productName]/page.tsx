@@ -7,6 +7,8 @@ import Footer from "@/components/footer";
 import MainCarousel from "@/components/main/mainCarousel";
 import TreeMainInfo from "./treeMainInfo";
 import NotFound from "./not-found";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/pages/api/auth/[...nextauth]";
 
 interface ProductProps {
   params: {
@@ -15,33 +17,22 @@ interface ProductProps {
 }
 
 const Product: FC<ProductProps> = async ({ params }) => {
-  // const decodedProductName = decodeURIComponent(
-  //   params.productName.replace(/-/g, " ")
-  // );
+  const session = await getServerSession(authOptions);
 
-  // const allProductsRes = await fetch(
-  //   `${process.env.NEXT_PUBLIC_API_BASE_URL}/order/api/trees/?offset=100`
-  // );
-  // const products = await allProductsRes.json();
-
-  // const product = products?.data.find((p: { name: string }) => {
-  //   return p.name === decodedProductName;
-  // });
-
-  // if (!product) {
-  //   return (
-  //     <div className="text-green-500 py-5 text-center text-xl">
-  //       <NotFound />
-  //     </div>
-  //   );
-  // }
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/order/api/tree/${params.productName}`
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/order/api/tree/${params.productName}`,
+    {
+      headers: {
+        Authorization: session?.access ? `Bearer ${session?.access}` : "",
+        TOKEN: session?.token ?? "",
+      },
+    }
   );
 
   const data = await res.json();
+
   //this is the data that made app crash if i would have disabled cash
-  
+
   const treeData: TreeData = {
     tree: data[0]?.tree,
     images: data[1]?.images,

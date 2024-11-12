@@ -56,14 +56,20 @@ const ShoppingCartButton: FC<ShoppingCartButtonProps> = () => {
               </div>
               {count > 0 && (
                 <div className="rounded-full h-4 w-4 flex justify-center items-center text-white font-semibold bg-red-600">
-                  <div className="text-[10px] leading-none">{count}</div>
+                  <div className="text-[10px] leading-none">
+                    {count > 9 ? `+9` : count}
+                  </div>
                 </div>
               )}
             </div>
           </Button>
         </Link>
       ) : (
-        <Button onClick={() => setIsModalOpen(true)} className="relative p-2" variant="icon">
+        <Button
+          onClick={() => setIsModalOpen(true)}
+          className="relative p-2"
+          variant="icon"
+        >
           <div className="flex justify-center gap-3 items-center">
             <div className="relative w-6 h-6">
               <Image

@@ -60,99 +60,104 @@ const ChildComment: FC<ChildCommentProps> = ({ commentId, replyedTo }) => {
   if (size >= 1) {
     return (
       <>
-        {data &&
-          currentPageData?.data.map((comment: TreeComment) => (
-            <div key={comment?.id}>
-              <div className="flex flex-col-reverse ms-4 sm:flex-row items-start gap-4 justify-end my-5 rounded-lg">
-                <div className="flex flex-col gap-6 items-start me-auto justify-between h-full">
-                  <div className="text-sm">
-                    {comment?.irani && (
-                      <div>
-                        {(() => {
-                          const dateInfo = DateFormatDMY(comment.irani);
-                          if (dateInfo) {
-                            return (
-                              <>
-                                {dateInfo.day}/{dateInfo.month}/{dateInfo.year}
-                              </>
-                            );
-                          }
-                          return null;
-                        })()}
-                      </div>
-                    )}
-                  </div>
-                  <div className="mt-auto flex gap-4">
-                    <ThumbsDown className="text-[#909090] w-5 h-5" />
-                    <ThumbsUp className="text-[#909090] w-5 h-5" />
-                    <AlertOctagonIcon className="text-[#909090] w-5 h-5" />
-                  </div>
-                </div>
-                <div className="flex flex-col w-full">
-                  <div className="text-xl sm:text-2xl font-semibold">
-                    {comment?.user_username ? (
-                      <>
-                        <div className="flex gap-2 justify-end items-center">
-                          <span className="text-xs text-[##3D3D3D]">
-                            ( در پاسخ به کاربر {replyedTo})
-                          </span>
-                          <div>{comment?.user_username}</div>
+        <div>
+          {data &&
+            currentPageData?.data.map((comment: TreeComment) => (
+              <div key={comment?.id}>
+                <div className="flex flex-col-reverse ms-4 sm:flex-row items-start gap-4 justify-end my-5 rounded-lg">
+                  <div className="flex flex-col gap-6 items-start me-auto justify-between h-full">
+                    <div className="text-sm">
+                      {comment?.irani && (
+                        <div>
+                          {(() => {
+                            const dateInfo = DateFormatDMY(comment.irani);
+                            if (dateInfo) {
+                              return (
+                                <>
+                                  {dateInfo.day}/{dateInfo.month}/
+                                  {dateInfo.year}
+                                </>
+                              );
+                            }
+                            return null;
+                          })()}
                         </div>
-                      </>
-                    ) : (
-                      <div className="">کاربر ناشناس</div>
-                    )}
+                      )}
+                    </div>
+                    <div className="mt-auto flex gap-4">
+                      <ThumbsDown className="text-[#909090] w-5 h-5" />
+                      <ThumbsUp className="text-[#909090] w-5 h-5" />
+                      <AlertOctagonIcon className="text-[#909090] w-5 h-5" />
+                    </div>
                   </div>
+                  <div className="flex flex-col w-full">
+                    <div className="text-xl sm:text-2xl font-semibold">
+                      {comment?.user_username ? (
+                        <>
+                          <div className="flex gap-2 justify-end items-center">
+                            <span className="text-xs text-[##3D3D3D]">
+                              ( در پاسخ به کاربر {replyedTo})
+                            </span>
+                            <div>{comment?.user_username}</div>
+                          </div>
+                        </>
+                      ) : (
+                        <div className="">کاربر ناشناس</div>
+                      )}
+                    </div>
 
-                  <div className="text-[#757575] text-sm">{comment?.text}</div>
-                  <div>
-                    <Button
-                      className="text-[#757575] gap-1 my-3"
-                      size={"sm"}
-                      variant={"secondary"}
-                      onClick={() =>
-                        handleReply(
-                          textareaRef,
-                          setcommentToreplyId,
-                          setCommentToReplyUsername,
-                          comment
-                        )
-                      }
-                    >
-                      <ReplyIcon className="text-[#22C563]" />
-                      پاسخ به کاربر
-                    </Button>
+                    <div className="text-[#757575] text-sm">
+                      {comment?.text}
+                    </div>
+                    <div>
+                      <Button
+                        className="text-[#757575] gap-1 my-3"
+                        size={"sm"}
+                        variant={"secondary"}
+                        onClick={() =>
+                          handleReply(
+                            textareaRef,
+                            setcommentToreplyId,
+                            setCommentToReplyUsername,
+                            comment
+                          )
+                        }
+                      >
+                        <ReplyIcon className="text-[#22C563]" />
+                        پاسخ به کاربر
+                      </Button>
+                    </div>
                   </div>
-                </div>
-                <div className="justify-end flex w-full sm:block sm:w-auto">
-                  <div className="relative rounded-full p-2 sm:p-4 bg-[#EAEAEA]">
-                    {comment?.user_profileimage ? (
-                      <Image
-                        alt={`پروفایل ${comment?.user_username}`}
-                        fill
-                        src={`${comment?.user_profileimage}`}
-                      />
-                    ) : (
-                      <FaUser className="h-7 w-7 text-[#5F6368]" />
-                    )}
+                  <div className="justify-end flex w-full sm:block sm:w-auto">
+                    <div className="relative rounded-full p-2 sm:p-4 bg-[#EAEAEA]">
+                      {comment?.user_profileimage ? (
+                        <Image
+                          alt={`پروفایل ${comment?.user_username}`}
+                          fill
+                          src={`${comment?.user_profileimage}`}
+                        />
+                      ) : (
+                        <FaUser className="h-7 w-7 text-[#5F6368]" />
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          ))}
-        <div hidden={currentPageData?.data.length === 0} className="mb-3">
-          <Button
-            onClick={() => setSize(size + 1)}
-            variant={"green"}
-            disabled={
-              !currentPageData ||
-              currentPageData?.data.length === previousPageData?.data.length
-            }
-            size={"lg"}
-            className="disabled:opacity-50 disabled:bg-gray-800"
-          >
-            نمایش بیشتر
-          </Button>
+            ))}
+          <div hidden={currentPageData?.data.length === 0} className="mb-3">
+            <Button
+              onClick={() => setSize(size + 1)}
+              variant={"green"}
+              disabled={
+                !currentPageData ||
+                currentPageData?.data.length === previousPageData?.data.length
+              }
+              size={"lg"}
+              className="disabled:opacity-50 disabled:bg-gray-800 mt-3"
+            >
+              نمایش بیشتر
+            </Button>
+          </div>
         </div>
       </>
     );
