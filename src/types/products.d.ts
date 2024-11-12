@@ -26,10 +26,10 @@ export interface TreeData {
 
 export interface TreeComment {
   id: string;
-  created: string; // Date in ISO format
+  created: string;
   text: string;
   user_username: string;
   user_profileimage: string | null;
-  child_count: number; // Recursive definition to support nested comments
+  count_of_child: number; 
   irani: string;
 }
