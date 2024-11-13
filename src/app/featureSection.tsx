@@ -6,11 +6,25 @@ interface FeatureSectionProps {
   green_land: number;
 }
 
+const fetchTreeData = async (): Promise<FeatureSectionProps> => {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/tree_data/`
+    );
+
+    if (!res.ok) {
+      throw new Error("Failed to fetch tree data");
+    }
+    return await res.json();
+  } catch (error) {
+    console.error("Error fetching map data:", error);
+    return { air: 0, all: 0, green_land: 0 };
+  }
+};
+
 const FeatureSection = async () => {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/tree_data/`
-  );
-  const data: FeatureSectionProps = await res.json();
+  const data = await fetchTreeData();
+  // const data: FeatureSectionProps = await res.json();
 
   return (
     <>
