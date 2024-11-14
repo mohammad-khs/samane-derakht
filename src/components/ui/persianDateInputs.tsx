@@ -1,8 +1,6 @@
 "use client";
 import React, { useState, useMemo, useEffect, useRef } from "react";
 import momentJalaali from "moment-jalaali";
-import { FaChevronCircleDown, FaChevronDown } from "react-icons/fa";
-import { ChevronDownIcon } from "lucide-react";
 import { TriangleDownIcon } from "@radix-ui/react-icons";
 
 // Get the Persian months

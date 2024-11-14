@@ -29,7 +29,7 @@ const ProgressBar: FC<ProgressBarProps> = ({ step }) => {
                 : currentStep > 1
                 ? "bg-[#28D16C]"
                 : "bg-[#EAEAEA]"
-            } p-3 rounded-full`}
+            } p-1 sm:p-3 rounded-full`}
           >
             {currentStep > 1 ? (
               <FaCheck className="m-1 w-5 h-5 text-white" />
@@ -41,17 +41,19 @@ const ProgressBar: FC<ProgressBarProps> = ({ step }) => {
               />
             )}
           </li>
-          <div className={`text-xs mt-2 w-24 text-center mb-auto`}>
+          <div
+            className={`text-xs hidden sm:block mt-2 w-24 text-center mb-auto`}
+          >
             1.اطلاعات خریدار
           </div>
           {currentStep > 1 && (
-            <div className="font-semibold text-[#28D16C] text-[10px] bg-[#28D16C33] leading-6 px-2 mt-2 rounded-lg">
+            <div className="font-semibold hidden sm:block text-[#28D16C] text-[10px] bg-[#28D16C33] leading-6 px-2 mt-2 rounded-lg">
               کامل شده
             </div>
           )}
         </div>
 
-        <div className="border-b-2 border-[#EAEAEA] w-full mx-2 self-start mt-7"></div>
+        <div className="border-b-2 border-[#EAEAEA] w-full mx-2 self-start mt-5 sm:mt-7"></div>
 
         {/* Step 2 */}
         <div className="flex flex-col items-center">
@@ -62,7 +64,7 @@ const ProgressBar: FC<ProgressBarProps> = ({ step }) => {
                 : currentStep > 2
                 ? "bg-[#28D16C]"
                 : "bg-[#EAEAEA]"
-            } p-3 rounded-full`}
+            } p-1 sm:p-3 rounded-full`}
           >
             {currentStep > 2 ? (
               <FaCheck className="m-1 w-5 h-5 text-white" />
@@ -74,17 +76,19 @@ const ProgressBar: FC<ProgressBarProps> = ({ step }) => {
               />
             )}
           </li>
-          <div className={`text-xs mt-2 w-24 text-center mb-auto`}>
+          <div
+            className={`text-xs hidden sm:block mt-2 w-24 text-center mb-auto`}
+          >
             2.انتخاب شهر و محل
           </div>
           {currentStep > 2 && (
-            <div className="font-semibold text-[#28D16C] text-[10px] bg-[#28D16C33] leading-6 px-2 mt-2 rounded-lg">
+            <div className="font-semibold hidden sm:block text-[#28D16C] text-[10px] bg-[#28D16C33] leading-6 px-2 mt-2 rounded-lg">
               کامل شده
             </div>
           )}
         </div>
 
-        <div className="border-b-2 border-[#EAEAEA] w-full mx-2 self-start mt-7"></div>
+        <div className="border-b-2 border-[#EAEAEA] w-full mx-2 self-start mt-5 sm:mt-7"></div>
 
         {/* Step 3 */}
         <div className="flex flex-col items-center">
@@ -95,7 +99,7 @@ const ProgressBar: FC<ProgressBarProps> = ({ step }) => {
                 : currentStep > 3
                 ? "bg-[#28D16C]"
                 : "bg-[#EAEAEA]"
-            } p-3 rounded-full`}
+            } p-1 sm:p-3 rounded-full`}
           >
             {currentStep > 3 ? (
               <FaCheck className="m-1 w-5 h-5 text-white" />
@@ -107,24 +111,26 @@ const ProgressBar: FC<ProgressBarProps> = ({ step }) => {
               />
             )}
           </li>
-          <div className={`text-xs mt-2 w-24 text-center mb-auto`}>
+          <div
+            className={`text-xs hidden sm:block mt-2 w-24 text-center mb-auto`}
+          >
             3.آپلود فیلم و توضیحات
           </div>
           {currentStep > 3 && (
-            <div className="font-semibold text-[#28D16C] text-[10px] bg-[#28D16C33] leading-6 px-2 mt-2 rounded-lg">
+            <div className="font-semibold hidden sm:block text-[#28D16C] text-[10px] bg-[#28D16C33] leading-6 px-2 mt-2 rounded-lg">
               کامل شده
             </div>
           )}
         </div>
 
-        <div className="border-b-2 border-[#EAEAEA] w-full mx-2 self-start mt-7"></div>
+        <div className="border-b-2 border-[#EAEAEA] w-full mx-2 self-start mt-5 sm:mt-7"></div>
 
         {/* Step 4 */}
         <div className="flex flex-col items-center">
           <li
             className={`${
               currentStep >= 4 ? "ring-[2px] ring-[#28D16C]" : "bg-[#EAEAEA]"
-            } p-3 rounded-full`}
+            } p-1 sm:p-3 rounded-full`}
           >
             <FaCreditCard
               className={`m-1 w-5 h-5 ${
@@ -132,7 +138,9 @@ const ProgressBar: FC<ProgressBarProps> = ({ step }) => {
               }`}
             />
           </li>
-          <div className={`text-xs mt-2 w-24 text-center `}>4.پرداخت</div>
+          <div className={`text-xs hidden sm:block mt-2 w-24 text-center `}>
+            4.پرداخت
+          </div>
         </div>
       </ul>
     </div>

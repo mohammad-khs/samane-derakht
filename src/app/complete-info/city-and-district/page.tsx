@@ -1,9 +1,49 @@
 import { FC } from "react";
 import ProgressBar from "../progressBar";
+import SelectAddress from "./selectAddress";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/pages/api/auth/[...nextauth]";
+import { redirect } from "next/navigation";
 
 interface CityAndDistrictProps {}
 
-const CityAndDistrict: FC<CityAndDistrictProps> = () => {
+export interface Province {
+  id: string;
+  name: string;
+  longtitud: string;
+  latitud: string;
+}
+
+export interface City {
+  id: string;
+  name: string;
+  province_name: string;
+}
+
+export interface ProvinceData {
+  provinces: Province;
+  cities: City[];
+  empty: ProvinceMarker[];
+  em_count: number;
+  empty_tree_allowed: number;
+  searched_province: Province;
+}
+
+export interface ProvinceMarker {
+  id: string;
+  is_full: boolean;
+  latitud: string;
+  longtitud: string;
+  province_name: string;
+}
+
+const CityAndDistrict: FC<CityAndDistrictProps> = async () => {
+  const session = await getServerSession(authOptions);
+
+  if (session === null) {
+    redirect("/");
+  }
+
   return (
     <>
       <div className="w-full flex justify-center">
@@ -11,6 +51,7 @@ const CityAndDistrict: FC<CityAndDistrictProps> = () => {
           <ProgressBar step="2" />
         </div>
       </div>
+      <SelectAddress session={session} />
     </>
   );
 };

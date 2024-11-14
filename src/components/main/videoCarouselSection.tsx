@@ -21,11 +21,6 @@ const fetchVideos = async (): Promise<[]> => {
 };
 
 const VideoCarouselSection: FC<VideoCarouselSectionProps> = async () => {
-  // const req = await fetch(
-  //   `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/videos/`
-  // );
-  // const res = await req.json();
-
   const data = await fetchVideos();
 
   return (
