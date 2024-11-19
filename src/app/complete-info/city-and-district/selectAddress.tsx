@@ -11,6 +11,17 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { CaretLeftIcon, CaretRightIcon } from "@radix-ui/react-icons";
 import toast from "react-hot-toast";
+import dynamic from "next/dynamic";
+import { Loader2Icon } from "lucide-react";
+
+const DynamicMarkerList = dynamic(() => import("./MarkerList"), {
+  ssr: false,
+  loading: () => (
+    <div className="h-10 flex justify-center items-center">
+      <Loader2Icon className="animate-spin h-9 w-9" />
+    </div>
+  ),
+});
 
 interface SelectAddressProps {
   session: Session | null;
@@ -86,7 +97,7 @@ const SelectAddress: FC<SelectAddressProps> = ({ session }) => {
 
         if (response.status === 404) {
           toast.error("منطقه مورد نظر یافت نشد");
-          return; // Stop further execution
+          return;
         }
         setData(response.data);
       } catch (error: any) {
@@ -94,33 +105,28 @@ const SelectAddress: FC<SelectAddressProps> = ({ session }) => {
 
         if (axios.isAxiosError(error)) {
           if (error.response && error.response.status === 404) {
-            // Handle 404 specifically
             toast.error("منطقه مورد نظر یافت نشد");
           } else {
-            // Handle other axios-related errors
             toast.error("خطا در بارگذاری اطلاعات");
           }
         } else {
-          // Handle unexpected errors
           toast.error("خطای غیرمنتظره‌ای رخ داد");
         }
 
         // Set fallback data regardless of error type
-        // setData({
-        //   provinces: { id: "", name: "", longtitud: "", latitud: "" },
-        //   cities: [],
-        //   empty: [],
-        //   em_count: 0,
-        //   empty_tree_allowed: 0,
-        //   searched_province: { id: "", name: "", longtitud: "", latitud: "" },
-        // });
+        setData({
+          provinces: { id: "", name: "", longtitud: "", latitud: "" },
+          cities: [],
+          empty: [],
+          em_count: 0,
+          empty_tree_allowed: 0,
+          searched_province: { id: "", name: "", longtitud: "", latitud: "" },
+        });
       }
     };
-
     fetchCityAndDistrict();
+    setMapProvince("");
   }, [provinceName, session, mapProvince]);
-
-  console.log(data);
 
   return (
     <div className="mx-4 sm:mx-24" dir="rtl">
@@ -161,7 +167,7 @@ const SelectAddress: FC<SelectAddressProps> = ({ session }) => {
         </div>
       </div>
       <div className="text-sm mt-4 text-[#28D16C]">
-        برای شهر انتخاب شده {data?.em_count} جای خالی وجود دارد
+        {data?.em_count} جای خالی وجود دارد
       </div>
       <div className="text-sm mt-3 text-[#1f1f1f]">
         لطفا مکانی که در آن سکونت دارید را انتخاب کنید
@@ -169,10 +175,14 @@ const SelectAddress: FC<SelectAddressProps> = ({ session }) => {
       <div className="border-b-2 border-[#A3A3A3] my-8"></div>
 
       <PlantTreeMapSection
+        session={session}
         data={data}
         mapProvince={mapProvince}
         setMapProvince={setMapProvince}
       />
+
+      <DynamicMarkerList data={data} session={session} />
+
       <div className="flex justify-end gap-4">
         <div className="flex justify-end mt-8">
           <Link href={"buyer-info"}>
