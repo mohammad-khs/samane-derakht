@@ -35,6 +35,7 @@ export interface ProvinceMarker {
   latitud: string;
   longtitud: string;
   province_name: string;
+  city_name: string;
 }
 
 const CityAndDistrict: FC<CityAndDistrictProps> = async () => {

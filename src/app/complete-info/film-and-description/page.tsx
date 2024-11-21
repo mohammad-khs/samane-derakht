@@ -1,9 +1,19 @@
 import { FC } from "react";
 import ProgressBar from "../progressBar";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/pages/api/auth/[...nextauth]";
+import { redirect } from "next/navigation";
+import UploadSpec from "./uploadSpec";
 
 interface FilmAndDescriptionProps {}
 
-const FilmAndDescription: FC<FilmAndDescriptionProps> = () => {
+const FilmAndDescription: FC<FilmAndDescriptionProps> = async () => {
+  const session = await getServerSession(authOptions);
+
+  if (session === null) {
+    redirect("/");
+  }
+
   return (
     <>
       <div className="w-full flex justify-center">
@@ -11,6 +21,7 @@ const FilmAndDescription: FC<FilmAndDescriptionProps> = () => {
           <ProgressBar step="3" />
         </div>
       </div>
+      <UploadSpec session={session} />
     </>
   );
 };

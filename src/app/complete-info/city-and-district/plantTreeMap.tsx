@@ -65,7 +65,7 @@ export const handleMarkerClick = async (
 };
 
 const PlantTreeMap: FC<PlantTreeMapProps> = ({
-  zoom = 10,
+  zoom = 8,
   initialPostion = latLng(35.74472, 51.375265),
   mapMarkerData,
   searchedProvince,
@@ -110,7 +110,7 @@ const PlantTreeMap: FC<PlantTreeMapProps> = ({
           className="w-full rounded-3xl z-30 h-80"
           center={mapCenter}
           zoom={zoom}
-          minZoom={9}
+          minZoom={6}
           scrollWheelZoom={true}
           zoomControl={false}
         >
@@ -166,7 +166,7 @@ const PlantTreeMap: FC<PlantTreeMapProps> = ({
               className="w-full h-full z-40"
               center={mapCenter} // Use the same mapCenter for the fullscreen map
               zoom={zoom}
-              minZoom={7}
+              minZoom={6}
               scrollWheelZoom={true}
               zoomControl={false}
             >

@@ -1,6 +1,7 @@
-"use client"
+"use client";
 
 import { ProvinceMarker } from "@/app/complete-info/city-and-district/page";
+import { FileStatus } from "@/app/complete-info/film-and-description/imageUploader";
 import {
   createContext,
   useContext,
@@ -15,6 +16,8 @@ interface CompleteInfoType {
   setValue: React.Dispatch<React.SetStateAction<string>>;
   selectedMarkers: ProvinceMarker[];
   setSelectedMarkers: Dispatch<SetStateAction<ProvinceMarker[]>>;
+  imageFiles: FileStatus[];
+  setImageFiles: Dispatch<SetStateAction<FileStatus[]>>;
 }
 
 const CompleteInfoContext = createContext<CompleteInfoType | undefined>(
@@ -31,12 +34,22 @@ export const CompleteInfoProvider: React.FC<CompleteInfoProviderProps> = ({
   // firstData
   const [value, setValue] = useState<string>("");
 
-  // firstSecondData
+  // SecondData
   const [selectedMarkers, setSelectedMarkers] = useState<ProvinceMarker[]>([]);
+
+  // thirdData
+  const [imageFiles, setImageFiles] = useState<FileStatus[]>([]);
 
   return (
     <CompleteInfoContext.Provider
-      value={{ value, setValue, selectedMarkers, setSelectedMarkers }}
+      value={{
+        value,
+        setValue,
+        selectedMarkers,
+        setSelectedMarkers,
+        imageFiles,
+        setImageFiles,
+      }}
     >
       {children}
     </CompleteInfoContext.Provider>

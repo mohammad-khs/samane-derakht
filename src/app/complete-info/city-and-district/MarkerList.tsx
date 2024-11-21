@@ -36,12 +36,13 @@ const MarkerList: FC<MarkerListProps> = ({ data, session }) => {
               <X className="w-4 h-4" />
             </button>
             <div
-              className="flex flex-col gap-2 sm:flex-row sm:gap-3 text-sm"
+              className="flex flex-col leading-6 gap-2 sm:flex-row sm:gap-3 text-sm"
               dir="rtl"
             >
-              <div>مکان: {marker.province_name}</div>
-              <div> عرض جغرافیای: {marker.latitud}</div>
-              <div>طول جغرافیای: {marker.longtitud}</div>
+              <div>استان: {marker.province_name}</div>
+              <div>شهر: {marker.city_name}</div>
+              <div className="text-xs leading-6"> عرض: {marker.latitud}</div>
+              <div className="text-xs leading-6">طول: {marker.longtitud}</div>
             </div>
           </div>
         ))}

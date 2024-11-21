@@ -86,7 +86,7 @@ const SelectAddress: FC<SelectAddressProps> = ({ session }) => {
           {
             params: {
               province: provinceName === "" ? "شهریار" : provinceName,
-              map_province: mapProvince === "" ? "تهران" : mapProvince,
+              map_province: mapProvince === "" ? "" : mapProvince,
             },
             headers: {
               Authorization: session.access ? `Bearer ${session.access}` : "",
@@ -125,8 +125,8 @@ const SelectAddress: FC<SelectAddressProps> = ({ session }) => {
       }
     };
     fetchCityAndDistrict();
-    setMapProvince("");
   }, [provinceName, session, mapProvince]);
+// there is a problem where when i want to search something twice i can not
 
   return (
     <div className="mx-4 sm:mx-24" dir="rtl">
