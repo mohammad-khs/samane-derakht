@@ -1,20 +1,23 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { useCompleteInfoContext } from "@/context/completeInfo";
 import { CaretLeftIcon } from "@radix-ui/react-icons";
 import Link from "next/link";
 import { Dispatch, FC, SetStateAction } from "react";
 import { FaBuilding, FaPhoneAlt } from "react-icons/fa";
 
 interface CorporateCustomerProps {
-  setIsIndividual: Dispatch<SetStateAction<boolean>>;
+  setCustomer: Dispatch<SetStateAction<"HA" | "HO">>;
 }
 
-const CorporateCustomer: FC<CorporateCustomerProps> = ({ setIsIndividual }) => {
+const CorporateCustomer: FC<CorporateCustomerProps> = ({ setCustomer }) => {
+  const { email, setEmail, name, setName } = useCompleteInfoContext();
   return (
     <>
       <div className=" mx-4 sm:mx-24" dir="rtl">
-        <div className="flex items-center gap-4 text-[#1F1F1F] font-semibold text-lg leading-6 mt-8 mb-4">
-          <FaBuilding /> <span>مشخصات شرکت </span>
+        <div className="flex items-center gap-4 text-[#5f6368] font-semibold text-lg leading-6 mt-8 mb-4">
+          <FaBuilding /> <span className="text-[#1F1F1F]">مشخصات شرکت </span>
         </div>
         <label className="text-sm text-[#1F1F1F]" htmlFor="factory-name">
           نام سازمان
@@ -23,6 +26,8 @@ const CorporateCustomer: FC<CorporateCustomerProps> = ({ setIsIndividual }) => {
           <Input
             className="my-3"
             id="factory-name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
             type="text"
             variant="default"
             size="default"
@@ -55,6 +60,8 @@ const CorporateCustomer: FC<CorporateCustomerProps> = ({ setIsIndividual }) => {
             <div>
               <Input
                 className="my-3"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 id="corporate-email"
                 type="email"
                 variant="default"
@@ -88,7 +95,7 @@ const CorporateCustomer: FC<CorporateCustomerProps> = ({ setIsIndividual }) => {
         </div>
         <div className="mt-8 text-sm">
           آیا شما یک شخص حقیقی هستید ؟{" "}
-          <button onClick={() => setIsIndividual(true)}>
+          <button onClick={() => setCustomer("HA")}>
             <span className="text-[#0B50AA] underline">وارد کردن اطلاعات</span>{" "}
           </button>
         </div>

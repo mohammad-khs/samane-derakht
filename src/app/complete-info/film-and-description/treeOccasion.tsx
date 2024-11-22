@@ -7,6 +7,7 @@ import toast from "react-hot-toast";
 import { FaTree } from "react-icons/fa";
 import TextareaAutosize from "react-textarea-autosize";
 import ThemeSelector from "./themeSelector";
+import { useCompleteInfoContext } from "@/context/completeInfo";
 
 interface TreeOccasionProps {
   session: Session;
@@ -20,6 +21,7 @@ interface TreeOccasion {
 const TreeOccasion: FC<TreeOccasionProps> = ({ session }) => {
   const [themes, setThemes] = useState<TreeOccasion[]>([]);
   const [input, setInput] = useState("");
+  const { setCurrentTheme } = useCompleteInfoContext();
 
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   useEffect(() => {
@@ -38,6 +40,7 @@ const TreeOccasion: FC<TreeOccasionProps> = ({ session }) => {
           throw new AxiosError();
         } else {
           setThemes(res.data);
+          setCurrentTheme(res.data[0]);
         }
       };
       fetchTreeOccasion();

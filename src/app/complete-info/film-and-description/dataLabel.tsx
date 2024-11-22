@@ -4,6 +4,10 @@ import { LucidePaperclip, Trash2 } from "lucide-react";
 import { FC, useState } from "react";
 
 import ImageUploader from "./imageUploader";
+import VideoUploader from "./videoUploader";
+import { useCompleteInfoContext } from "@/context/completeInfo";
+import { FaCheck, FaImage, FaMicrophone, FaPlay } from "react-icons/fa";
+import { cn } from "@/lib/utils";
 
 interface DataLabelProps {}
 
@@ -11,6 +15,8 @@ const DataLabel: FC<DataLabelProps> = () => {
   const [uploadSection, setUploadSection] = useState<
     "image" | "video" | "voice"
   >("image");
+  const { imageFiles, videoFiles, setImageFiles, setVideoFiles } =
+    useCompleteInfoContext();
   return (
     <>
       <div>
@@ -25,7 +31,10 @@ const DataLabel: FC<DataLabelProps> = () => {
             </p>
           </div>
           <div className="flex justify-center mt-2 sm:mt-0 items-center">
-            <Button variant={"outline"}>
+            <Button
+              onClick={(e) => [setImageFiles([]), setVideoFiles([])]}
+              variant={"outline"}
+            >
               <Trash2 className="w-4 h-4 ms-2 me-1 text-red-600" /> پاک کردن
               داده ها
             </Button>
@@ -34,28 +43,68 @@ const DataLabel: FC<DataLabelProps> = () => {
         <div className="flex gap-4 mt-8">
           <Button
             onClick={(e) => setUploadSection("image")}
-            variant={uploadSection === "image" ? "green" : "outline"}
+            variant={
+              uploadSection === "image"
+                ? "green"
+                : imageFiles.length > 0
+                ? "approved"
+                : "lightGray"
+            }
+            size={"resizble"}
+            className="gap-2"
           >
+            <FaImage className="w-4 h-4" />
             آپلود عکس
+            {imageFiles.length > 0 && (
+              <div className="hidden sm:flex justify-center items-center rounded-full bg-[#28D16C] w-4 h-4">
+                <FaCheck className=" w-[10px] h-[10px] text-white" />
+              </div>
+            )}
           </Button>
           <Button
             onClick={(e) => setUploadSection("video")}
-            variant={uploadSection === "video" ? "green" : "outline"}
+            variant={
+              uploadSection === "video"
+                ? "green"
+                : videoFiles.length > 0
+                ? "approved"
+                : "lightGray"
+            }
+            size={"resizble"}
+            className="gap-2"
           >
-            آپلود محصول
+            <div
+              className={`${cn(
+                "rounded-sm p-1",
+                uploadSection === "video"
+                  ? "text-[#28D16C] bg-white"
+                  : "text-white bg-[#565656]"
+              )}`}
+            >
+              <FaPlay className="w-2 h-2" />
+            </div>
+            آپلود فیلم
+            {videoFiles.length > 0 && (
+              <div className="hidden sm:flex justify-center items-center rounded-full bg-[#28D16C] w-4 h-4">
+                <FaCheck className=" w-[10px] h-[10px] text-white" />
+              </div>
+            )}
           </Button>
           <Button
             onClick={(e) => setUploadSection("voice")}
-            variant={uploadSection === "voice" ? "green" : "outline"}
+            variant={uploadSection === "voice" ? "green" : "lightGray"}
+            size={"resizble"}
+            className="gap-2"
           >
+            <FaMicrophone className="w-4 h-4" />
             آپلود ویس
           </Button>
         </div>
         <div className="border-b-2 border-[#A3A3A3] mb-8 mt-2"></div>
         <div className=" sm:px-10">
           {uploadSection === "image" && <ImageUploader />}
-          {uploadSection === "video" && <div>video</div>}
-          {uploadSection === "voice" && <div>voice</div>}
+          {uploadSection === "video" && <VideoUploader />}
+          {/* {uploadSection === "voice" && <div>voice</div>} */}
         </div>
       </div>
     </>

@@ -21,7 +21,7 @@ export interface City {
 }
 
 export interface ProvinceData {
-  provinces: Province;
+  province: Province;
   cities: City[];
   empty: ProvinceMarker[];
   em_count: number;

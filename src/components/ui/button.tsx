@@ -21,6 +21,8 @@ const buttonVariants = cva(
         link: "text-primary underline-offset-4 hover:underline",
         green: "bg-[#28D16C] text-white",
         icon: "border-2 rounded-lg flex justify-center items-center border-[#BAC4BE]",
+        approved: "border-2 border-[#28D16C] text-[#898989]",
+        lightGray: "border-[2px] border-[#D2D2D2] text-[#898989] hover:text-accent-foreground hover:bg-accent",
       },
       size: {
         default: "h-9 px-4 py-2",

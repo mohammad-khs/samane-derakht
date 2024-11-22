@@ -3,6 +3,7 @@ import Image from "next/image";
 import TreeOccasion from "./treeOccasion";
 import { apiNameToIconName } from "@/helper/nameToIcon";
 import { CaretDownIcon, DropdownMenuIcon } from "@radix-ui/react-icons";
+import { useCompleteInfoContext } from "@/context/completeInfo";
 
 interface ThemeSelectorProps {
   themes: TreeOccasion[];
@@ -11,10 +12,7 @@ interface ThemeSelectorProps {
 const ThemeSelector: FC<ThemeSelectorProps> = ({ themes }) => {
   const [isOpen, setIsOpen] = useState(false);
   const themeInput = useRef<HTMLDivElement>(null);
-  const [currentTheme, setCurrentTheme] = useState<TreeOccasion>({
-    id: "1",
-    name: "عشق",
-  });
+  const { setCurrentTheme, currentTheme } = useCompleteInfoContext();
 
   const handleClickOutside = (event: MouseEvent) => {
     if (

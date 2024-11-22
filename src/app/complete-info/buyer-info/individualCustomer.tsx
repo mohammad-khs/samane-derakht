@@ -1,3 +1,4 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { CaretLeftIcon } from "@radix-ui/react-icons";
@@ -6,14 +7,14 @@ import { Dispatch, FC, SetStateAction } from "react";
 import { FaPhoneAlt } from "react-icons/fa";
 import { TreeUserIcon } from "./page";
 import PersianDatePicker from "@/components/ui/persianDateInputs";
+import { useCompleteInfoContext } from "@/context/completeInfo";
 
 interface IndividualCustomerProps {
-  setIsIndividual: Dispatch<SetStateAction<boolean>>;
+  setCustomer: Dispatch<SetStateAction<"HA" | "HO">>;
 }
 
-const IndividualCustomer: FC<IndividualCustomerProps> = ({
-  setIsIndividual,
-}) => {
+const IndividualCustomer: FC<IndividualCustomerProps> = ({ setCustomer }) => {
+  const { email, setEmail, name, setName } = useCompleteInfoContext();
   return (
     <>
       <div className=" mx-4 sm:mx-24" dir="rtl">
@@ -27,6 +28,8 @@ const IndividualCustomer: FC<IndividualCustomerProps> = ({
           <Input
             className="my-3"
             id="name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
             type="text"
             variant="default"
             size="default"
@@ -50,6 +53,8 @@ const IndividualCustomer: FC<IndividualCustomerProps> = ({
             </label>
             <div>
               <Input
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 className="my-3"
                 id="email"
                 type="email"
@@ -81,7 +86,7 @@ const IndividualCustomer: FC<IndividualCustomerProps> = ({
         </div>
         <div className="mt-8 text-sm">
           آیا شما یک شخص حقوقی هستید ؟{" "}
-          <button onClick={() => setIsIndividual(false)}>
+          <button onClick={() => setCustomer("HO")}>
             <span className="text-[#0B50AA] underline">وارد کردن اطلاعات</span>{" "}
           </button>
         </div>

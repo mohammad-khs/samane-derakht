@@ -2,17 +2,18 @@
 import { FC, useState } from "react";
 import CorporateCustomer from "./corporateCustomer";
 import IndividualCustomer from "./individualCustomer";
+import { useCompleteInfoContext } from "@/context/completeInfo";
 
 interface CorporateAndIndividualProps {}
 
 const CorporateAndIndividual: FC<CorporateAndIndividualProps> = () => {
-  const [isIndividual, setIsIndividual] = useState(true);
+  const { setCustomer, customer } = useCompleteInfoContext();
   return (
     <>
-      {isIndividual ? (
-        <IndividualCustomer setIsIndividual={setIsIndividual} />
+      {customer === "HA" ? (
+        <IndividualCustomer setCustomer={setCustomer} />
       ) : (
-        <CorporateCustomer setIsIndividual={setIsIndividual} />
+        <CorporateCustomer setCustomer={setCustomer} />
       )}
     </>
   );

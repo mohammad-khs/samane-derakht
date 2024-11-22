@@ -13,6 +13,7 @@ import { CaretLeftIcon, CaretRightIcon } from "@radix-ui/react-icons";
 import toast from "react-hot-toast";
 import dynamic from "next/dynamic";
 import { Loader2Icon } from "lucide-react";
+import { useCompleteInfoContext } from "@/context/completeInfo";
 
 const DynamicMarkerList = dynamic(() => import("./MarkerList"), {
   ssr: false,
@@ -28,52 +29,54 @@ interface SelectAddressProps {
 }
 const provincesList = [
   {
-    id: "d75b6fae-adb3-4a68-80c1-94a323cbf56c",
+    id: "1",
     name: "فارس",
   },
   {
-    id: "b0698947-5b17-4cb6-b13c-a37c9da5480b",
+    id: "2",
     name: "تهران",
   },
   {
-    id: "8ce33620-c381-494a-9f1b-ff492cd46384",
+    id: "3",
     name: "بندرعباس",
   },
   {
-    id: "89bfa644-9386-499d-bd85-986885f1116e",
+    id: "4",
     name: "یزد",
   },
   {
-    id: "80a70b49-7bec-4995-a81f-420e2ca9cb56",
+    id: "5",
     name: "بوشهر",
   },
   {
-    id: "775c932b-f464-4bd6-aaae-4f3a0b8988a3",
+    id: "6",
     name: "کردستان",
   },
   {
-    id: "6765d992-1dab-4a56-adab-a01f8c49f15d",
+    id: "7",
     name: "کرج",
   },
   {
-    id: "38ba25c3-89d4-49f6-927e-30703ea3dda7",
+    id: "8",
     name: "ایلام",
   },
   {
-    id: "32d880e0-e97e-414d-af97-84c77a49ec3d",
+    id: "9",
     name: "لرستان",
   },
   {
-    id: "2b825f1a-dbe9-4cbc-9303-a4bfa499d0a0",
+    id: "0",
     name: "اصفهان",
   },
 ];
 
 const SelectAddress: FC<SelectAddressProps> = ({ session }) => {
+  const { setProvinceId, setCityId } = useCompleteInfoContext();
   const [provinceName, setProvinceName] = useState("تهران");
-  const [cityName, setCityName] = useState("شهریار");
+  const [cityName, setCityName] = useState("");
   const [data, setData] = useState<ProvinceData | null>(null);
   const [mapProvince, setMapProvince] = useState("");
+
   useEffect(() => {
     if (!session) {
       redirect("/");
@@ -100,6 +103,21 @@ const SelectAddress: FC<SelectAddressProps> = ({ session }) => {
           return;
         }
         setData(response.data);
+
+        if (response?.data?.province?.id) {
+          setProvinceId(response.data.province.id);
+        }
+
+        if (cityName === "") {
+          setCityName(response.data.cities[0].name);
+        }
+        // Map over the cities to get the cityId
+        const selectedCity = response.data.cities.find(
+          (city) => city.name === cityName
+        );
+        if (selectedCity) {
+          setCityId(selectedCity.id);
+        }
       } catch (error: any) {
         console.error("Error fetching city and district:", error);
 
@@ -115,7 +133,7 @@ const SelectAddress: FC<SelectAddressProps> = ({ session }) => {
 
         // Set fallback data regardless of error type
         setData({
-          provinces: { id: "", name: "", longtitud: "", latitud: "" },
+          province: { id: "", name: "", longtitud: "", latitud: "" },
           cities: [],
           empty: [],
           em_count: 0,
@@ -124,9 +142,10 @@ const SelectAddress: FC<SelectAddressProps> = ({ session }) => {
         });
       }
     };
+
     fetchCityAndDistrict();
-  }, [provinceName, session, mapProvince]);
-// there is a problem where when i want to search something twice i can not
+  }, [provinceName, session, mapProvince, cityName]);
+
 
   return (
     <div className="mx-4 sm:mx-24" dir="rtl">
@@ -139,7 +158,7 @@ const SelectAddress: FC<SelectAddressProps> = ({ session }) => {
           <select
             id="province"
             value={provinceName}
-            onChange={(e) => setProvinceName(e.target.value)}
+            onChange={(e) => [setProvinceName(e.target.value), setCityName("")]}
             className="flex items-center cursor-pointer px-1.5 text-sm mt-3 py-1 border-2 border-[#A3A3A3] rounded"
           >
             {provincesList?.map((province) => (

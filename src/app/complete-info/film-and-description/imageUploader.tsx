@@ -1,16 +1,21 @@
 import { useCompleteInfoContext } from "@/context/completeInfo";
 import { X } from "lucide-react";
-import React, { useState } from "react";
+import React, { FC, useState } from "react";
 import toast from "react-hot-toast";
 import { FaImage } from "react-icons/fa";
 
 export type FileStatus = {
   id: string;
   name: string;
+  file: File;
   status: "uploaded" | "uploading";
 };
 
-const ImageUploader = () => {
+interface ImageUploaderProps {
+  maxFiles?: number;
+}
+
+const ImageUploader: FC<ImageUploaderProps> = ({ maxFiles = 10 }) => {
   const { imageFiles, setImageFiles } = useCompleteInfoContext();
   const [isDragging, setIsDragging] = useState(false);
 
@@ -18,63 +23,40 @@ const ImageUploader = () => {
     if (!filesList) return;
 
     const validFiles = Array.from(filesList)
-      .map((file) => {
-        const uuidGenerator = crypto.randomUUID();
-        // Validate file size and type
+      .filter((file) => {
         if (file.size > 3000000) {
           toast.error(`تصویر نباید بیشتر از ۳ مگابایت باشد`);
-          return null;
-        } else if (!file.type.startsWith("image/")) {
-          toast.error(`فایل باید یک تصویر باشد`);
-          return null;
+          return false;
         }
-        // Return the valid file object
-        return {
-          id: uuidGenerator, // Generate unique ID
-          name: file.name,
-          status: "uploading" as const,
-        };
+        if (!file.type.startsWith("image/")) {
+          toast.error(`فایل باید یک تصویر باشد`);
+          return false;
+        }
+        return true;
       })
-      .filter(Boolean) as Array<{
-      id: string;
-      name: string;
-      status: "uploading";
-    }>; // Remove invalid entries
+      .map((file) => ({
+        id: crypto.randomUUID(),
+        file, // Store the actual file
+        name: file.name,
+        status: "uploading" as const,
+      }));
 
+    if (imageFiles.length + validFiles.length > maxFiles) {
+      toast.error(`حداکثر ${maxFiles} تصویر مجاز است.`);
+      return;
+    }
     // Update state with valid files
     setImageFiles((prevFiles) => [...prevFiles, ...validFiles]);
 
     // Simulate upload success
-    setTimeout(() => {
-      setImageFiles((prevFiles) =>
-        prevFiles.map((f) =>
-          validFiles.some((newFile) => newFile.id === f.id)
-            ? { ...f, status: "uploaded" }
-            : f
-        )
-      );
-    }, 2000);
-  };
 
-  const handleDragOver = (event: React.DragEvent<HTMLDivElement>) => {
-    event.preventDefault();
-    setIsDragging(true);
-  };
-
-  const handleDragLeave = () => {
-    setIsDragging(false);
-  };
-
-  const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
-    event.preventDefault();
-    setIsDragging(false);
-
-    const droppedFiles = event.dataTransfer.files;
-    handleFileUpload(droppedFiles);
-  };
-
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    handleFileUpload(event.target.files);
+    setImageFiles((prevFiles) =>
+      prevFiles.map((f) =>
+        validFiles.some((newFile) => newFile.id === f.id)
+          ? { ...f, status: "uploaded" }
+          : f
+      )
+    );
   };
 
   const handleFileRemove = (id: string) => {
@@ -88,7 +70,7 @@ const ImageUploader = () => {
         آپلود عکس
       </h3>
       <p className="text-xs text-[#565656] mb-2">
-        افزودن این قابلیت باعث اظاف شدن هزینه پرداخت میشد
+        افزودن این قابلیت باعث اضاف شدن هزینه پرداخت میشود
       </p>
 
       {/* Drag-and-Drop Area */}
@@ -96,9 +78,16 @@ const ImageUploader = () => {
         className={`border-2 border-dashed bg-[#EBEBEB] border-gray-300 rounded-lg p-4 flex items-center justify-center mb-4 ${
           isDragging ? "bg-green-200" : ""
         }`}
-        onDragOver={handleDragOver}
-        onDragLeave={handleDragLeave}
-        onDrop={handleDrop}
+        onDragOver={(e) => {
+          e.preventDefault();
+          setIsDragging(true);
+        }}
+        onDragLeave={() => setIsDragging(false)}
+        onDrop={(e) => {
+          e.preventDefault();
+          setIsDragging(false);
+          handleFileUpload(e.dataTransfer.files);
+        }}
       >
         <label className="flex flex-col items-center cursor-pointer">
           <span className="text-green-600 font-medium mb-2">
@@ -112,7 +101,7 @@ const ImageUploader = () => {
             multiple
             accept="image/*" // Only accept image files
             className="hidden"
-            onChange={handleInputChange}
+            onChange={(e) => handleFileUpload(e.target.files)}
           />
         </label>
       </div>
