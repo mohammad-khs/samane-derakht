@@ -12,7 +12,8 @@ interface CorporateCustomerProps {
 }
 
 const CorporateCustomer: FC<CorporateCustomerProps> = ({ setCustomer }) => {
-  const { email, setEmail, name, setName } = useCompleteInfoContext();
+  const { email, setEmail, name, setName, zipCode, setZipCode } =
+    useCompleteInfoContext();
   return (
     <>
       <div className=" mx-4 sm:mx-24" dir="rtl">
@@ -40,6 +41,8 @@ const CorporateCustomer: FC<CorporateCustomerProps> = ({ setCustomer }) => {
         <div>
           <Input
             className="my-3"
+            value={zipCode}
+            onChange={(e) => setZipCode(e.target.value)}
             id="registration-number"
             type="text"
             variant="default"

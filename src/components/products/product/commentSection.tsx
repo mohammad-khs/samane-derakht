@@ -74,8 +74,8 @@ const CommentSection: FC<CommentSectionProps> = ({}) => {
         <Button
           disabled={
             (!previousPageData && !currentPageData) ||
-            (currentPageData?.[2].comments?.length ?? 0) ===
-              (previousPageData?.[2].comments?.length ?? 0)
+            (currentPageData?.[2]?.comments?.length ?? 0) ===
+              (previousPageData?.[2]?.comments?.length ?? 0)
           }
           onClick={() => setSize(size + 1)}
           variant={"green"}
@@ -83,8 +83,8 @@ const CommentSection: FC<CommentSectionProps> = ({}) => {
           className="disabled:opacity-50 disabled:bg-gray-800"
         >
           {(!previousPageData && !currentPageData) ||
-          (currentPageData?.[2].comments?.length ?? 0) ===
-            (previousPageData?.[2].comments?.length ?? 0)
+          (currentPageData?.[2]?.comments?.length ?? 0) ===
+            (previousPageData?.[2]?.comments?.length ?? 0)
             ? "پیغامی نیست"
             : "نمایش بیشتر"}
         </Button>

@@ -13,6 +13,8 @@ import {
 } from "react";
 
 interface CompleteInfoType {
+  zipCode: string;
+  setZipCode: Dispatch<SetStateAction<string>>;
   name: string;
   setName: Dispatch<SetStateAction<string>>;
   email: string;
@@ -45,6 +47,7 @@ export const CompleteInfoProvider: React.FC<CompleteInfoProviderProps> = ({
   children,
 }) => {
   // firstData
+  const [zipCode, setZipCode] = useState("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [customer, setCustomer] = useState<"HA" | "HO">("HA");
@@ -65,6 +68,8 @@ export const CompleteInfoProvider: React.FC<CompleteInfoProviderProps> = ({
   return (
     <CompleteInfoContext.Provider
       value={{
+        zipCode,
+        setZipCode,
         name,
         setName,
         email,

@@ -24,6 +24,9 @@ const UploadSpec: FC<UploadSpecProps> = ({ session }) => {
     currentTheme,
     email,
     name,
+    zipCode,
+    imageFiles,
+    videoFiles,
   } = useCompleteInfoContext();
 
   const handleAddOrderAPI = async () => {
@@ -46,8 +49,11 @@ const UploadSpec: FC<UploadSpecProps> = ({ session }) => {
           city_id: cityId,
           province_id: provinceId,
           theme_id: currentTheme.id,
-          email: email,
-          name: name,
+          ...(email ? { email: email } : {}),
+          ...(zipCode ? { zipcode: zipCode } : {}),
+          ...(name ? customer === "HA" ? { name: name } : { organization: name }: {}),
+          ...(videoFiles && { video: videoFiles[0].file }),
+          // ...(imageFiles && imageFiles.length > 0 && { images: imageFiles }),
         },
         {
           headers: {
@@ -99,3 +105,44 @@ const UploadSpec: FC<UploadSpecProps> = ({ session }) => {
 };
 
 export default UploadSpec;
+
+
+// with form data 
+
+// const formData = new FormData();
+
+// formData.append("user_type", customer);
+// formData.append("coords", JSON.stringify(ids));
+// formData.append("city_id", cityId);
+// formData.append("province_id", provinceId);
+// formData.append("theme_id", currentTheme.id);
+// formData.append("email", email);
+// formData.append("zipcode", zipCode);
+
+// if (customer === "HA") {
+//   formData.append("name", name);
+// } else {
+//   formData.append("organization", name);
+// }
+
+// if (videoFiles && videoFiles[0]) {
+//   formData.append("video", videoFiles[0].file);
+// }
+
+// if (imageFiles && imageFiles.length > 0) {
+//   imageFiles.forEach((image,index) => {
+//     formData.append(`images[${index}]`, image.file);
+//   });
+// }
+
+// const response = await axios.post(
+//   `${process.env.NEXT_PUBLIC_API_BASE_URL}/order/api/addOrder/`,
+//   formData,
+//   {
+//     headers: {
+//       Authorization: session.access ? `Bearer ${session.access}` : "",
+//       TOKEN: session.token || "",
+//       "Content-Type": "multipart/form-data",
+//     },
+//   }
+// );

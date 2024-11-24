@@ -24,6 +24,10 @@ const AddToCardButton: FC<AddToCardButtonProps> = ({ treeData, session }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        if (!treeData.tree?.slug) {
+          setIsInCart(false);
+          return;
+        }
         const response = await axios.get(
           `${process.env.NEXT_PUBLIC_API_BASE_URL}/order/api/checkInCart/${treeData.tree?.slug}/`,
           {

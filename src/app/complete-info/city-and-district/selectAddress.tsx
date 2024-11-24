@@ -109,10 +109,10 @@ const SelectAddress: FC<SelectAddressProps> = ({ session }) => {
         }
 
         if (cityName === "") {
-          setCityName(response.data.cities[0].name);
+          setCityName(response?.data?.cities[0]?.name);
         }
         // Map over the cities to get the cityId
-        const selectedCity = response.data.cities.find(
+        const selectedCity = response?.data?.cities?.find(
           (city) => city.name === cityName
         );
         if (selectedCity) {
@@ -145,7 +145,6 @@ const SelectAddress: FC<SelectAddressProps> = ({ session }) => {
 
     fetchCityAndDistrict();
   }, [provinceName, session, mapProvince, cityName]);
-
 
   return (
     <div className="mx-4 sm:mx-24" dir="rtl">
