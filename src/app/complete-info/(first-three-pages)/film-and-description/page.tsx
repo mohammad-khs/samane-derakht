@@ -1,5 +1,5 @@
 import { FC } from "react";
-import ProgressBar from "../progressBar";
+import ProgressBar from "../../progressBar";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import { redirect } from "next/navigation";

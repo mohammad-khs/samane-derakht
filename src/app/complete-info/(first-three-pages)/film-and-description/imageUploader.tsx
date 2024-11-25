@@ -1,3 +1,4 @@
+"use client"
 import { useCompleteInfoContext } from "@/context/completeInfo";
 import { X } from "lucide-react";
 import React, { FC, useState } from "react";
@@ -99,6 +100,7 @@ const ImageUploader: FC<ImageUploaderProps> = ({ maxFiles = 10 }) => {
           <input
             type="file"
             multiple
+            name="image"
             accept="image/*" // Only accept image files
             className="hidden"
             onChange={(e) => handleFileUpload(e.target.files)}

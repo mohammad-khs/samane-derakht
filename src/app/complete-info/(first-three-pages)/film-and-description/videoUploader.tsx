@@ -1,3 +1,4 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import Video from "@/components/ui/video";
 import { useCompleteInfoContext } from "@/context/completeInfo";
@@ -98,7 +99,8 @@ const VideoUploader: FC<VideoUploaderProps> = ({ maxFiles = 1 }) => {
             </div>
             <input
               type="file"
-              multiple
+              // multiple
+              name="video"
               accept="video/*"
               className="hidden"
               onChange={(e) => handleFileUpload(e.target.files)}
@@ -110,22 +112,22 @@ const VideoUploader: FC<VideoUploaderProps> = ({ maxFiles = 1 }) => {
         <div>
           {videoFiles.map((file) => (
             <div
-              className="flex flex-col sm:flex-row gap-2 justify-center"
+              className="flex flex-col md:flex-row gap-2 justify-center"
               key={file.id}
             >
               <div className="flex items-center w-full lg:w-8/12 justify-between border-2 rounded-3xl p-2 mb-2">
                 <div className="flex items-center">
                   <Video vidoAddress={URL.createObjectURL(file.file)} />
                 </div>
-              </div>{" "}
-              <div>
+              </div>
+              <div className="flex justify-center gap-2 items-center text-center">
                 <Button
                   onClick={(e) => handleFileRemove(file.id)}
                   variant={"outline"}
                 >
                   <Trash2 className="w-4 h-4 ms-2 me-1 text-red-600" /> حذف
                 </Button>
-                <div className="flex items-center justify-center mt-2 space-x-2 rtl:space-x-reverse">
+                <div>
                   {file.status === "uploaded" ? (
                     <span className="text-green-500 text-xs sm:text-sm">
                       آپلود شده

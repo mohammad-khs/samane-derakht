@@ -1,5 +1,5 @@
 import { FC } from "react";
-import ProgressBar from "../progressBar";
+import ProgressBar from "../../progressBar";
 import { FaUserAlt } from "react-icons/fa";
 import CorporateAndIndividual from "./corporateAndIndividual";
 import { getServerSession } from "next-auth";
@@ -30,9 +30,11 @@ const CompleteInfo: FC<CompleteInfoProps> = async () => {
         Authorization: session?.access ? `Bearer ${session?.access}` : "",
         TOKEN: session?.token ?? "",
       },
+      cache: "no-store",
     }
   );
   const data = (await response.json()) as { exists: boolean };
+  console.log("this is firstData: ", data);
 
   if (data.exists) {
     redirect("city-and-district");

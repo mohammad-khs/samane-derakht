@@ -8,6 +8,7 @@ import VideoUploader from "./videoUploader";
 import { useCompleteInfoContext } from "@/context/completeInfo";
 import { FaCheck, FaImage, FaMicrophone, FaPlay } from "react-icons/fa";
 import { cn } from "@/lib/utils";
+import VoiceUploader from "./voiceUploader";
 
 interface DataLabelProps {}
 
@@ -15,7 +16,7 @@ const DataLabel: FC<DataLabelProps> = () => {
   const [uploadSection, setUploadSection] = useState<
     "image" | "video" | "voice"
   >("image");
-  const { imageFiles, videoFiles, setImageFiles, setVideoFiles } =
+  const { imageFiles, videoFiles, setImageFiles, setVideoFiles,audioFiles } =
     useCompleteInfoContext();
   return (
     <>
@@ -78,7 +79,7 @@ const DataLabel: FC<DataLabelProps> = () => {
                 "rounded-sm p-1",
                 uploadSection === "video"
                   ? "text-[#28D16C] bg-white"
-                  : "text-white bg-[#565656]"
+                  : "text-white bg-[#898989]"
               )}`}
             >
               <FaPlay className="w-2 h-2" />
@@ -92,19 +93,30 @@ const DataLabel: FC<DataLabelProps> = () => {
           </Button>
           <Button
             onClick={(e) => setUploadSection("voice")}
-            variant={uploadSection === "voice" ? "green" : "lightGray"}
+            variant={
+              uploadSection === "voice"
+                ? "green"
+                : audioFiles.length > 0
+                ? "approved"
+                : "lightGray"
+            }
             size={"resizble"}
             className="gap-2"
           >
             <FaMicrophone className="w-4 h-4" />
             آپلود ویس
+            {audioFiles.length > 0 && (
+              <div className="hidden sm:flex justify-center items-center rounded-full bg-[#28D16C] w-4 h-4">
+                <FaCheck className=" w-[10px] h-[10px] text-white" />
+              </div>
+            )}
           </Button>
         </div>
         <div className="border-b-2 border-[#A3A3A3] mb-8 mt-2"></div>
         <div className=" sm:px-10">
           {uploadSection === "image" && <ImageUploader />}
           {uploadSection === "video" && <VideoUploader />}
-          {/* {uploadSection === "voice" && <div>voice</div>} */}
+          {uploadSection === "voice" && <VoiceUploader />}
         </div>
       </div>
     </>

@@ -1,8 +1,8 @@
 "use client";
 
-import { ProvinceMarker } from "@/app/complete-info/city-and-district/page";
-import { FileStatus } from "@/app/complete-info/film-and-description/imageUploader";
-import TreeOccasion from "@/app/complete-info/film-and-description/treeOccasion";
+import { ProvinceMarker } from "@/app/complete-info/(first-three-pages)/city-and-district/page";
+import { FileStatus } from "@/app/complete-info/(first-three-pages)/film-and-description/imageUploader";
+import TreeOccasion from "@/app/complete-info/(first-three-pages)/film-and-description/treeOccasion";
 import {
   createContext,
   useContext,
@@ -33,6 +33,8 @@ interface CompleteInfoType {
   setImageFiles: Dispatch<SetStateAction<FileStatus[]>>;
   videoFiles: FileStatus[];
   setVideoFiles: Dispatch<SetStateAction<FileStatus[]>>;
+  audioFiles: FileStatus[];
+  setAudioFiles: Dispatch<SetStateAction<FileStatus[]>>;
 }
 
 const CompleteInfoContext = createContext<CompleteInfoType | undefined>(
@@ -64,6 +66,7 @@ export const CompleteInfoProvider: React.FC<CompleteInfoProviderProps> = ({
   });
   const [imageFiles, setImageFiles] = useState<FileStatus[]>([]);
   const [videoFiles, setVideoFiles] = useState<FileStatus[]>([]);
+  const [audioFiles, setAudioFiles] = useState<FileStatus[]>([]);
 
   return (
     <CompleteInfoContext.Provider
@@ -90,6 +93,8 @@ export const CompleteInfoProvider: React.FC<CompleteInfoProviderProps> = ({
         setImageFiles,
         videoFiles,
         setVideoFiles,
+        audioFiles,
+        setAudioFiles,
       }}
     >
       {children}
