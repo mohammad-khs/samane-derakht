@@ -5,6 +5,7 @@ import { FC } from "react";
 import ProgressBar from "../progressBar";
 import { redirect } from "next/navigation";
 import LeftsidePayment from "./leftsidePayment";
+import RightsidePayment from "./rightsidePayment";
 
 interface PaymentProps {}
 
@@ -17,8 +18,11 @@ const Payment: FC<PaymentProps> = async () => {
 
   return (
     <>
-      <div className="flex flex-col justify-center sm:flex-row gap-3 text-[#1F1F1F] p-4">
+      <div className="flex flex-col justify-center lg:flex-row gap-3 text-[#1F1F1F] p-4">
         <LeftsidePayment />
+        <div className="rounded-lg bg-white w-full p-5">
+          <RightsidePayment />
+        </div>
       </div>
     </>
   );

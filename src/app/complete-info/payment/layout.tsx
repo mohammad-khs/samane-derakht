@@ -28,8 +28,8 @@ export default function Layout({
               </div>
             </div>
           </header>
+          <main>{children}</main>
         </div>
-        <main>{children}</main>
         <Footer sponsors={false} />
       </div>
     </CompleteInfoProvider>

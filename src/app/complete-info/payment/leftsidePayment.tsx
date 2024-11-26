@@ -9,9 +9,9 @@ interface LeftsidePaymentProps {}
 const LeftsidePayment: FC<LeftsidePaymentProps> = () => {
   return (
     <>
-      <div className="rounded-lg bg-white p-4">
+      <section className="rounded-lg bg-white p-4 whitespace-nowrap">
         <div
-          className="flex justify-between items-center mb-3 gap-5"
+          className="flex justify-between items-center mb-3 sm:gap-16"
           style={{ direction: "rtl" }}
         >
           <div className="flex flex-col">
@@ -141,7 +141,7 @@ const LeftsidePayment: FC<LeftsidePaymentProps> = () => {
             زمان کاشت درخت 7 تا 10 روز کاری میباشد
           </span>
         </div>
-      </div>
+      </section>
     </>
   );
 };
