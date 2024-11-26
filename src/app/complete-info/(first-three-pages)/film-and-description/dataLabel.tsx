@@ -16,12 +16,12 @@ const DataLabel: FC<DataLabelProps> = () => {
   const [uploadSection, setUploadSection] = useState<
     "image" | "video" | "voice"
   >("image");
-  const { imageFiles, videoFiles, setImageFiles, setVideoFiles,audioFiles } =
+  const { imageFiles, videoFiles, setImageFiles, setVideoFiles, audioFiles } =
     useCompleteInfoContext();
   return (
     <>
       <div>
-        <div className="flex justify-between flex-col sm:flex-row items-center mb-5 mt-8">
+        <div className="md:flex justify-between flex-col sm:flex-row items-center mb-5 mt-8">
           <div>
             <h2 className="flex items-center gap-4 text-[#1F1F1F] font-semibold text-lg leading-6 mb-2">
               <LucidePaperclip className="text-[#5F6368] rotate-[-45deg]" />
@@ -31,7 +31,7 @@ const DataLabel: FC<DataLabelProps> = () => {
               لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ
             </p>
           </div>
-          <div className="flex justify-center mt-2 sm:mt-0 items-center">
+          <div className="mt-2 md:mt-0 items-center">
             <Button
               onClick={(e) => [setImageFiles([]), setVideoFiles([])]}
               variant={"outline"}
@@ -41,7 +41,7 @@ const DataLabel: FC<DataLabelProps> = () => {
             </Button>
           </div>
         </div>
-        <div className="flex gap-4 mt-8">
+        <div className="flex gap-1 sm:gap-4 mt-8">
           <Button
             onClick={(e) => setUploadSection("image")}
             variant={
