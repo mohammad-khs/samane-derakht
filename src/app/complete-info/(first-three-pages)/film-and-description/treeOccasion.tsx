@@ -8,20 +8,19 @@ import { FaTree } from "react-icons/fa";
 import TextareaAutosize from "react-textarea-autosize";
 import ThemeSelector from "./themeSelector";
 import { useCompleteInfoContext } from "@/context/completeInfo";
+import { TreeOccasionType } from "@/types/complete-info";
 
 interface TreeOccasionProps {
   session: Session;
 }
 
-interface TreeOccasion {
-  id: string;
-  name: string;
-}
+
 
 const TreeOccasion: FC<TreeOccasionProps> = ({ session }) => {
-  const [themes, setThemes] = useState<TreeOccasion[]>([]);
-  const [input, setInput] = useState("");
-  const { setCurrentTheme } = useCompleteInfoContext();
+  const [themes, setThemes] = useState<TreeOccasionType[]>([]);
+
+  const { setCurrentTheme, description, setDescription } =
+    useCompleteInfoContext();
 
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   useEffect(() => {
@@ -82,8 +81,8 @@ const TreeOccasion: FC<TreeOccasionProps> = ({ session }) => {
             ref={textareaRef}
             rows={1}
             id="tree-description"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
             placeholder={`داستان کاشت این درخت...`}
             className="block w-full resize-none border-0 bg-transparent px-5 text-gray-900 placeholder:text-gray-400 focus:ring-0 focus:ring-transparent focus:outline-none py-1.5 sm:text-sm sm:leading-6"
           />

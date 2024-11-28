@@ -16,22 +16,20 @@ export default function Layout({
   children: React.ReactNode;
 }>) {
   return (
-    <CompleteInfoProvider>
-      <div className="bg-[#EBEBEB]">
-        <div className="md:container md:mx-auto md:pt-5">
-          <Navbar />
-          <MobileNav />
-          <header className="bg-white mx-4 mt-4 rounded-xl">
-            <div className="w-full flex justify-center">
-              <div className="w-full md:w-4/5 lg:w-3/5">
-                <ProgressBar step="4" />
-              </div>
+    <div className="bg-[#EBEBEB]">
+      <div className="md:container md:mx-auto md:pt-5">
+        <Navbar />
+        <MobileNav />
+        <header className="bg-white mx-4 mt-4 rounded-xl">
+          <div className="w-full flex justify-center">
+            <div className="w-full md:w-4/5 lg:w-3/5">
+              <ProgressBar step="4" />
             </div>
-          </header>
-          <main>{children}</main>
-        </div>
-        <Footer sponsors={false} />
+          </div>
+        </header>
+        <main>{children}</main>
       </div>
-    </CompleteInfoProvider>
+      <Footer sponsors={false} />
+    </div>
   );
 }

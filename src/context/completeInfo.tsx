@@ -1,8 +1,11 @@
 "use client";
 
-import { ProvinceMarker } from "@/app/complete-info/(first-three-pages)/city-and-district/page";
-import { FileStatus } from "@/app/complete-info/(first-three-pages)/film-and-description/imageUploader";
-import TreeOccasion from "@/app/complete-info/(first-three-pages)/film-and-description/treeOccasion";
+import {
+  Authority,
+  FileStatus,
+  ProvinceMarker,
+  TreeOccasionType,
+} from "@/types/complete-info";
 import {
   createContext,
   useContext,
@@ -21,20 +24,30 @@ interface CompleteInfoType {
   setEmail: Dispatch<SetStateAction<string>>;
   customer: "HA" | "HO";
   setCustomer: Dispatch<SetStateAction<"HA" | "HO">>;
+
   provinceId: string;
   setProvinceId: Dispatch<SetStateAction<string>>;
   cityId: string;
   setCityId: Dispatch<SetStateAction<string>>;
   selectedMarkers: ProvinceMarker[];
   setSelectedMarkers: Dispatch<SetStateAction<ProvinceMarker[]>>;
-  currentTheme: TreeOccasion;
-  setCurrentTheme: Dispatch<SetStateAction<TreeOccasion>>;
+
+  description: string;
+  setDescription: Dispatch<SetStateAction<string>>;
+  currentTheme: TreeOccasionType;
+  setCurrentTheme: Dispatch<SetStateAction<TreeOccasionType>>;
   imageFiles: FileStatus[];
   setImageFiles: Dispatch<SetStateAction<FileStatus[]>>;
   videoFiles: FileStatus[];
   setVideoFiles: Dispatch<SetStateAction<FileStatus[]>>;
   audioFiles: FileStatus[];
   setAudioFiles: Dispatch<SetStateAction<FileStatus[]>>;
+
+  authority: Authority | null;
+  setAuthority: Dispatch<SetStateAction<Authority | null>>;
+
+  method: "gateway" | "wallet";
+  setMethod: Dispatch<SetStateAction<"gateway" | "wallet">>;
 }
 
 const CompleteInfoContext = createContext<CompleteInfoType | undefined>(
@@ -60,14 +73,18 @@ export const CompleteInfoProvider: React.FC<CompleteInfoProviderProps> = ({
   const [selectedMarkers, setSelectedMarkers] = useState<ProvinceMarker[]>([]);
 
   // thirdData
-  const [currentTheme, setCurrentTheme] = useState<TreeOccasion>({
+  const [currentTheme, setCurrentTheme] = useState<TreeOccasionType>({
     id: "1",
     name: "عشق",
   });
   const [imageFiles, setImageFiles] = useState<FileStatus[]>([]);
   const [videoFiles, setVideoFiles] = useState<FileStatus[]>([]);
   const [audioFiles, setAudioFiles] = useState<FileStatus[]>([]);
+  const [description, setDescription] = useState("");
+  const [authority, setAuthority] = useState<Authority | null>(null);
 
+  // fourthPage
+  const [method, setMethod] = useState<"gateway" | "wallet">("gateway");
   return (
     <CompleteInfoContext.Provider
       value={{
@@ -89,12 +106,19 @@ export const CompleteInfoProvider: React.FC<CompleteInfoProviderProps> = ({
 
         currentTheme,
         setCurrentTheme,
+        description,
+        setDescription,
         imageFiles,
         setImageFiles,
         videoFiles,
         setVideoFiles,
         audioFiles,
         setAudioFiles,
+
+        authority,
+        setAuthority,
+        method,
+        setMethod,
       }}
     >
       {children}

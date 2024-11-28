@@ -11,6 +11,7 @@ import { useCompleteInfoContext } from "@/context/completeInfo";
 import toast from "react-hot-toast";
 import { Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { Authority } from "@/types/complete-info";
 
 interface UploadSpecProps {
   session: Session;
@@ -32,6 +33,9 @@ const UploadSpec: FC<UploadSpecProps> = ({ session }) => {
     imageFiles,
     videoFiles,
     audioFiles,
+    description,
+    authority,
+    setAuthority, 
   } = useCompleteInfoContext();
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
@@ -39,6 +43,10 @@ const UploadSpec: FC<UploadSpecProps> = ({ session }) => {
 
     if (!selectedMarkers.length) {
       toast.error("لطفا به تعداد آیتم های سبد خرید مکان انتخاب کنید");
+      return;
+    }
+    if (!description) {
+      toast.error("لطفا توضیحی درباره محصول یا محصولات ارائه فرماید");
       return;
     }
 
@@ -53,11 +61,13 @@ const UploadSpec: FC<UploadSpecProps> = ({ session }) => {
 
     try {
       const formData = new FormData();
-      formData.append("user_type", customer);
       formData.append("coords", ids);
       formData.append("city_id", cityId);
       formData.append("province_id", provinceId);
       formData.append("theme_id", currentTheme.id);
+      formData.append("description", description);
+      //after fixing the bug take user_type under name condition ....
+      formData.append("user_type", customer);
 
       if (name) {
         formData.append("email", email);
@@ -89,12 +99,8 @@ const UploadSpec: FC<UploadSpecProps> = ({ session }) => {
           method: "POST",
           body: formData,
           headers: {
-            // Authorization: session.access ? `Bearer ${session.access}` : "",
-            // TOKEN: session.token || "",
-            Authorization: session.access
-              ? `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzMzOTU0MTQyLCJpYXQiOjE3MzA2MjA4NDIsImp0aSI6IjhhNGJkZDRkMzQ1YjQ3ODE4Zjk1NWU4NWUxYzhiZTIyIiwidXNlcl9pZCI6ImJkNjQ5MGUwLWVkM2ItNGNkMS1hNGM4LTM3ZjBkNTViNjE4NyJ9.MUPoTXMDTJ2VucSyThgPYRyg4-t0aZr-zxGnfYEzNlk`
-              : "",
-            TOKEN: "5b6efc7e46cc141c3f1246884a66811fa19bd3bf",
+            Authorization: session.access ? `Bearer ${session.access}` : "",
+            TOKEN: session.token || "",
           },
         }
       );
@@ -102,11 +108,13 @@ const UploadSpec: FC<UploadSpecProps> = ({ session }) => {
       if (response.status !== 200) {
         throw new Error(`Upload failed: ${response.statusText}`);
       }
-      const data = await response.json();
-      console.log("Success:", data);
+      const data = (await response.json()) as Authority;
+      setAuthority(data);
+      console.log("Success");
       toast.success("اطلاعات شما با موفقیت آپلود شد");
       router.push("payment");
     } catch (err: unknown) {
+      setAuthority(null);
       const message =
         err instanceof Error
           ? err.message

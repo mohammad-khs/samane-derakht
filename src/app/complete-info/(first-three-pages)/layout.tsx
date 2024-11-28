@@ -15,15 +15,13 @@ export default function Layout({
   children: React.ReactNode;
 }>) {
   return (
-    <CompleteInfoProvider>
-      <div className="bg-[#EBEBEB]">
-        <div className="md:container md:mx-auto md:pt-5 min-h-[65vh]">
-          <Navbar />
-          <MobileNav />
-          <main className="bg-white m-4 md:my-8 rounded-xl">{children}</main>
-        </div>
-        <Footer sponsors={false} />
+    <div className="bg-[#EBEBEB]">
+      <div className="md:container md:mx-auto md:pt-5 min-h-[65vh]">
+        <Navbar />
+        <MobileNav />
+        <main className="bg-white m-4 md:my-8 rounded-xl">{children}</main>
       </div>
-    </CompleteInfoProvider>
+      <Footer sponsors={false} />
+    </div>
   );
 }

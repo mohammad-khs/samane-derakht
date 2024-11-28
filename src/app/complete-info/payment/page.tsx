@@ -19,9 +19,12 @@ const Payment: FC<PaymentProps> = async () => {
   return (
     <>
       <div className="flex flex-col justify-center lg:flex-row gap-3 text-[#1F1F1F] p-4">
-        <LeftsidePayment />
+        <div>
+          <LeftsidePayment session={session} />
+        </div>
+
         <div className="rounded-lg bg-white w-full p-5">
-          <RightsidePayment />
+          <RightsidePayment session={session} />
         </div>
       </div>
     </>

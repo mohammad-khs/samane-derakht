@@ -5,12 +5,6 @@ import React, { FC, useState } from "react";
 import toast from "react-hot-toast";
 import { FaImage } from "react-icons/fa";
 
-export type FileStatus = {
-  id: string;
-  name: string;
-  file: File;
-  status: "uploaded" | "uploading";
-};
 
 interface ImageUploaderProps {
   maxFiles?: number;
