@@ -40,7 +40,7 @@ const LeftsidePayment: FC<LeftsidePaymentProps> = ({ session }) => {
       if (response.status === 200) {
         setAuthorityCode(response.data.authority);
         console.log("this is data: ", response.data);
-        router.push(
+        window.open(
           `https://sandbox.zarinpal.com/pg/StartPay/${response.data.authority}`
         );
       }
