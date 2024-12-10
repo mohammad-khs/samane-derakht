@@ -2,6 +2,8 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useCompleteInfoContext } from "@/context/completeInfo";
+import { formatNumberWithCommas } from "@/helper/formatNumberWithCommas";
+import { CoponDetails } from "@/types/complete-info";
 import axios from "axios";
 import { Loader2 } from "lucide-react";
 import { Session } from "next-auth";
@@ -18,7 +20,7 @@ const RightsidePayment: FC<RightsidePaymentProps> = ({ session }) => {
     useCompleteInfoContext();
   const [loading, setLoading] = useState(false);
   const [copon, setCopon] = useState("");
-  const [coponResponse, setCoponResponse] = useState();
+  const [coponDetails, setCoponDetails] = useState<CoponDetails>();
 
   const handleAddCopon = async () => {
     if (!copon) {
@@ -46,8 +48,15 @@ const RightsidePayment: FC<RightsidePaymentProps> = ({ session }) => {
 
       if (response.status === 200) {
         console.log(response.data);
-
-        setCoponResponse(response.data);
+        const data = response.data as CoponDetails;
+        setCoponDetails(response.data as CoponDetails);
+        setAuthority((prev) => {
+          if (!prev) return null; // Handle the case where prev is null
+          return {
+            ...prev, // Keep other properties of the state
+            all_price_with_off: data?.final_price ?? prev.all_price_with_off,
+          };
+        });
         toast.success("کد تخفیف با موفقیت ثبت گردید");
         setCopon("");
       }
@@ -133,7 +142,17 @@ const RightsidePayment: FC<RightsidePaymentProps> = ({ session }) => {
                     </h3>
                     <span className="text-[#898989] text-xs">
                       موجودی کیف پول:{" "}
-                      <span className="text-[#383838]">2,400,000</span> تومان
+                      {authority?.wallet_balance &&
+                      authority?.wallet_balance !== 0 ? (
+                        <>
+                          <span className="text-[#383838]">
+                            {formatNumberWithCommas(authority?.wallet_balance)}
+                          </span>{" "}
+                          تومان
+                        </>
+                      ) : (
+                        <span className="text-[#383838]">بدون موجودی</span>
+                      )}
                     </span>
                   </div>
                 </div>
@@ -154,6 +173,11 @@ const RightsidePayment: FC<RightsidePaymentProps> = ({ session }) => {
               <h3 className="">کد تخفیف را وارد نمایید</h3>
               <div className="flex  items-center gap-5">
                 <Input
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      handleAddCopon();
+                    }
+                  }}
                   placeholder="کد تخفیف"
                   value={copon}
                   onChange={(e) => setCopon(e.target.value)}
@@ -175,13 +199,13 @@ const RightsidePayment: FC<RightsidePaymentProps> = ({ session }) => {
                   )}
                 </Button>
               </div>
-              {coponResponse && (
+              {coponDetails && (
                 <div className="flex items-center gap-5">
                   <div className="p-1 rounded-md bg-[#28D16C33]">
                     <FaCheck className="text-[#247C48]" />
                   </div>
                   <p className="text-xs md:text-sm leading-6">
-                    شما 200 هزار تومان تخفیف دریافت کرده اید
+                    شما {coponDetails.off_percent} درصد تخفیف دریافت کرده اید
                   </p>
                 </div>
               )}

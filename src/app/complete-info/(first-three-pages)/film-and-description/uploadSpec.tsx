@@ -35,7 +35,7 @@ const UploadSpec: FC<UploadSpecProps> = ({ session }) => {
     audioFiles,
     description,
     authority,
-    setAuthority, 
+    setAuthority,
   } = useCompleteInfoContext();
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
@@ -108,7 +108,10 @@ const UploadSpec: FC<UploadSpecProps> = ({ session }) => {
       if (response.status !== 200) {
         throw new Error(`Upload failed: ${response.statusText}`);
       }
+
       const data = (await response.json()) as Authority;
+      console.log("this is the first data : ", data);
+
       setAuthority(data);
       console.log("Success");
       toast.success("اطلاعات شما با موفقیت آپلود شد");
@@ -120,7 +123,9 @@ const UploadSpec: FC<UploadSpecProps> = ({ session }) => {
           ? err.message
           : "مشکلی پیش آمد لطفا مجدد تلاش فرمایید";
       console.error("Error:", err);
-      toast.error(message);
+      if (err === "email is not valid") {
+        toast.error("ایمیلتان اشتباه است");
+      }
     } finally {
       setLoading(false);
     }

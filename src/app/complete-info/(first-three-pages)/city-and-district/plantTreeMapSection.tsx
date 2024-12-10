@@ -4,10 +4,10 @@ import { Input } from "@/components/ui/input";
 import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
 import Image from "next/image";
 import { Dispatch, FC, SetStateAction, useState } from "react";
-import { ProvinceData } from "./page";
 import dynamic from "next/dynamic";
 import { Loader2Icon } from "lucide-react";
 import { Session } from "next-auth";
+import { ProvinceData } from "@/types/complete-info";
 
 const DynamicPlantTreeMap = dynamic(() => import("./plantTreeMap"), {
   ssr: false,

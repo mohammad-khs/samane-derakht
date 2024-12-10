@@ -17,8 +17,10 @@ interface LeftsidePaymentProps {
 const LeftsidePayment: FC<LeftsidePaymentProps> = ({ session }) => {
   const { authority, method } = useCompleteInfoContext();
   const [loading, setLoading] = useState(false);
-  const [authorityCode, setAuthorityCode] = useState("");
-  const router = useRouter();
+  console.log(authority);
+  console.log(authority?.all_price);
+  console.log(authority?.all_price_with_off);
+
   const handlePayOrder = async () => {
     if (!authority?.order_id) {
       toast.error("ID سفارش در دسترس نیست لطفا مجددا تلاش فرمایید", {
@@ -38,11 +40,8 @@ const LeftsidePayment: FC<LeftsidePaymentProps> = ({ session }) => {
         }
       );
       if (response.status === 200) {
-        setAuthorityCode(response.data.authority);
         console.log("this is data: ", response.data);
-        window.open(
-          `https://sandbox.zarinpal.com/pg/StartPay/${response.data.authority}`
-        );
+        window.open(`${response.data.authority}`);
       }
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -69,13 +68,14 @@ const LeftsidePayment: FC<LeftsidePaymentProps> = ({ session }) => {
           <div className="flex flex-col">
             <h3 className="text-sm">مجموع کالا ها:</h3>
             <div className="text-xs text-[#9F9F9F]">
-              {/* {allProductsCount} */}
+              {authority?.products_count}
               کالا{" "}
             </div>
           </div>
           <div className="flex justify-center items-center gap-1">
-            {/* {formatNumberWithCommas(allPrice?.all_price)} */}
-            2,000,000
+            {authority?.all_price
+              ? formatNumberWithCommas(authority.all_price)
+              : 0}
             <span className="text-[#9F9F9F] text-xs">تومان</span>{" "}
           </div>
         </div>
@@ -90,10 +90,11 @@ const LeftsidePayment: FC<LeftsidePaymentProps> = ({ session }) => {
             <h3 className="text-sm">تخفیف:</h3>
           </div>
           <div className="flex justify-center items-center gap-1">
-            {formatNumberWithCommas(
-              //   allPrice?.all_price - allPriceWithOff?.all_price_off
-              100000
-            )}
+            {authority?.all_price_with_off
+              ? formatNumberWithCommas(
+                  authority.all_price - authority.all_price_with_off
+                )
+              : 0}
             <span className="text-[#9F9F9F] text-xs">تومان</span>{" "}
           </div>
         </div>
@@ -109,9 +110,9 @@ const LeftsidePayment: FC<LeftsidePaymentProps> = ({ session }) => {
               </div>
               <div className="flex justify-center items-center gap-1">
                 {formatNumberWithCommas(
-                  (authority.has_video ? 400000 : 0) +
-                    (authority.has_voice ? 900000 : 0) +
-                    (authority.images ? 900000 : 0)
+                  (authority.has_video ? authority.video_price : 0) +
+                    (authority.has_voice ? authority.voice_price : 0) +
+                    (authority.images ? authority.image_price : 0)
                 )}
                 <span className="text-[#9F9F9F] text-xs">تومان</span>{" "}
               </div>
@@ -130,7 +131,7 @@ const LeftsidePayment: FC<LeftsidePaymentProps> = ({ session }) => {
                 <h3>هزینه ضبط فیلم:</h3>
               </div>
               <div className="flex justify-center items-center gap-1">
-                {formatNumberWithCommas(400000)}
+                {formatNumberWithCommas(authority?.video_price)}
                 <span className="text-[#9F9F9F] text-xs">تومان</span>{" "}
               </div>
             </div>
@@ -145,7 +146,7 @@ const LeftsidePayment: FC<LeftsidePaymentProps> = ({ session }) => {
                 <h3>هزینه آپلود عکس:</h3>
               </div>
               <div className="flex justify-center items-center gap-1">
-                {formatNumberWithCommas(900000)}
+                {formatNumberWithCommas(authority.image_price)}
                 <span className="text-[#9F9F9F] text-xs">تومان</span>{" "}
               </div>
             </div>
@@ -160,7 +161,7 @@ const LeftsidePayment: FC<LeftsidePaymentProps> = ({ session }) => {
                 <h3>هزینه ضبط صدا:</h3>
               </div>
               <div className="flex justify-center items-center gap-1">
-                {formatNumberWithCommas(900000)}
+                {formatNumberWithCommas(authority.voice_price)}
                 <span className="text-[#9F9F9F] text-xs">تومان</span>{" "}
               </div>
             </div>
@@ -176,10 +177,9 @@ const LeftsidePayment: FC<LeftsidePaymentProps> = ({ session }) => {
             <h3 className="font-semibold">مبلغ نهایی:</h3>
           </div>
           <div className="flex justify-center items-center gap-1">
-            {formatNumberWithCommas(
-              // allPriceWithOff?.all_price_off
-              1900000
-            )}
+            {authority?.all_price && authority.all_price_with_off
+              ? formatNumberWithCommas(authority.all_price_with_off)
+              : 0}
             <span className="text-[#28D16C] text-xs">تومان</span>{" "}
           </div>
         </div>

@@ -4,7 +4,9 @@ import { Input } from "@/components/ui/input";
 import { useCompleteInfoContext } from "@/context/completeInfo";
 import { CaretLeftIcon } from "@radix-ui/react-icons";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Dispatch, FC, SetStateAction } from "react";
+import toast from "react-hot-toast";
 import { FaBuilding, FaPhoneAlt } from "react-icons/fa";
 
 interface CorporateCustomerProps {
@@ -14,6 +16,22 @@ interface CorporateCustomerProps {
 const CorporateCustomer: FC<CorporateCustomerProps> = ({ setCustomer }) => {
   const { email, setEmail, name, setName, zipCode, setZipCode } =
     useCompleteInfoContext();
+  const router = useRouter();
+  const handleIndividualCustomer = () => {
+    if (name === "") {
+      toast.error("لطفا نام سازمان را وارد کنید");
+      return;
+    }
+    if (zipCode === "") {
+      toast.error("لطفا شناسه ثبت را وارد کنید");
+      return;
+    }
+    if (email === "") {
+      toast.error("لطفا ایمیل خود را وارد کنید");
+      return;
+    }
+    router.push("city-and-district");
+  };
   return (
     <>
       <div className=" mx-4 sm:mx-24" dir="rtl">
@@ -103,12 +121,15 @@ const CorporateCustomer: FC<CorporateCustomerProps> = ({ setCustomer }) => {
           </button>
         </div>
         <div className="w-full flex justify-end mt-8">
-          <Link href={"city-and-district"}>
-            <Button className="md:w-44" variant={"green"} size={"resizble"}>
-              مرحله بعد
-              <CaretLeftIcon className="h-8 w-8" />
-            </Button>
-          </Link>
+          <Button
+            onClick={handleIndividualCustomer}
+            className="md:w-44"
+            variant={"green"}
+            size={"resizble"}
+          >
+            مرحله بعد
+            <CaretLeftIcon className="h-8 w-8" />
+          </Button>
         </div>
         <br />
       </div>

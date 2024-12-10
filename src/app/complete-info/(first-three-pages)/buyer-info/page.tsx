@@ -5,6 +5,7 @@ import CorporateAndIndividual from "./corporateAndIndividual";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import { redirect } from "next/navigation";
+import DecoyForSettingCustomer from "./decoyForSettingCustomer";
 
 interface CompleteInfoProps {}
 
@@ -33,11 +34,13 @@ const CompleteInfo: FC<CompleteInfoProps> = async () => {
       cache: "no-store",
     }
   );
-  const data = (await response.json()) as { exists: boolean };
-  console.log("this is firstData: ", data);
+  const data = (await response.json()) as {
+    exists: boolean;
+    user_type: "HA" | "HO";
+  };
 
-  if (data.exists) {
-    redirect("city-and-district");
+  if (data.exists && data.user_type) {
+    return <DecoyForSettingCustomer fetchedCustomer={data.user_type} />;
   }
 
   return (

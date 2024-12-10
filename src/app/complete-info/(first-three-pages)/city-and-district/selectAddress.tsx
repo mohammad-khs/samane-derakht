@@ -1,7 +1,7 @@
 "use client";
 
 import { FC, useEffect, useState } from "react";
-import { City, ProvinceData } from "./page";
+
 import { Session } from "next-auth";
 import { redirect } from "next/navigation";
 import axios from "axios";
@@ -14,6 +14,8 @@ import toast from "react-hot-toast";
 import dynamic from "next/dynamic";
 import { Loader2Icon } from "lucide-react";
 import { useCompleteInfoContext } from "@/context/completeInfo";
+import { City, ProvinceData } from "@/types/complete-info";
+import { useRouter } from "next/navigation";
 
 const DynamicMarkerList = dynamic(() => import("./MarkerList"), {
   ssr: false,
@@ -71,12 +73,34 @@ const provincesList = [
 ];
 
 const SelectAddress: FC<SelectAddressProps> = ({ session }) => {
-  const { setProvinceId, setCityId } = useCompleteInfoContext();
+  const { setProvinceId, setCityId, selectedMarkers } =
+    useCompleteInfoContext();
   const [provinceName, setProvinceName] = useState("تهران");
   const [cityName, setCityName] = useState("");
   const [data, setData] = useState<ProvinceData | null>(null);
   const [mapProvince, setMapProvince] = useState("");
 
+  const router = useRouter();
+
+  const handleIndividualCustomer = () => {
+    if (!data) {
+      toast.error("لطفا صفحه را رفرش کنید تا استان و شهر");
+      return;
+    }
+    if (!cityName) {
+      toast.error("لطفا شهر خود را وارد کنید");
+      return;
+    }
+    if (!provinceName) {
+      toast.error("لطفا استان خود را وارد کنید");
+      return;
+    }
+    if (selectedMarkers.length < 1) {
+      toast.error("لطفا به تعداد درختان مکان انتخاب کنید");
+      return;
+    }
+    router.push("film-and-description");
+  };
   useEffect(() => {
     if (!session) {
       redirect("/");
@@ -215,12 +239,17 @@ const SelectAddress: FC<SelectAddressProps> = ({ session }) => {
           </Link>
         </div>
         <div className="flex justify-end mt-8">
-          <Link href={"film-and-description"}>
-            <Button className="md:w-44" variant={"green"} size={"resizble"}>
+         
+            <Button
+              onClick={handleIndividualCustomer}
+              className="md:w-44"
+              variant={"green"}
+              size={"resizble"}
+            >
               مرحله بعد
               <CaretLeftIcon className="h-8 w-8" />
             </Button>
-          </Link>
+         
         </div>
       </div>
       <br />

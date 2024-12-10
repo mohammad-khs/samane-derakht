@@ -8,12 +8,26 @@ import { FaPhoneAlt } from "react-icons/fa";
 import { TreeUserIcon } from "./page";
 import PersianDatePicker from "@/components/ui/persianDateInputs";
 import { useCompleteInfoContext } from "@/context/completeInfo";
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 interface IndividualCustomerProps {
   setCustomer: Dispatch<SetStateAction<"HA" | "HO">>;
 }
 
 const IndividualCustomer: FC<IndividualCustomerProps> = ({ setCustomer }) => {
+  const router = useRouter();
+  const handleIndividualCustomer = () => {
+    if (name === "") {
+      toast.error("لطفا نام و نام خانوادگی خود را وارد کنید");
+      return;
+    }
+    if (email === "") {
+      toast.error("لطفا ایمیل خود را وارد کنید");
+      return;
+    }
+    router.push("city-and-district");
+  };
   const { email, setEmail, name, setName } = useCompleteInfoContext();
   return (
     <>
@@ -91,12 +105,15 @@ const IndividualCustomer: FC<IndividualCustomerProps> = ({ setCustomer }) => {
           </button>
         </div>
         <div className="w-full flex justify-end mt-8">
-          <Link href={"city-and-district"}>
-            <Button className="md:w-44" variant={"green"} size={"resizble"}>
-              مرحله بعد
-              <CaretLeftIcon className="h-8 w-8" />
-            </Button>
-          </Link>
+          <Button
+            onClick={handleIndividualCustomer}
+            className="md:w-44"
+            variant={"green"}
+            size={"resizble"}
+          >
+            مرحله بعد
+            <CaretLeftIcon className="h-8 w-8" />
+          </Button>
         </div>
         <br />
       </div>
