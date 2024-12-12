@@ -7,19 +7,25 @@ import SignInModalParent from "./authentication/signInModalParent";
 import ShoppingCartButton from "./ui/shoppingCartButton";
 import { usePathname } from "next/navigation";
 
-interface NavbarProps {}
+interface NavbarProps {
+  isDashboard?: boolean;
+}
 
-const Navbar: FC<NavbarProps> = () => {
+const Navbar: FC<NavbarProps> = ({ isDashboard = false }) => {
   const pathName = usePathname();
 
   const isActive = (path: string) => pathName === path;
 
   return (
     <>
-      <nav className="bg-[#E4E7E5] flex-row py-2 mx-2 hidden md:flex rounded-xl">
+      <nav
+        className={`${
+          isDashboard ? "bg-[#FFFFFF] shadow-md" : "bg-[#E4E7E5] mx-2 rounded-xl"
+        }  flex-row py-2 hidden md:flex`}
+      >
         <div className="flex justify-start items-center gap-4 ms-5 basis-1/3">
           <SignInModalParent>ثبت نام/ورود</SignInModalParent>
-          <ShoppingCartButton />
+          <ShoppingCartButton /> 
         </div>
         <div className="w-full flex gap-1 lg:gap-4 justify-center items-center basis-1/3">
           <Button

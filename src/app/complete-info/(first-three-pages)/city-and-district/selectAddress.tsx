@@ -29,7 +29,7 @@ const DynamicMarkerList = dynamic(() => import("./MarkerList"), {
 interface SelectAddressProps {
   session: Session | null;
 }
-const provincesList = [
+export const provincesList = [
   {
     id: "1",
     name: "فارس",

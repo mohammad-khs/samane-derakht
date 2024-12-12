@@ -5,6 +5,7 @@ import SignInModal from "./signInModal";
 import { Button } from "../ui/button";
 import { useSession } from "next-auth/react";
 import { UserCircle } from "lucide-react";
+import Link from "next/link";
 
 interface SignInModalParentProps {
   children: React.ReactNode;
@@ -30,9 +31,11 @@ const SignInModalParent: FC<SignInModalParentProps> = ({ children }) => {
           />
         </>
       ) : (
-        <Button size={"icon"} variant={"green"}>
-          <UserCircle />
-        </Button>
+        <Link href={"/dashboard/profile-settings"}>
+          <Button size={"icon"} variant={"green"}>
+            <UserCircle />
+          </Button>
+        </Link>
       )}
     </div>
   );

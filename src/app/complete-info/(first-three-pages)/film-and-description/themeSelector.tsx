@@ -1,12 +1,12 @@
 import React, { FC, useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import TreeOccasion from "./treeOccasion";
 import { apiNameToIconName } from "@/helper/nameToIcon";
-import { CaretDownIcon, DropdownMenuIcon } from "@radix-ui/react-icons";
+import { CaretDownIcon } from "@radix-ui/react-icons";
 import { useCompleteInfoContext } from "@/context/completeInfo";
+import { TreeOccasionType } from "@/types/complete-info";
 
 interface ThemeSelectorProps {
-  themes: TreeOccasion[];
+  themes: TreeOccasionType[];
 }
 
 const ThemeSelector: FC<ThemeSelectorProps> = ({ themes }) => {
@@ -23,7 +23,7 @@ const ThemeSelector: FC<ThemeSelectorProps> = ({ themes }) => {
     }
   };
 
-  const handleSelect = (theme: TreeOccasion) => {
+  const handleSelect = (theme: TreeOccasionType) => {
     setCurrentTheme(theme); // Update the selected theme
     setIsOpen(false); // Close the dropdown
   };
