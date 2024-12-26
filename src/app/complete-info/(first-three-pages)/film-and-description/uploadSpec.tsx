@@ -6,7 +6,6 @@ import { Session } from "next-auth";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { CaretLeftIcon, CaretRightIcon } from "@radix-ui/react-icons";
-import axios, { Axios, AxiosError } from "axios";
 import { useCompleteInfoContext } from "@/context/completeInfo";
 import toast from "react-hot-toast";
 import { Loader2 } from "lucide-react";

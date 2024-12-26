@@ -56,15 +56,16 @@ const IndividualModal: FC<IndividualModalProps> = ({ onClose, session }) => {
         console.log(response.data);
         const data = response.data;
         setUserIdentity({
-          city: data.city,
-          zipcode: data.zipcode,
+          city: data?.city,
+          zipcode: data?.zipcode,
           user_type: "HA",
-          organization: data.organization,
-          email: data.email,
-          bio: data.bio,
-          birthday: data.birthday,
-          phone: data.phone,
-          username: data.username,
+          organization: data?.organization,
+          email: data?.email,
+          bio: data?.bio,
+          birthday: data?.birthday,
+          phone: data?.phone,
+          username: data?.username,
+          first_last_name: data?.first_last_name,
         });
         console.log(data);
         toast.success("تغییرات شما با موفقیت ثبت گردید");
@@ -80,6 +81,10 @@ const IndividualModal: FC<IndividualModalProps> = ({ onClose, session }) => {
         if (
           error.response?.data?.email?.[0] === "Enter a valid email address."
         ) {
+          toast.error("لطفا ایمیلی با فرمت درست وارد کنید", { duration: 7000 });
+        }
+
+        if (error.response?.data[0] === "email is not valid") {
           toast.error("لطفا ایمیلی با فرمت درست وارد کنید", { duration: 7000 });
         }
         toast.error("ثبت تغییرات شما با شکست مواجه شد لطفا دوباره امتحان کنید");
@@ -109,7 +114,7 @@ const IndividualModal: FC<IndividualModalProps> = ({ onClose, session }) => {
         <div>
           <div>
             <label className="text-[#1F1F1F]" htmlFor="name">
-              نام و نام خانوادگی
+              نام کاربری
             </label>
             <div className="my-3">
               <Input
@@ -120,7 +125,7 @@ const IndividualModal: FC<IndividualModalProps> = ({ onClose, session }) => {
                 type="text"
                 variant="default"
                 size="lg"
-                placeholder="نام و نام خانوادگی خود را وارد کنید"
+                placeholder="نام کاربری خود را وارد کنید"
               />
             </div>
           </div>

@@ -8,19 +8,9 @@ import {
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
-import {
-  Home,
-  InfoIcon,
-  LineChart,
-  Menu,
-  Package,
-  Package2,
-  ShoppingCart,
-  Users,
-  Users2Icon,
-} from "lucide-react";
+import { InfoIcon, Menu, Package2, ShoppingCart, Users } from "lucide-react";
 import Link from "next/link";
-import { GroupIcon } from "@radix-ui/react-icons";
+
 import { FaHeadphones, FaQuestion } from "react-icons/fa";
 
 export default function MobileNav() {
@@ -40,11 +30,11 @@ export default function MobileNav() {
           <span className="sr-only">Toggle navigation menu</span>
         </Button>
       </SheetTrigger>
-      <SheetContent side="left" className="flex flex-col">
+      <SheetContent side="right" className="flex flex-col">
         <SheetTitle>
           <VisuallyHidden.Root>menu</VisuallyHidden.Root>
         </SheetTitle>
-        <nav className="grid gap-2 text-lg font-medium">
+        <nav className="grid gap-2 text-lg font-medium" dir="rtl">
           <Link
             href="#"
             className="flex items-center gap-2 text-lg font-semibold"

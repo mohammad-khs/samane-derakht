@@ -29,6 +29,7 @@ const IndividualDashboard: FC<IndividualDashboardProps> = ({ session }) => {
   const handleUpdateHAIdentity = async () => {
     setLoading(true);
     try {
+      console.log(userIdentity?.first_last_name);
       const response = await axios.put(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/account/api/update-dashboard/`,
         {
@@ -39,6 +40,7 @@ const IndividualDashboard: FC<IndividualDashboardProps> = ({ session }) => {
           bio: userIdentity?.bio,
           email: userIdentity?.email,
           username: userIdentity?.username,
+          name: userIdentity?.first_last_name,
         },
         {
           headers: {
@@ -61,23 +63,7 @@ const IndividualDashboard: FC<IndividualDashboardProps> = ({ session }) => {
           birthday: data?.birthday,
           phone: data?.phone,
           username: data?.username,
-        });
-        console.log(data);
-        toast.success("تغییرات شما با موفقیت ثبت گردید");
-      }
-      if (response.status === 200) {
-        console.log(response.data);
-        const data = response.data;
-        setUserIdentity({
-          city: data.city,
-          zipcode: data.zipcode,
-          user_type: "HA",
-          organization: data.organization,
-          email: data.email,
-          bio: data.bio,
-          birthday: data.birthday,
-          phone: data.phone,
-          username: data.username,
+          first_last_name: data?.first_last_name,
         });
         console.log(data);
         toast.success("تغییرات شما با موفقیت ثبت گردید");
@@ -126,15 +112,15 @@ const IndividualDashboard: FC<IndividualDashboardProps> = ({ session }) => {
           </div>
 
           <div className="mr-4">
-            <div className="flex gap-8">
-              <div>
-                <label className="text-sm text-[#1F1F1F]" htmlFor="name">
-                  نام و نام خانوادگی
+            <div className="md:flex gap-8">
+              <div className="flex flex-col justify-center items-center md:items-start">
+                <label className="text-sm text-[#1F1F1F]" htmlFor="username">
+                  نام کاربری
                 </label>
                 <div>
                   <Input
-                    className="my-3"
-                    id="name"
+                    className="my-3 placeholder:text-xs"
+                    id="username"
                     value={userIdentity?.username || ""}
                     onChange={(e) =>
                       setUserIdentity((prev) => {
@@ -147,11 +133,37 @@ const IndividualDashboard: FC<IndividualDashboardProps> = ({ session }) => {
                     type="text"
                     variant="default"
                     size="default"
-                    placeholder="نام خود را وارد نمایید"
+                    placeholder="نام کاربری خود را وارد نمایید"
                   />
                 </div>
               </div>
-              <div>
+            </div>
+            <div className="md:flex gap-8">
+              <div className="flex flex-col justify-center items-center md:items-start">
+                <label className="text-sm text-[#1F1F1F]" htmlFor="name">
+                  نام و نام خانوادگی
+                </label>
+                <div>
+                  <Input
+                    className="my-3 placeholder:text-xs"
+                    id="name"
+                    value={userIdentity?.first_last_name || ""}
+                    onChange={(e) =>
+                      setUserIdentity((prev) => {
+                        if (!prev) {
+                          return undefined;
+                        }
+                        return { ...prev, first_last_name: e.target.value };
+                      })
+                    }
+                    type="text"
+                    variant="default"
+                    size="default"
+                    placeholder="نام و نام خانوادگی را وارد نمایید"
+                  />
+                </div>
+              </div>
+              <div className="flex flex-col justify-center items-center md:items-start">
                 <label className="text-sm text-[#1F1F1F]" htmlFor="phone2">
                   شماره تماس
                 </label>
@@ -177,8 +189,8 @@ const IndividualDashboard: FC<IndividualDashboardProps> = ({ session }) => {
               </div>
             </div>
 
-            <div className="flex gap-8">
-              <div>
+            <div className="md:flex gap-8">
+              <div className="flex flex-col justify-center items-center md:items-start">
                 <label className="text-sm text-[#1F1F1F]" htmlFor="email">
                   ایمیل
                 </label>
@@ -202,7 +214,7 @@ const IndividualDashboard: FC<IndividualDashboardProps> = ({ session }) => {
                   />
                 </div>
               </div>
-              <div>
+              <div className="flex flex-col justify-center items-center md:items-start">
                 <label className="text-sm text-[#1F1F1F]" htmlFor="birthday">
                   تاریخ تولد
                 </label>

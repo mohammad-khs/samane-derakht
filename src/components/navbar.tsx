@@ -20,8 +20,8 @@ const Navbar: FC<NavbarProps> = ({ isDashboard = false }) => {
     <>
       <nav
         className={`${
-          isDashboard ? "bg-[#FFFFFF] shadow-md" : "bg-[#E4E7E5] mx-2 rounded-xl"
-        }  flex-row py-2 hidden md:flex`}
+          isDashboard ? "bg-[#FFFFFF] shadow-md lg:flex" : "bg-[#E4E7E5] mx-2 rounded-xl md:flex"
+        }  flex-row py-2 hidden`}
       >
         <div className="flex justify-start items-center gap-4 ms-5 basis-1/3">
           <SignInModalParent>ثبت نام/ورود</SignInModalParent>

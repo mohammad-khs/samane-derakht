@@ -5,7 +5,6 @@ import { Input } from "@/components/ui/input";
 import { useDashboardIdentityContext } from "@/context/dashboardIdentity";
 import { CaretLeftIcon } from "@radix-ui/react-icons";
 import { Session } from "next-auth";
-import { useRouter } from "next/router";
 import { FC, useRef, useState } from "react";
 import TextareaAutosize from "react-textarea-autosize";
 import IndividualModal from "./individualModal";
@@ -61,6 +60,7 @@ const CorporateDashboard: FC<CorporateDashboardProps> = ({ session }) => {
           birthday: data?.birthday,
           phone: data?.phone,
           username: data?.username,
+          first_last_name: data?.first_last_name,
         });
         console.log(data);
         toast.success("تغییرات شما با موفقیت ثبت گردید");
@@ -88,12 +88,12 @@ const CorporateDashboard: FC<CorporateDashboardProps> = ({ session }) => {
         <br />
         <div className=" mx-4 sm:mx-24" dir="rtl">
           <div className="flex items-center gap-4 text-[#1F1F1F] font-semibold text-lg leading-6 mt-8 mb-4">
-            <TreeUserIcon /> <span>مشخصات فردی </span>
+            <TreeUserIcon /> <span>مشخصات شرکت</span>
           </div>
 
           <div className="mr-4">
-            <div className="flex gap-8">
-              <div>
+            <div className="md:flex gap-8">
+              <div className="flex flex-col justify-center items-center md:items-start">
                 <label
                   className="text-sm text-[#1F1F1F]"
                   htmlFor="factory-name"
@@ -120,7 +120,7 @@ const CorporateDashboard: FC<CorporateDashboardProps> = ({ session }) => {
                   />
                 </div>
               </div>
-              <div>
+              <div className="flex flex-col justify-center items-center md:items-start">
                 <label
                   className="text-sm text-[#1F1F1F]"
                   htmlFor="corporate-phone2"
@@ -149,8 +149,8 @@ const CorporateDashboard: FC<CorporateDashboardProps> = ({ session }) => {
               </div>
             </div>
 
-            <div className="flex gap-8">
-              <div>
+            <div className="md:flex gap-8">
+              <div className="flex flex-col justify-center items-center md:items-start">
                 <label
                   className="text-sm text-[#1F1F1F]"
                   htmlFor="corporate-email"
@@ -177,7 +177,7 @@ const CorporateDashboard: FC<CorporateDashboardProps> = ({ session }) => {
                   />
                 </div>
               </div>
-              <div>
+              <div className="flex flex-col justify-center items-center md:items-start">
                 <label
                   className="text-sm text-[#1F1F1F]"
                   htmlFor="registration-number"

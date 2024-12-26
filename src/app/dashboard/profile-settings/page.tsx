@@ -14,6 +14,7 @@ export type UserIdentity = {
   birthday: string | null;
   bio: string | null;
   city: string | null;
+  first_last_name: string | null;
 };
 
 async function fetchDashboard(session: Session): Promise<UserIdentity | null> {

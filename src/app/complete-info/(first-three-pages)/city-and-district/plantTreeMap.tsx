@@ -9,11 +9,12 @@ import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility
 import { Icon, latLng, LatLng } from "leaflet";
 import { FullscreenIcon, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Province, ProvinceMarker } from "./page";
+
 import axios from "axios";
 import { Session } from "next-auth";
 import { redirect } from "next/navigation";
 import { useCompleteInfoContext } from "@/context/completeInfo";
+import { Province, ProvinceMarker } from "@/types/complete-info";
 
 interface PlantTreeMapProps {
   zoom?: number;

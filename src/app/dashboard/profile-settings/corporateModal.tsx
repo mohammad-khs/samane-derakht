@@ -19,6 +19,7 @@ const CorporateModal: FC<CorporateModalProps> = ({ onClose, session }) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [organization, setOrganization] = useState("");
   const [zipcode, setZipcode] = useState("");
+  const [email, setEmail] = useState("");
   const [city, setCity] = useState("تهران");
 
   const handleChangeIdentityToHO = async () => {
@@ -31,6 +32,7 @@ const CorporateModal: FC<CorporateModalProps> = ({ onClose, session }) => {
           organization: organization,
           city: city,
           zipcode: zipcode,
+          email: email,
         },
         {
           headers: {
@@ -53,6 +55,7 @@ const CorporateModal: FC<CorporateModalProps> = ({ onClose, session }) => {
           birthday: data?.birthday,
           phone: data?.phone,
           username: data?.username,
+          first_last_name: data?.first_last_name,
         });
         console.log(data);
         toast.success("تغییرات شما با موفقیت ثبت گردید");
@@ -74,7 +77,7 @@ const CorporateModal: FC<CorporateModalProps> = ({ onClose, session }) => {
   };
   const handleOutsideClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if ((e.target as HTMLDivElement).id === "modal-container" && onClose) {
-      onClose(); // Call onClose only if it's provided
+      onClose();
     }
   };
 
@@ -124,7 +127,23 @@ const CorporateModal: FC<CorporateModalProps> = ({ onClose, session }) => {
               />
             </div>
           </div>
-
+          <div>
+            <label className="text-[#1F1F1F]" htmlFor="email">
+              ایمیل
+            </label>
+            <div>
+              <Input
+                className="w-full my-3"
+                id="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                type="email"
+                variant="default"
+                size="lg"
+                placeholder="ایمیل خود را وارد نمایید"
+              />
+            </div>
+          </div>
           <div>
             <label htmlFor="province">استان</label>
             <select

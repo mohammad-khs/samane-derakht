@@ -239,17 +239,15 @@ const SelectAddress: FC<SelectAddressProps> = ({ session }) => {
           </Link>
         </div>
         <div className="flex justify-end mt-8">
-         
-            <Button
-              onClick={handleIndividualCustomer}
-              className="md:w-44"
-              variant={"green"}
-              size={"resizble"}
-            >
-              مرحله بعد
-              <CaretLeftIcon className="h-8 w-8" />
-            </Button>
-         
+          <Button
+            onClick={handleIndividualCustomer}
+            className="md:w-44"
+            variant={"green"}
+            size={"resizble"}
+          >
+            مرحله بعد
+            <CaretLeftIcon className="h-8 w-8" />
+          </Button>
         </div>
       </div>
       <br />
