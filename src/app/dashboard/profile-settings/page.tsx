@@ -17,9 +17,11 @@ export type UserIdentity = {
   first_last_name: string | null;
 };
 
-async function fetchDashboard(session: Session): Promise<UserIdentity | null> {
+async function fetchDashboardData(
+  session: Session
+): Promise<UserIdentity | null> {
   try {
-    const res = await fetch(
+    const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_BASE_URL}/account/api/dashboard/`,
       {
         method: "GET",
@@ -28,16 +30,16 @@ async function fetchDashboard(session: Session): Promise<UserIdentity | null> {
           Authorization: `Bearer ${session.access}`,
           TOKEN: session.token,
         },
-        cache: "no-store", // Ensure no caching
+        cache: "no-store",
       }
     );
 
-    if (!res.ok) {
-      throw new Error("Failed to fetch user data");
+    if (!response.ok) {
+      throw new Error(`Error fetching dashboard data: ${response.statusText}`);
     }
-    return (await res.json()) as UserIdentity;
+    return (await response.json()) as UserIdentity;
   } catch (error) {
-    console.error("Error fetching user data:", error);
+    console.error("Error fetching dashboard data:", error);
     return null;
   }
 }
@@ -49,11 +51,16 @@ const Dashboard = async () => {
     redirect("/");
   }
 
-  const data = await fetchDashboard(session);
-  console.log(data);
+  const data = await fetchDashboardData(session);
 
   if (!data) {
-    return <p>Error loading data. Please try again.</p>;
+    return (
+      <div>
+        <p className="text-red-500 text-lg">
+          ارور در لود کردن داده‌ها. لطفا صفحه را رفرش کنید.
+        </p>
+      </div>
+    );
   }
 
   return (

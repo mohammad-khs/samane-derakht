@@ -12,7 +12,7 @@ import {
 
 const DashboardSidebar = () => {
   return (
-    <div className="flex flex-col items-center p-4 w-full h-full">
+    <div className="flex flex-col items-center py-9 p-4 w-full h-full">
       {/* User Profile Section */}
       <div className="text-center mb-6">
         <div className="w-20 h-20 mx-auto rounded-full bg-gray-300 flex items-center justify-center">
@@ -25,23 +25,23 @@ const DashboardSidebar = () => {
       <div className="h-full">
         <nav className="flex flex-col gap-4 w-full">
           {[
-            { icon: <FaShoppingCart />, label: "سفارش‌ها" },
-            { icon: <FaHeart />, label: "لیست علاقه‌مندی‌ها" },
-            { icon: <FaEnvelope />, label: "پیام‌ها" },
-            { icon: <FaChartLine />, label: "گزارش مالی" },
-            { icon: <FaTree />, label: "درخت‌های من" },
-            { icon: <FaComments />, label: "دیدگاه‌های من" },
-            { icon: <FaWallet />, label: "برداشت مالی" },
-            { icon: <FaUserCircle />, label: "صفحه اختصاصی" },
-          ].map(({ icon, label }, index) => (
-            <a
+            { icon: <FaShoppingCart />, label: "سفارش‌ها", href: "orders" },
+            { icon: <FaHeart />, label: "لیست علاقه‌مندی‌ها", href: "" },
+            { icon: <FaEnvelope />, label: "پیام‌ها", href: "" },
+            { icon: <FaChartLine />, label: "گزارش مالی", href: "" },
+            { icon: <FaTree />, label: "درخت‌های من", href: "" },
+            { icon: <FaComments />, label: "دیدگاه‌های من", href: "" },
+            { icon: <FaWallet />, label: "برداشت مالی", href: "" },
+            { icon: <FaUserCircle />, label: "صفحه اختصاصی", href: "" },
+          ].map(({ icon, label, href }, index) => (
+            <Link
               key={index}
-              href="#"
               className="flex items-center gap-2 text-gray-700 hover:text-green-600 transition px-4"
+              href={href}
             >
               <span className="text-xl">{icon}</span>
               <span className="text-sm">{label}</span>
-            </a>
+            </Link>
           ))}
         </nav>
         {/* Footer Action */}
@@ -51,7 +51,7 @@ const DashboardSidebar = () => {
           پشتیبانی و تیکت
         </button>
       </Link>
-    </div>  
+    </div>
   );
 };
 
