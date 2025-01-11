@@ -38,7 +38,7 @@ const MyTickets: FC<MyTicketsProps> = ({ session }) => {
 
       // The response data is directly available as response.data in Axios
       console.log("response : ", response.data);
-    
+      
     } catch (error) {
       // Error handling: If the request fails
       console.error("Error fetching tickets:", error);
