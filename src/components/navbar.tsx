@@ -6,6 +6,7 @@ import Link from "next/link";
 import SignInModalParent from "./authentication/signInModalParent";
 import ShoppingCartButton from "./ui/shoppingCartButton";
 import { usePathname } from "next/navigation";
+import Notifications from "./ui/notifications";
 
 interface NavbarProps {
   isDashboard?: boolean;
@@ -25,7 +26,8 @@ const Navbar: FC<NavbarProps> = ({ isDashboard = false }) => {
       >
         <div className="flex justify-start items-center gap-4 ms-5 basis-1/3">
           <SignInModalParent>ثبت نام/ورود</SignInModalParent>
-          <ShoppingCartButton /> 
+          <ShoppingCartButton />
+          <Notifications /> 
         </div>
         <div className="w-full flex gap-1 lg:gap-4 justify-center items-center basis-1/3">
           <Button

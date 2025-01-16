@@ -41,7 +41,10 @@ export default function MobileNavDashboard() {
           <span className="sr-only">Toggle navigation menu</span>
         </Button>
       </SheetTrigger>
-      <SheetContent side="right" className="flex gap-0 py-0 h-full pr-0 flex-col">
+      <SheetContent
+        side="right"
+        className="flex gap-0 py-0 h-full pr-0 flex-col"
+      >
         <SheetTitle>
           <VisuallyHidden.Root>menu</VisuallyHidden.Root>
         </SheetTitle>
@@ -108,18 +111,30 @@ export default function MobileNavDashboard() {
             <div className="h-full">
               <nav className="flex flex-col gap-4 w-full">
                 {[
-                  { icon: <FaShoppingCart />, label: "سفارش‌ها" },
-                  { icon: <FaHeart />, label: "لیست علاقه‌مندی‌ها" },
-                  { icon: <FaEnvelope />, label: "پیام‌ها" },
-                  { icon: <FaChartLine />, label: "گزارش مالی" },
-                  { icon: <FaTree />, label: "درخت‌های من" },
-                  { icon: <FaComments />, label: "دیدگاه‌های من" },
-                  { icon: <FaWallet />, label: "برداشت مالی" },
-                  { icon: <FaUserCircle />, label: "صفحه اختصاصی" },
-                ].map(({ icon, label }, index) => (
+                  {
+                    icon: <FaShoppingCart />,
+                    label: "سفارش‌ها",
+                    href: "orders",
+                  },
+                  {
+                    icon: <FaHeart />,
+                    label: "لیست علاقه‌مندی‌ها",
+                    href: "favorites",
+                  },
+                  { icon: <FaEnvelope />, label: "پیام‌ها", href: "" },
+                  {
+                    icon: <FaChartLine />,
+                    label: "گزارش مالی",
+                    href: "transactions",
+                  },
+                  { icon: <FaTree />, label: "درخت‌های من", href: "trees" },
+                  { icon: <FaComments />, label: "دیدگاه‌های من", href: "" },
+                  { icon: <FaWallet />, label: "برداشت مالی", href: "" },
+                  { icon: <FaUserCircle />, label: "صفحه اختصاصی", href: "" },
+                ].map(({ icon, label, href }, index) => (
                   <a
                     key={index}
-                    href="#"
+                    href={href}
                     className="flex items-center gap-2 text-gray-700 hover:text-green-600 transition px-4"
                   >
                     <span className="text-xl">{icon}</span>

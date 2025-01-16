@@ -26,10 +26,14 @@ const DashboardSidebar = () => {
         <nav className="flex flex-col gap-4 w-full">
           {[
             { icon: <FaShoppingCart />, label: "سفارش‌ها", href: "orders" },
-            { icon: <FaHeart />, label: "لیست علاقه‌مندی‌ها", href: "" },
+            {
+              icon: <FaHeart />,
+              label: "لیست علاقه‌مندی‌ها",
+              href: "favorites",
+            },
             { icon: <FaEnvelope />, label: "پیام‌ها", href: "" },
-            { icon: <FaChartLine />, label: "گزارش مالی", href: "" },
-            { icon: <FaTree />, label: "درخت‌های من", href: "" },
+            { icon: <FaChartLine />, label: "گزارش مالی", href: "transactions" },
+            { icon: <FaTree />, label: "درخت‌های من", href: "trees" },
             { icon: <FaComments />, label: "دیدگاه‌های من", href: "" },
             { icon: <FaWallet />, label: "برداشت مالی", href: "" },
             { icon: <FaUserCircle />, label: "صفحه اختصاصی", href: "" },

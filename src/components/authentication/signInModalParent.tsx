@@ -32,7 +32,7 @@ const SignInModalParent: FC<SignInModalParentProps> = ({ children }) => {
         </>
       ) : (
         <Link href={"/dashboard/profile-settings"}>
-          <Button size={"icon"} variant={"green"}>
+          <Button className="flex justify-center items-center" size={"icon"} variant={"green"}>
             <UserCircle />
           </Button>
         </Link>
