@@ -6,8 +6,7 @@ import TreeHeadInfo from "./treeheadInfo";
 import Footer from "@/components/footer";
 import MainCarousel from "@/components/main/mainCarousel";
 import TreeMainInfo from "./treeMainInfo";
-import NotFound from "./not-found";
-import { getServerSession } from "next-auth";
+import { getServerSession, Session } from "next-auth";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 
 interface ProductProps {
@@ -16,20 +15,56 @@ interface ProductProps {
   };
 }
 
+const fetchProductData = async (
+  session: Session | null,
+  productName: string
+) => {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}/order/api/tree/${productName}`,
+      {
+        headers: {
+          Authorization: session?.access ? `Bearer ${session?.access}` : "",
+          TOKEN: session?.token ?? "",
+        },
+      }
+    );
+
+    if (res.ok) {
+      const data = await res.json();
+      return data;
+    }
+
+    if (!res.ok) {
+      throw new Error(`Failed to fetch data: ${res.status} ${res.statusText}`);
+    }
+  } catch (err) {
+    console.log("Error fetching product data:", err);
+  }
+};
+
 const Product: FC<ProductProps> = async ({ params }) => {
   const session = await getServerSession(authOptions);
 
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/order/api/tree/${params.productName}`,
-    {
-      headers: {
-        Authorization: session?.access ? `Bearer ${session?.access}` : "",
-        TOKEN: session?.token ?? "",
-      },
-    }
-  );
+  const data = await fetchProductData(session, params.productName);
 
-  const data = await res.json();
+  // if (data === undefined) {
+  //   return (
+  //     <>
+  //       <div className="mt-3">
+  //         <Navbar />
+  //         <MobileNav />
+  //         <h2 className="text-red-600 text-lg w-full h-96 flex justify-center items-center">
+  //           <div>لطفا صفحه را رفرش کنید</div>
+  //         </h2>
+
+  //         <div className="absolute w-full bottom-0">
+  //           <Footer sponsors={false} />
+  //         </div>
+  //       </div>
+  //     </>
+  //   );
+  // }
 
   //this is the data that made app crash if i would have disabled cash
 

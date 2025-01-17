@@ -1,19 +1,29 @@
 "use client";
 
-import Link from "next/link";
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect, useState, useRef } from "react";
 import { Button } from "./button";
 import axios from "axios";
 import { useSession } from "next-auth/react";
 import { MailIcon } from "lucide-react";
+import Link from "next/link";
 
 interface NotificationsProps {}
 
-const Notifications: FC<NotificationsProps> = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const { data: session, status } = useSession();
+interface NotificationType {
+  id: string;
+  notif_type: number;
+  url_for_order: string | null;
+  url_for_reply_comment: string | null;
+  url_for_ticket: string | null;
+  url_for_transaction: string | null;
+}
 
+const Notifications: FC<NotificationsProps> = () => {
+  const { data: session, status } = useSession();
   const [count, setCount] = useState(0);
+  const [notifications, setNotifications] = useState<NotificationType[]>([]);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -29,6 +39,7 @@ const Notifications: FC<NotificationsProps> = () => {
           }
         );
         setCount(response.data.count);
+        setNotifications(response.data.data);
       } catch (error) {
         console.error("Failed to fetch notifications:", error);
       }
@@ -39,11 +50,61 @@ const Notifications: FC<NotificationsProps> = () => {
     }
   }, [session, status]);
 
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setIsDropdownOpen(false);
+      }
+    };
+
+    if (isDropdownOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isDropdownOpen]);
+
+  const toggleDropdown = () => {
+    setIsDropdownOpen(!isDropdownOpen);
+  };
+
+  const getNotificationMessage = (notif_type: number) => {
+    switch (notif_type) {
+      case 1:
+        return "پیام";
+      case 2:
+        return "ترد";
+      case 3:
+        return "تیکت";
+      case 4:
+        return "پایان سفارش";
+      case 5:
+        return "پاسخ در صفحه محصول";
+      case 6:
+        return "تراکنش";
+      case 7:
+        return "پاسخ در تاپیک درختان";
+      default:
+        return "هیچ پیام جدیدی نیست";
+    }
+  };
+
   return (
     <>
       {status === "authenticated" && (
-        <Link href="/shopping-cart">
-          <Button className="relative p-2" variant="icon">
+        <div className="relative" ref={dropdownRef}>
+          <Button
+            className="relative p-2"
+            variant="icon"
+            onClick={toggleDropdown}
+          >
             <div className="flex justify-center gap-3 items-center">
               <div className="relative w-6 h-6">
                 <MailIcon />
@@ -57,7 +118,44 @@ const Notifications: FC<NotificationsProps> = () => {
               )}
             </div>
           </Button>
-        </Link>
+
+          {isDropdownOpen && (
+            <div className="absolute right-0 mt-2 w-64 bg-white border border-gray-200 rounded-lg shadow-lg z-50">
+              <div className="p-4">
+                {notifications.length > 0 ? (
+                  <ul className="space-y-2">
+                    {notifications.map((notification) => (
+                      <li
+                        key={notification.id}
+                        className="text-sm p-2 rounded bg-gray-50 hover:bg-gray-100 cursor-pointer"
+                      >
+                        <p>{getNotificationMessage(notification.notif_type)}</p>
+                        {notification.url_for_reply_comment && (
+                          <Link
+                            href={'/products/چنار'}
+                            className="text-xs text-[#28D16C] hover:underline"
+                          >
+                            دیدن کامنت
+                          </Link>
+                        )}
+                        {notification.url_for_order && (
+                          <Link
+                            href={notification.url_for_order}
+                            className="text-xs text-[#28D16C] hover:underline"
+                          >
+                            دیدن سفارش
+                          </Link>
+                        )}
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p className="text-sm text-gray-500">هیچ پیام جدیدی نیست</p>
+                )}
+              </div>
+            </div>
+          )}
+        </div>
       )}
     </>
   );

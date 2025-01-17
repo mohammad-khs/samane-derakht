@@ -82,9 +82,6 @@ const MyTransactions: FC<MyTransactionsProps> = ({ session }) => {
       <div className="rounded-xl p-4 bg-white text-[#1F1F1F]">
         <div className="mb-8 flex gap-4">
           <div>
-            <label htmlFor="sort-by" className="sr-only">
-              مرتب‌سازی بر اساس
-            </label>
             <select
               id="sort-by"
               value={sortBy}
@@ -106,7 +103,6 @@ const MyTransactions: FC<MyTransactionsProps> = ({ session }) => {
               onChange={(e) =>
                 setTransactionSort(e.target.value as TransactionSortType)
               }
-              defaultValue={"default"}
               className="flex items-center cursor-pointer px-1.5 text-sm py-1 border-2 border-[#A3A3A3] rounded"
             >
               <option value="default" disabled>
@@ -117,30 +113,6 @@ const MyTransactions: FC<MyTransactionsProps> = ({ session }) => {
               <option value="3">دریافت وجه</option>
               <option value="4">ارسال وجه</option>
               <option value="5">برداشت</option>
-            </select>
-          </div>
-          <div className="mr-auto">
-            <select
-              // value={sortBy}
-              // onChange={handleSortChange}
-              defaultValue={"default"}
-              className="flex items-center cursor-pointer px-1.5 text-sm py-1 border-2 border-[#A3A3A3] rounded"
-            >
-              <option value="default" disabled>
-                از تاریخ
-              </option>
-            </select>
-          </div>
-          <div className="">
-            <select
-              // value={sortBy}
-              // onChange={handleSortChange}
-              defaultValue={"default"}
-              className="flex items-center cursor-pointer px-1.5 text-sm py-1 border-2 border-[#A3A3A3] rounded"
-            >
-              <option value="default" disabled>
-                تا تاریخ
-              </option>
             </select>
           </div>
           <Button

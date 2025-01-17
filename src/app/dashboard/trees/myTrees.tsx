@@ -70,7 +70,7 @@ const MyTrees: FC<MyTreesProps> = ({ session }) => {
     <>
       <div>
         {data?.data.map((treeItem: MyTreeItem) => (
-          <MyTreesSection item={treeItem} />
+          <MyTreesSection key={treeItem.id} item={treeItem} />
         ))}
       </div>
     </>

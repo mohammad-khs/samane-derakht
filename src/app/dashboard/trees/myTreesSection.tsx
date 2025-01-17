@@ -3,14 +3,40 @@ import { FallbackImage } from "@/components/products/product/headerImages";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
-import { FC } from "react";
+import { FC, useEffect, useRef, useState } from "react";
 import { MyTreeItem } from "./myTrees";
+import ModalMap from "./modalMap";
+import { latLng } from "leaflet";
 
 interface MyTreesSectionProps {
   item: MyTreeItem;
 }
 
 const MyTreesSection: FC<MyTreesSectionProps> = ({ item }) => {
+  const [openMapModal, setOpenMapModal] = useState(false);
+  const modalRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        modalRef.current &&
+        !modalRef.current.contains(event.target as Node)
+      ) {
+        setOpenMapModal(false);
+      }
+    };
+
+    if (openMapModal) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [openMapModal]);
+
   return (
     <>
       <div
@@ -55,7 +81,11 @@ const MyTreesSection: FC<MyTreesSectionProps> = ({ item }) => {
               </div>
               <div className="leading-7">
                 آدرس: {item.province_name} {item.city_name} {item.location_name}{" "}
-                <span className="font-semibold underline text-[#3F3F3F]">نمایش روی مپ</span>
+                <button onClick={(e) => setOpenMapModal(true)} className="">
+                  <span className="font-semibold underline text-[#3F3F3F]">
+                    نمایش روی نقشه
+                  </span>
+                </button>
               </div>
             </div>
           </div>
@@ -69,6 +99,18 @@ const MyTreesSection: FC<MyTreesSectionProps> = ({ item }) => {
           </Button>
         </div>
       </div>
+      {openMapModal && (
+        <div className="w-full bg-[#56565656] lg:pr-64 h-full z-[50] absolute top-0 right-0 flex justify-center items-center">
+          <div className="w-full px-8" ref={modalRef}>
+            <ModalMap
+              mapCenter={latLng(
+                parseFloat(item.latitud),
+                parseFloat(item.longtitud)
+              )}
+            />
+          </div>
+        </div>
+      )}
     </>
   );
 };
