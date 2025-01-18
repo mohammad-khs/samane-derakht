@@ -79,7 +79,7 @@ const MyTransactions: FC<MyTransactionsProps> = ({ session }) => {
 
   return (
     <>
-      <div className="rounded-xl p-4 bg-white text-[#1F1F1F]">
+      <div className="rounded-xl p-4 text-xs sm:text-base bg-white text-[#1F1F1F]">
         <div className="mb-8 flex gap-4">
           <div>
             <select
