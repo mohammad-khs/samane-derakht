@@ -37,7 +37,7 @@ const AddTicketSection: FC<AddTicketSectionProps> = ({ session }) => {
 
     if (imageFiles && imageFiles.length > 0) {
       imageFiles.forEach((image) => {
-        formData.append(`images`, image.file);
+        formData.append(`file`, image.file);
       });
     }
 
@@ -142,6 +142,7 @@ const AddTicketSection: FC<AddTicketSectionProps> = ({ session }) => {
 
             <div className="mt-4">
               <TicketImageUploader
+                maxFiles={1}
                 imageFiles={imageFiles}
                 setImageFiles={setImageFiles}
               />

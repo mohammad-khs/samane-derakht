@@ -93,9 +93,8 @@ const TicketImageUploader: FC<TicketImageUploaderProps> = ({
           </div>
           <input
             type="file"
-            multiple
             name="image"
-            accept="image/*" // Only accept image files
+            accept="image/*" 
             className="hidden"
             onChange={(e) => handleFileUpload(e.target.files)}
           />

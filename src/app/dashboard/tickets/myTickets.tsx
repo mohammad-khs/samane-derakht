@@ -47,7 +47,6 @@ const MyTickets: FC<MyTicketsProps> = ({ session }) => {
       }
       console.log("response : ", response.data);
     } catch (error) {
-      // Error handling: If the request fails
       console.error("Error fetching tickets:", error);
     }
   };
@@ -108,29 +107,25 @@ const MyTickets: FC<MyTicketsProps> = ({ session }) => {
       {allData.map((data) => {
         const dateInfo = DateFormatDMY(data.irani);
         return (
-          <>
-            <div className="rounded-xl my-2 bg-white">
-              <br />
-              <div className="mx-4 flex justify-between items-center" dir="rtl">
-                <div>
-                  <h2 className="text-lg">{data.subject}</h2>
-                  <div className="text-[#898989]">{data.description}</div>
-                </div>
-                <div>
-                  <Button variant={"lightGray"}>
-                    وضعیت {data.ticket_type}
-                  </Button>
-                  {dateInfo && (
-                    <div className="text-end mt-2">
-                      {dateInfo.year} {monthNumToMonthName(dateInfo.month)}{" "}
-                      {dateInfo.day}
-                    </div>
-                  )}
-                </div>
+          <div key={data.id} className="rounded-xl my-2 bg-white">
+            <br />
+            <div className="mx-4 flex justify-between items-center" dir="rtl">
+              <div>
+                <h2 className="text-lg">{data.subject}</h2>
+                <div className="text-[#898989]">{data.description}</div>
               </div>
-              <br />
+              <div>
+                <Button variant={"lightGray"}>وضعیت {data.ticket_type}</Button>
+                {dateInfo && (
+                  <div className="text-end mt-2">
+                    {dateInfo.year} {monthNumToMonthName(dateInfo.month)}{" "}
+                    {dateInfo.day}
+                  </div>
+                )}
+              </div>
             </div>
-          </>
+            <br />
+          </div>
         );
       })}
     </>
