@@ -15,56 +15,62 @@ interface ProductProps {
   };
 }
 
-const fetchProductData = async (
-  session: Session | null,
-  productName: string
-) => {
-  try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}/order/api/tree/${productName}`,
-      {
-        headers: {
-          Authorization: session?.access ? `Bearer ${session?.access}` : "",
-          TOKEN: session?.token ?? "",
-        },
-      }
-    );
-
-    if (res.ok) {
-      const data = await res.json();
-      return data;
-    }
-
-    if (!res.ok) {
-      throw new Error(`Failed to fetch data: ${res.status} ${res.statusText}`);
-    }
-  } catch (err) {
-    console.log("Error fetching product data:", err);
-  }
-};
-
 const Product: FC<ProductProps> = async ({ params }) => {
   const session = await getServerSession(authOptions);
 
+  const fetchProductData = async (
+    session: Session | null,
+    productName: string
+  ) => {
+    try {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/order/api/tree/${productName}`,
+        {
+          headers: {
+            Authorization: session?.access ? `Bearer ${session?.access}` : "",
+            TOKEN: session?.token ?? "",
+          },
+        }
+      );
+      console.log(res.status);
+      console.log(res.statusText);
+
+      if (res.ok) {
+        const data = await res.json();
+        console.log("this is data inside the function : ", data);
+        return data;
+      }
+
+      if (!res.ok) {
+        throw new Error(
+          `Failed to fetch the product data : ${res.status} ${res.statusText}`
+        );
+      }
+    } catch (err) {
+      console.log("Error fetching product data:", err);
+    }
+  };
+
   const data = await fetchProductData(session, params.productName);
+  console.log("this is data inside the component : ", data);
 
-  // if (data === undefined) {
-  //   return (
-  //     <>
-  //       <div className="mt-3">
-  //         <Navbar />
-  //         <MobileNav />
-  //         <h2 className="text-red-600 text-lg w-full h-96 flex justify-center items-center">
-  //           <div>لطفا صفحه را رفرش کنید</div>
-  //         </h2>
+  if (data === undefined) {
+    return (
+      <>
+        <div className="mt-3">
+          <Navbar />
+          <MobileNav />
+          <h2 className="text-red-600 text-lg w-full h-96 flex justify-center items-center">
+            <div>لطفا صفحه را رفرش کنید</div>
+          </h2>
 
-  //         <div className="absolute w-full bottom-0">
-  //           <Footer sponsors={false} />
-  //         </div>
-  //       </div>
-  //     </>
-  //   );
-  // }
+          <div className="absolute w-full bottom-0">
+            <Footer sponsors={false} />
+          </div>
+        </div>
+      </>
+    );
+  }
 
   //this is the data that made app crash if i would have disabled cash
 
