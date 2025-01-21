@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { DateFormatDMY, monthNumToMonthName } from "@/helper/dateHandler";
 import axios from "axios";
 import { Session } from "next-auth";
+import Link from "next/link";
 import { FC, useEffect, useState } from "react";
 
 interface MyTicketsProps {
@@ -115,7 +116,11 @@ const MyTickets: FC<MyTicketsProps> = ({ session }) => {
                 <div className="text-[#898989]">{data.description}</div>
               </div>
               <div>
-                <Button variant={"lightGray"}>وضعیت {data.ticket_type}</Button>
+                <Link href={`tickets/${data.id}/`}>
+                  <Button variant={"lightGray"}>
+                    وضعیت {data.ticket_type}
+                  </Button>
+                </Link>
                 {dateInfo && (
                   <div className="text-end mt-2">
                     {dateInfo.year} {monthNumToMonthName(dateInfo.month)}{" "}

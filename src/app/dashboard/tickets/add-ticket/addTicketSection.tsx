@@ -10,6 +10,7 @@ import toast from "react-hot-toast";
 import axios from "axios";
 import { Session } from "next-auth";
 import { FileStatus } from "@/types/complete-info";
+import { redirect, useRouter } from "next/navigation";
 
 interface AddTicketSectionProps {
   session: Session | null;
@@ -19,7 +20,7 @@ const AddTicketSection: FC<AddTicketSectionProps> = ({ session }) => {
   const [subject, setSubject] = useState("");
   const [description, setDescription] = useState("");
   const [imageFiles, setImageFiles] = useState<FileStatus[]>([]);
-
+  const router = useRouter();
   const handleSubmitTicket = async () => {
     if (subject.length < 4) {
       toast.error("عنوان تیکت کوتاه است");
@@ -57,13 +58,14 @@ const AddTicketSection: FC<AddTicketSectionProps> = ({ session }) => {
       if (response.status === 200) {
         toast.success("با موفقیت انجام شد");
         console.log(response.data);
+        router.replace("/dashboard/tickets");
       }
       if (response.status === 404) {
         toast.error("منطقه مورد نظر یافت نشد");
         return;
       }
     } catch (error: any) {
-      console.error("Error fetching city and district:", error);
+      console.error("Error in sending tikcet:", error);
 
       if (axios.isAxiosError(error)) {
         if (error.response && error.response.status === 404) {
@@ -77,6 +79,7 @@ const AddTicketSection: FC<AddTicketSectionProps> = ({ session }) => {
     }
   };
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+
   return (
     <>
       <h1 className="text-2xl mb-4">ثبت تیکت</h1>

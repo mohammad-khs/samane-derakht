@@ -24,12 +24,22 @@ export interface TreeData {
   in_cart: boolean;
 }
 
-export interface TreeComment {
+export interface TreeChildComment {
   id: string;
   created: string;
   text: string;
   user_username: string;
   user_profileimage: string | null;
-  count_of_child: number; 
+  irani: string;
+}
+
+export interface TreeComment {
+  child_of_all: TreeChildComment[];
+  id: string;
+  created: string;
+  text: string;
+  user_username: string;
+  user_profileimage: string | null;
+  count_of_child: number;
   irani: string;
 }

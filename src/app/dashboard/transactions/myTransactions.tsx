@@ -80,13 +80,13 @@ const MyTransactions: FC<MyTransactionsProps> = ({ session }) => {
   return (
     <>
       <div className="rounded-xl p-4 text-xs sm:text-base bg-white text-[#1F1F1F]">
-        <div className="mb-8 flex gap-4">
+        <div className="mb-8 flex flex-col sm:flex-row gap-2 md:gap-4 ">
           <div>
             <select
               id="sort-by"
               value={sortBy}
               onChange={handleSortChange}
-              className="cursor-pointer px-1.5 text-sm py-1 border-2 border-[#A3A3A3] rounded"
+              className="cursor-pointer px-1.5 py-1 border-2 border-[#A3A3A3] rounded text-xs sm:text-base"
             >
               <option value="default" disabled>
                 مرتب‌سازی بر اساس
@@ -97,13 +97,13 @@ const MyTransactions: FC<MyTransactionsProps> = ({ session }) => {
               <option value="create">قدیمی‌ترین</option>
             </select>
           </div>
-          <div className="">
+          <div>
             <select
               value={transactionSort}
               onChange={(e) =>
                 setTransactionSort(e.target.value as TransactionSortType)
               }
-              className="flex items-center cursor-pointer px-1.5 text-sm py-1 border-2 border-[#A3A3A3] rounded"
+              className="cursor-pointer px-1.5 py-1 border-2 border-[#A3A3A3] rounded text-xs sm:text-base"
             >
               <option value="default" disabled>
                 نوع تراکنش
@@ -115,31 +115,28 @@ const MyTransactions: FC<MyTransactionsProps> = ({ session }) => {
               <option value="5">برداشت</option>
             </select>
           </div>
-          <Button
-            onClick={fetchFinishedOrders}
-            className="bg-[#F2B93B]"
-            variant={"green"}
-          >
-            اعمال فیلتر
-          </Button>
+          <div className="items-center flex">
+            <Button
+              onClick={fetchFinishedOrders}
+              className="bg-[#F2B93B]"
+              variant={"green"}
+            >
+              اعمال فیلتر
+            </Button>
+          </div>
         </div>
         <table className="w-full">
           <thead className="text-center bg-[#EAEAEA] rounded-full">
             <tr className="">
               <th className="p-2  rounded-r-2xl">عنوان تراکنش</th>
-              <th className="p-2 ">تاریخ</th>
-              <th className="p-2 ">مقدار</th>
-              <th className="p-2  rounded-l-2xl">موجودی</th>
+              <th className="p-2">تاریخ</th>
+              <th className="p-2 rounded-l-2xl">مقدار</th>
             </tr>
           </thead>
           <tbody>
             {data?.data.map((transaction) => {
               return (
-                <Transaction
-                  key={transaction.id}
-                  transaction={transaction}
-                  balance={data.balance}
-                />
+                <Transaction key={transaction.id} transaction={transaction} />
               );
             })}
           </tbody>

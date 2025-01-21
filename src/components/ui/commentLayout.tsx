@@ -9,9 +9,8 @@ import {
   ThumbsUp,
 } from "lucide-react";
 import Image from "next/image";
-import { Dispatch, FC, MutableRefObject, SetStateAction } from "react";
+import { FC } from "react";
 import { FaUser } from "react-icons/fa";
-import ChildComment from "./childComment";
 import { handleReply } from "@/lib/utils";
 
 interface CommentLayoutProps {

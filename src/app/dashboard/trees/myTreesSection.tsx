@@ -62,7 +62,9 @@ const MyTreesSection: FC<MyTreesSectionProps> = ({ item }) => {
             <div>
               <span>نهال درخت {item.tree_name}</span>{" "}
               <span className="text-[#247C48] underline text-xs">
-                <Link href={`/products/${item?.tree_name}`}>مشاهده محصول</Link>
+                <Link href={`/products/${item?.tree_type_slug}`}>
+                  مشاهده محصول
+                </Link>
               </span>
             </div>
             <div className="text-sm text-center mt-2 sm:text-start">

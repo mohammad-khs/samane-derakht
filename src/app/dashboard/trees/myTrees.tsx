@@ -25,6 +25,7 @@ export interface MyTreeItem {
   province_name: string;
   show_status_message: null | string;
   tree_type_image: string;
+  tree_type_slug: string;
 }
 
 interface MyTrees {

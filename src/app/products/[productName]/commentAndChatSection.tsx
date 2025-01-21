@@ -29,6 +29,8 @@ interface CommentAndChatSectionContext extends CommentAndChatSectionProps {
   setcommentToreplyId: Dispatch<SetStateAction<string | undefined>>;
   commentToReplyUsername: string | null;
   setCommentToReplyUsername: Dispatch<SetStateAction<string | null>>;
+  profileId: string | undefined;
+  setProfileId: Dispatch<SetStateAction<string | undefined>>;
 }
 const commentAndChatSectionContext = createContext<
   CommentAndChatSectionContext | undefined
@@ -44,6 +46,7 @@ const CommentAndChatSection: FC<CommentAndChatSectionProps> = ({
   const [commentToreplyId, setcommentToreplyId] = useState<string | undefined>(
     undefined
   );
+  const [profileId, setProfileId] = useState<string | undefined>(undefined);
   const [commentToReplyUsername, setCommentToReplyUsername] = useState<
     string | null
   >(null);
@@ -64,6 +67,8 @@ const CommentAndChatSection: FC<CommentAndChatSectionProps> = ({
           session,
           commentToReplyUsername,
           setCommentToReplyUsername,
+          profileId,
+          setProfileId,
         }}
       >
         <div className="md:w-3/4 ms-auto">

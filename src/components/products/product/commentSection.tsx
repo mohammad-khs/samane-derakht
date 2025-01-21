@@ -36,7 +36,6 @@ const CommentSection: FC<CommentSectionProps> = ({}) => {
   const currentPageData = data ? data[size - 1] : [];
   const previousPageData = data ? data[size - 2] : [];
 
-
   if (isLoading || currentPageData === undefined) {
     return (
       <div className="font-semibold text-[#28D16C] text-center my-3">
@@ -63,7 +62,8 @@ const CommentSection: FC<CommentSectionProps> = ({}) => {
                 <div className="border-r-2 -top-12 w-[40px] -right-10 sm:-right-14 border-dashed border-b-2 absolute border-[#EAEAEA] h-1/3"></div>
                 <div>
                   <ChildComment
-                    commentId={comment.id}
+                    childOfAll={comment.child_of_all}
+                    parentCommentId={comment.id}
                     replyedTo={comment.user_username}
                   />
                 </div>

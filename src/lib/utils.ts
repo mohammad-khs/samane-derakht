@@ -1,4 +1,4 @@
-import { TreeComment } from "@/types/products";
+import { TreeChildComment } from "@/types/products";
 import axios from "axios";
 import { clsx, type ClassValue } from "clsx";
 import { Dispatch, MutableRefObject, SetStateAction } from "react";
@@ -10,13 +10,14 @@ export function cn(...inputs: ClassValue[]) {
 
 export const fetcher = (url: string) => axios.get(url).then((res) => res.data);
 
-
 // its for reply handling in comment section
 export const handleReply = (
   textareaRef: MutableRefObject<HTMLTextAreaElement | null>,
   setcommentToreplyId: Dispatch<SetStateAction<string | undefined>>,
   setCommentToReplyUsername: Dispatch<SetStateAction<string | null>>,
-  comment: TreeComment | undefined
+  comment: TreeChildComment | undefined,
+  setProfileId: Dispatch<SetStateAction<string | undefined>> = () => undefined,
+  parentCommentId: string | undefined = ""
 ) => {
   textareaRef.current?.scrollIntoView({
     behavior: "smooth",
@@ -28,7 +29,9 @@ export const handleReply = (
   }, 1000);
 
   if (comment) {
+    //it should not be comment but user id ////////////////
+    setProfileId(comment?.id);
     setCommentToReplyUsername(comment.user_username);
-    setcommentToreplyId(comment?.id);
+    setcommentToreplyId(parentCommentId);
   }
 };

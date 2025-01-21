@@ -114,22 +114,22 @@ export default function MobileNavDashboard() {
                   {
                     icon: <FaShoppingCart />,
                     label: "سفارش‌ها",
-                    href: "orders",
+                    href: "/dashboard/orders",
                   },
                   {
                     icon: <FaHeart />,
                     label: "لیست علاقه‌مندی‌ها",
-                    href: "favorites",
+                    href: "/dashboard/favorites",
                   },
                   { icon: <FaEnvelope />, label: "پیام‌ها", href: "" },
                   {
                     icon: <FaChartLine />,
                     label: "گزارش مالی",
-                    href: "transactions",
+                    href: "/dashboard/transactions",
                   },
-                  { icon: <FaTree />, label: "درخت‌های من", href: "trees" },
+                  { icon: <FaTree />, label: "درخت‌های من", href: "/dashboard/trees" },
                   { icon: <FaComments />, label: "دیدگاه‌های من", href: "" },
-                  { icon: <FaWallet />, label: "برداشت مالی", href: "wallet" },
+                  { icon: <FaWallet />, label: "برداشت مالی", href: "/dashboard/wallet" },
                   { icon: <FaUserCircle />, label: "صفحه اختصاصی", href: "" },
                 ].map(({ icon, label, href }, index) => (
                   <a

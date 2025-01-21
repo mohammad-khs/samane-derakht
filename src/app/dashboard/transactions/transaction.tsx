@@ -11,10 +11,9 @@ import { TransactionType } from "./myTransactions";
 
 interface TransactionProps {
   transaction: TransactionType;
-  balance: number;
 }
 
-const Transaction: FC<TransactionProps> = ({ transaction, balance }) => {
+const Transaction: FC<TransactionProps> = ({ transaction }) => {
   const giveTransactionName = (transactionNumber: number) => {
     switch (transactionNumber) {
       case 1:
@@ -83,11 +82,6 @@ const Transaction: FC<TransactionProps> = ({ transaction, balance }) => {
       <td className="py-3 leading-8">
         {transaction.amount}{" "}
         <span className="text-xs text-[#959595]">تومان</span>
-      </td>
-      <td className="py-3 leading-8">
-        <div className="w-full">
-          {balance} <span className="text-xs text-[#959595]">تومان</span>
-        </div>
       </td>
     </tr>
   );
