@@ -8,12 +8,11 @@ import { toast } from "react-hot-toast";
 import TextareaAutosize from "react-textarea-autosize";
 
 interface ChatInputProps {
-  chatPartner: any;
   chatId: string;
   session: Session | null;
 }
 
-const ChatInput: FC<ChatInputProps> = ({ chatPartner, chatId, session }) => {
+const ChatInput: FC<ChatInputProps> = ({ chatId, session }) => {
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [input, setInput] = useState<string>("");
@@ -26,7 +25,7 @@ const ChatInput: FC<ChatInputProps> = ({ chatPartner, chatId, session }) => {
       await axios.post(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/account/api/sendticketMessage/${chatId}/`,
 
-        { ticketmessage: input, chatId },
+        { message: input, chatId },
         {
           headers: {
             Authorization: session?.access ? `Bearer ${session.access}` : "",
@@ -45,7 +44,7 @@ const ChatInput: FC<ChatInputProps> = ({ chatPartner, chatId, session }) => {
 
   return (
     <div className="border-t border-gray-200 px-4 pt-4 mb-2 sm:mb-0">
-      <div className="relative flex-1 overflow-hidden rounded-lg shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-indigo-600">
+      <div className="relative flex-1 overflow-hidden rounded-lg shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-[#28D16C]">
         <TextareaAutosize
           ref={textareaRef}
           onKeyDown={(e) => {
@@ -57,8 +56,8 @@ const ChatInput: FC<ChatInputProps> = ({ chatPartner, chatId, session }) => {
           rows={1}
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          placeholder={`Message ${chatPartner.name}`}
-          className="block w-full resize-none border-0 bg-transparent text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:py-1.5 sm:text-sm sm:leading-6"
+          placeholder={`ارسال متن`}
+          className="block w-full resize-none border-0 bg-transparent px-5 text-gray-900 placeholder:text-gray-400 focus:ring-0 focus:ring-transparent focus:outline-none py-2 sm:text-sm sm:leading-6"
         />
 
         <div
@@ -73,8 +72,8 @@ const ChatInput: FC<ChatInputProps> = ({ chatPartner, chatId, session }) => {
 
         <div className="absolute right-0 bottom-0 flex justify-between py-2 pl-3 pr-2">
           <div className="flex-shrink-0">
-            <Button onClick={sendMessage} type="submit">
-              Post
+            <Button onClick={sendMessage} variant={"green"} type="submit">
+              ارسال
             </Button>
           </div>
         </div>

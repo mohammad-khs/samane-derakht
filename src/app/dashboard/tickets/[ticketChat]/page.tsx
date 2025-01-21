@@ -17,13 +17,14 @@ const TicketChat: FC<TicketChatProps> = async ({ params }) => {
 
   return (
     <>
-      <div>
+      <div className="flex-1 justify-between flex flex-col min-h-[calc(100vh-152px)]">
         <ChatSection session={session} ticketChat={params.ticketChat} />
-        <ChatInput
-          session={session}
-          chatId={params.ticketChat}
-          chatPartner={"asdfhasdf"}
-        />
+        <div className="w-full right-0 mr-0 bottom-5">
+          <ChatInput
+            session={session}
+            chatId={params.ticketChat}
+          />
+        </div>
       </div>
     </>
   );
