@@ -30,6 +30,7 @@ export interface TreeChildComment {
   text: string;
   user_username: string;
   user_profileimage: string | null;
+  profile_id: string;
   irani: string;
 }
 
@@ -41,5 +42,6 @@ export interface TreeComment {
   user_username: string;
   user_profileimage: string | null;
   count_of_child: number;
+  profile_id: string;
   irani: string;
 }

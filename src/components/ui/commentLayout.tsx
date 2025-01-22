@@ -20,8 +20,12 @@ interface CommentLayoutProps {
 }
 
 const CommentLayout: FC<CommentLayoutProps> = ({ comment }) => {
-  const { textareaRef, setcommentToreplyId, setCommentToReplyUsername } =
-    useCommentAndChatSectionContext();
+  const {
+    textareaRef,
+    setcommentToreplyId,
+    setCommentToReplyUsername,
+    setProfileId,
+  } = useCommentAndChatSectionContext();
 
   if (comment) {
     return (
@@ -76,7 +80,9 @@ const CommentLayout: FC<CommentLayoutProps> = ({ comment }) => {
                     textareaRef,
                     setcommentToreplyId,
                     setCommentToReplyUsername,
-                    comment
+                    comment,
+                    setProfileId,
+                    comment.id
                   )
                 }
               >

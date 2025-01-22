@@ -29,8 +29,7 @@ export const handleReply = (
   }, 1000);
 
   if (comment) {
-    //it should not be comment but user id ////////////////
-    setProfileId(comment?.id);
+    setProfileId(comment?.profile_id);
     setCommentToReplyUsername(comment.user_username);
     setcommentToreplyId(parentCommentId);
   }

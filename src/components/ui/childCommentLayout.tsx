@@ -34,8 +34,12 @@ const ChildCommentLayout: FC<ChildCommentLayoutProps> = ({
   parentCommentId,
   setTriggerFetch,
 }) => {
-  const { setcommentToreplyId, setCommentToReplyUsername, textareaRef,setProfileId } =
-    useCommentAndChatSectionContext();
+  const {
+    setcommentToreplyId,
+    setCommentToReplyUsername,
+    textareaRef,
+    setProfileId,
+  } = useCommentAndChatSectionContext();
   return (
     <>
       <div>
@@ -97,7 +101,7 @@ const ChildCommentLayout: FC<ChildCommentLayoutProps> = ({
                         setCommentToReplyUsername,
                         childComment,
                         setProfileId,
-                        parentCommentId,
+                        parentCommentId
                       )
                     }
                   >
@@ -131,10 +135,8 @@ const ChildCommentLayout: FC<ChildCommentLayoutProps> = ({
           }}
           variant={"green"}
           disabled={
-            !childOfAll ||
-            childOfAll?.length === previousPageData?.data.length
+            !childOfAll || childOfAll?.length === previousPageData?.data.length
           }
-          
           size={"lg"}
           className="disabled:opacity-50 disabled:bg-gray-800 mt-3"
         >

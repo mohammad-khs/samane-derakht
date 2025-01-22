@@ -22,7 +22,8 @@ const ChatInput: FC<ChatInputProps> = () => {
     commentToReplyUsername,
     setCommentToReplyUsername,
     setcommentToreplyId,
-    profileId
+    profileId,
+    setProfileId,
   } = useCommentAndChatSectionContext();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [input, setInput] = useState<string>("");
@@ -33,6 +34,7 @@ const ChatInput: FC<ChatInputProps> = () => {
   const deleteReplyTo = () => {
     setcommentToreplyId(undefined);
     setCommentToReplyUsername(null);
+    setProfileId("");
   };
 
   const sendMessage = async () => {
@@ -48,7 +50,7 @@ const ChatInput: FC<ChatInputProps> = () => {
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/order/api/${
           commentToreplyId ? `replyComment` : `addComment`
         }/${productId}/${commentToreplyId ? `${commentToreplyId}/` : ""}`,
-        { text: input , profile_id : profileId },
+        { text: input, profile_id: profileId },
         {
           headers: {
             Authorization: `Bearer ${session?.data?.access}`,
@@ -66,10 +68,12 @@ const ChatInput: FC<ChatInputProps> = () => {
         user_profileimage: "",
         user_username: "شما",
         child_of_all: [],
+        profile_id: "",
       });
       setInput("");
       setCommentToReplyUsername(null);
       setcommentToreplyId(undefined);
+      setProfileId("");
       toast.success("پیام شما با موفقیت ثبت شد");
     } catch (error: unknown) {
       if (
