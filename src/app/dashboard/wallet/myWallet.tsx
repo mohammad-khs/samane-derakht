@@ -5,6 +5,7 @@ import axios from "axios";
 import { ArrowDownToLine, ArrowUpToLine, Loader2 } from "lucide-react";
 import { Session } from "next-auth";
 import { FC, useEffect, useState } from "react";
+import DepositModal from "./depositModal";
 
 interface MyWalletProps {
   session: Session;
@@ -20,6 +21,7 @@ interface BalanceType {
 const MyWallet: FC<MyWalletProps> = ({ session }) => {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState<BalanceType>();
+  const [depositModalIsOpen, setDepositModalIsOpen] = useState<boolean>(false);
   const fetchFinishedOrders = async () => {
     setLoading(true);
     try {
@@ -69,7 +71,11 @@ const MyWallet: FC<MyWalletProps> = ({ session }) => {
             </span>
           </div>
           <div className="flex gap-4">
-            <Button className="w-full" variant={"green"}>
+            <Button
+              onClick={(e) => setDepositModalIsOpen(true)}
+              className="w-full"
+              variant={"green"}
+            >
               <div className="flex gap-4 items-center">
                 <span>واریز </span>
                 <ArrowDownToLine className="w-5 h-5" />
@@ -108,6 +114,7 @@ const MyWallet: FC<MyWalletProps> = ({ session }) => {
           </div>
         </div>
       </div>
+      {depositModalIsOpen && <DepositModal session={session} onClose={() => setDepositModalIsOpen(false)} />}
     </>
   );
 };

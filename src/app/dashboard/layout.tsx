@@ -25,7 +25,7 @@ export default function Layout({
           <DashboardSidebar />
         </aside>
 
-        <main className="flex-1 lg:mr-[276px] m-4 md:my-8 p-4 relative">{children}</main>
+        <main className="flex-1 lg:mr-[276px] m-4 md:my-8 sm:p-4 relative">{children}</main>
       </div>
     </div>
   );

@@ -1,31 +1,46 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
 import axios from "axios";
 import { Session } from "next-auth";
-import { FC, useRef, useState } from "react";
+import { Dispatch, FC, SetStateAction, useRef, useState } from "react";
 import { toast } from "react-hot-toast";
 import TextareaAutosize from "react-textarea-autosize";
+import TicketFileUploader from "./ticketFileUpload";
+import { FileStatus } from "@/types/complete-info";
+import { PaperPlaneIcon } from "@radix-ui/react-icons";
+import { Loader2 } from "lucide-react";
 
-interface ChatInputProps {
+interface TicketChatInputProps {
   chatId: string;
   session: Session | null;
+  setSuccessMessage: Dispatch<SetStateAction<boolean>>;
 }
 
-const ChatInput: FC<ChatInputProps> = ({ chatId, session }) => {
+const TicketChatInput: FC<TicketChatInputProps> = ({
+  chatId,
+  session,
+  setSuccessMessage,
+}) => {
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [input, setInput] = useState<string>("");
-
+  const [files, setFiles] = useState<FileStatus[]>([]);
   const sendMessage = async () => {
     if (!input) return;
     setIsLoading(true);
 
-    try {
-      await axios.post(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/account/api/sendticketMessage/${chatId}/`,
+    const formData = new FormData();
+    formData.append("message", input);
+    if (files && files.length > 0) {
+      files.forEach((file) => {
+        formData.append(`file`, file.file);
+      });
+    }
 
-        { message: input, chatId },
+    try {
+      const res = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/account/api/sendticketMessage/${chatId}/`,
+        formData,
         {
           headers: {
             Authorization: session?.access ? `Bearer ${session.access}` : "",
@@ -33,10 +48,15 @@ const ChatInput: FC<ChatInputProps> = ({ chatId, session }) => {
           },
         }
       );
-      setInput("");
-      textareaRef.current?.focus();
+
+      if (res.status === 200) {
+        setSuccessMessage((prev) => !prev);
+        setInput("");
+        setFiles([]);
+        textareaRef.current?.focus();
+      }
     } catch {
-      toast.error("Something went wrong. Please try again later.");
+      toast.error("مشکلی پیش آمد لطفا دوباره سعی کنید");
     } finally {
       setIsLoading(false);
     }
@@ -59,7 +79,18 @@ const ChatInput: FC<ChatInputProps> = ({ chatId, session }) => {
           placeholder={`ارسال متن`}
           className="block w-full resize-none border-0 bg-transparent px-5 text-gray-900 placeholder:text-gray-400 focus:ring-0 focus:ring-transparent focus:outline-none py-2 sm:text-sm sm:leading-6"
         />
-
+        <button
+          disabled={isLoading}
+          className="absolute left-2 top-2"
+          onClick={sendMessage}
+          type="submit"
+        >
+          {isLoading ? (
+            <Loader2 className="w-8 h-8 animate-spin text-[#28D16C]" />
+          ) : (
+            <PaperPlaneIcon className="text-[#28D16C] w-6 h-6 rotate-180" />
+          )}
+        </button>
         <div
           onClick={() => textareaRef.current?.focus()}
           className="py-2"
@@ -72,9 +103,11 @@ const ChatInput: FC<ChatInputProps> = ({ chatId, session }) => {
 
         <div className="absolute right-0 bottom-0 flex justify-between py-2 pl-3 pr-2">
           <div className="flex-shrink-0">
-            <Button onClick={sendMessage} variant={"green"} type="submit">
-              ارسال
-            </Button>
+            <TicketFileUploader
+              files={files}
+              setFiles={setFiles}
+              maxFiles={1}
+            />
           </div>
         </div>
       </div>
@@ -82,4 +115,4 @@ const ChatInput: FC<ChatInputProps> = ({ chatId, session }) => {
   );
 };
 
-export default ChatInput;
+export default TicketChatInput;

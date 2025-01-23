@@ -1,19 +1,87 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import Image from "next/image";
-import { FC, useEffect, useRef, useState } from "react";
-import { MessageType } from "./chatSection";
+import {
+  FC,
+  useEffect,
+  useState,
+} from "react";
 import { FaUser } from "react-icons/fa";
+import axios from "axios";
+import { Session } from "next-auth";
+import { Loader2Icon } from "lucide-react";
 
 interface MessagesProps {
-  initialMessages: MessageType[] | undefined;
+  session: Session | null;
+  ticketChat: string;
+  successMessage: boolean;
 }
 
-const Messages: FC<MessagesProps> = ({ initialMessages }) => {
-  const [messages, setMessages] = useState<MessageType[] | undefined>(
-    initialMessages
-  );
+export interface MessageType {
+  created: string;
+  id: string;
+  irani: string;
+  message: string;
+  message_file: string | null;
+  receiver_messager: string;
+  sender_messager: string;
+  sender_user_phone: string;
+  ticket: string;
+}
+
+const Messages: FC<MessagesProps> = ({
+  session,
+  ticketChat,
+  successMessage,
+}) => {
+  const [chatData, setChatData] = useState<MessageType[]>();
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const fetchTicketChat = async () => {
+    setLoading(true);
+    try {
+      const data = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/account/api/myticketmessage/${ticketChat}`,
+        {
+          headers: {
+            Authorization: session?.access ? `Bearer ${session.access}` : "",
+            TOKEN: session?.token || "",
+          },
+        }
+      );
+
+      if (data.status !== 200) {
+        throw new Error("Failed to fetch ticketMessage");
+      }
+      if (data.status === 200) {
+        console.log(data);
+        setChatData(data.data as MessageType[]);
+        return data;
+      }
+    } catch (error) {
+      console.error("Error fetching ticketMessage:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchTicketChat();
+  }, [successMessage]);
+
+  useEffect(() => {
+    {
+      window.scrollTo(0, document.body.scrollHeight);
+    }
+  }, [chatData]);
+
+  if (loading) {
+    return (
+      <div className="h-full w-full flex justify-center items-center">
+        <Loader2Icon className="animate-spin h-10 text-[#28D16C] w-10" />
+      </div>
+    );
+  }
 
   // useEffect(() => {
   //   const messageHandler = (message: MessageType) => {
@@ -23,26 +91,22 @@ const Messages: FC<MessagesProps> = ({ initialMessages }) => {
   //       }
   //     });
   //   };
-  //   setMessages(initialMessages);
+  //   setMessages(chatData);
   // }, [messages]);
-
-  const scrollDownRef = useRef<HTMLDivElement | null>(null);
 
   // const formatTimestamp = (timestamp: number) => {
   //   return format(timestamp, "HH:mm");
   // };
 
   return (
-    <div className="flex h-full flex-1 flex-col-reverse gap-4 p-3">
-      <div ref={scrollDownRef} />
-
-      {messages?.map((message, index) => {
+    <div className="flex h-full flex-1 flex-col-reverse gap-4 md:p-3">
+      {chatData?.map((message, index) => {
         const isCurrentUser = message.receiver_messager !== "admin";
         console.log(isCurrentUser);
 
         const hasNextMessageFromSameUser =
-          messages[index - 1]?.sender_user_phone ===
-          messages[index].sender_user_phone;
+          chatData[index - 1]?.sender_user_phone ===
+          chatData[index].sender_user_phone;
 
         return (
           <div
@@ -56,7 +120,7 @@ const Messages: FC<MessagesProps> = ({ initialMessages }) => {
             >
               <div
                 className={cn(
-                  "flex flex-col space-y-2 text-base max-w-xs mx-2",
+                  "flex flex-col space-y-2 text-base  max-w-[280px] sm:max-w-xs mx-2 overflow-x-auto",
                   {
                     "order-1 items-end": isCurrentUser,
                     "order-2 items-start": !isCurrentUser,
