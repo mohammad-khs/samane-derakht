@@ -5,18 +5,19 @@ import axios from "axios";
 import { Session } from "next-auth";
 import Link from "next/link";
 import { FC, useEffect, useState } from "react";
+import Ticket from "./ticket";
 
 interface MyTicketsProps {
   session: Session;
 }
 
-interface Ticket {
+export interface TicketType {
   id: string;
   subject: string;
   last_mes: string;
   created: string;
   description: string;
-  ticket_type: string;
+  ticket_type: "باز" | "بسته" | "پاسخ داده شده" | "درحال برسی";
   count: number;
   irani: string;
   file: File;
@@ -27,12 +28,12 @@ const MyTickets: FC<MyTicketsProps> = ({ session }) => {
     "all" | "answered" | "open" | "close" | "reviewing"
   >("all");
 
-  const [allData, setAllData] = useState<Ticket[]>([]);
-  const [reviewData, setReviewData] = useState<Ticket[]>([]);
+  const [allData, setAllData] = useState<TicketType[]>([]);
+  const [reviewData, setReviewData] = useState<TicketType[]>([]);
+  const [answeredData, setAnsweredData] = useState<TicketType[]>([]);
 
   const fetchTickets = async () => {
     try {
-      // Make the GET request using Axios
       const response = await axios.get(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/account/api/mytickets/`,
         {
@@ -55,6 +56,21 @@ const MyTickets: FC<MyTicketsProps> = ({ session }) => {
   useEffect(() => {
     fetchTickets();
   }, []);
+
+  useEffect(() => {
+    const reviewing: any = [];
+    const answered: any = [];
+
+    allData.forEach((ticket) => {
+      if (ticket.ticket_type === "درحال برسی") {
+        reviewing.push(ticket);
+      } else if (ticket.ticket_type === "پاسخ داده شده") {
+        answered.push(ticket);
+      }
+    });
+    setReviewData(reviewing);
+    setAnsweredData(answered);
+  }, [allData]);
 
   return (
     <>
@@ -98,41 +114,45 @@ const MyTickets: FC<MyTicketsProps> = ({ session }) => {
                   activeButton === "answered" ? "bg-[#28D16C]" : "bg-[#D9D9D9]"
                 }`}
               >
-                {allData.length}
+                {answeredData.length}
+              </div>
+            </div>
+          </div>
+        </button>
+        <button
+          className={`relative pb-1 ${
+            activeButton === "reviewing"
+              ? "after:absolute after:left-0 after:bottom-[-6px] after:w-full after:h-[3px] after:bg-green-500"
+              : "text-[#5F6368]"
+          }`}
+          onClick={() => setActiveButton("reviewing")}
+        >
+          <div className="flex gap-1 justify-center items-center">
+            درانتظار پاسخ{" "}
+            <div
+              className={`flex justify-center items-center text-xs leading-6 text-white rounded-md px-[4px] ${
+                activeButton === "reviewing" ? "bg-[#28D16C]" : "bg-[#D9D9D9]"
+              }`}
+            >
+              <div
+                className={`flex justify-center items-center text-xs leading-6 text-white rounded-md px-[4px] ${
+                  activeButton === "reviewing" ? "bg-[#28D16C]" : "bg-[#D9D9D9]"
+                }`}
+              >
+                {reviewData.length}
               </div>
             </div>
           </div>
         </button>
       </div>
 
-      {allData.map((data) => {
-        const dateInfo = DateFormatDMY(data.irani);
-        return (
-          <div key={data.id} className="rounded-xl my-2 bg-white">
-            <br />
-            <div className="mx-4 flex justify-between items-center" dir="rtl">
-              <div>
-                <h2 className="text-lg">{data.subject}</h2>
-                <div className="text-[#898989]">{data.description}</div>
-              </div>
-              <div>
-                <Link href={`tickets/${data.id}/`}>
-                  <Button variant={"lightGray"}>
-                    وضعیت {data.ticket_type}
-                  </Button>
-                </Link>
-                {dateInfo && (
-                  <div className="text-end mt-2">
-                    {dateInfo.year} {monthNumToMonthName(dateInfo.month)}{" "}
-                    {dateInfo.day}
-                  </div>
-                )}
-              </div>
-            </div>
-            <br />
-          </div>
-        );
-      })}
+      {activeButton === "all" ? (
+        <Ticket allData={allData} />
+      ) : activeButton === "reviewing" ? (
+        <Ticket allData={reviewData} />
+      ) : (
+        activeButton === "answered" && <Ticket allData={answeredData} />
+      )}
     </>
   );
 };

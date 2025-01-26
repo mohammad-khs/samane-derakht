@@ -51,7 +51,7 @@ export default function MobileNavDashboard() {
         <div dir="rtl" className="flex h-full">
           <nav className="flex flex-col h-full justify-around items-center gap-2 text-lg w-20 bg-[#eaeaea] font-medium">
             <Link
-              href="#"
+              href="/"
               className="flex items-center gap-2 text-lg font-semibold"
             >
               <Button

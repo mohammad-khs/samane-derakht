@@ -13,7 +13,11 @@ import Link from "next/link";
 
 import { FaHeadphones, FaQuestion } from "react-icons/fa";
 
-export default function MobileNav() {
+interface MobileNavProps {
+  disappearLg?: boolean;
+}
+
+export default function MobileNav({ disappearLg = false }: MobileNavProps) {
   return (
     <Sheet>
       <SheetDescription>
@@ -24,7 +28,9 @@ export default function MobileNav() {
         <Button
           variant="outline"
           size="icon"
-          className="shrink-0 h-full w-auto  m-5 p-1 md:hidden"
+          className={`shrink-0 h-full w-auto  m-5 p-1 ${
+            disappearLg ? "lg:hidden" : "md:hidden"
+          }`}
         >
           <Menu className="h-8 w-8 text-[#383838]" />
           <span className="sr-only">Toggle navigation menu</span>
@@ -54,7 +60,7 @@ export default function MobileNav() {
             محصولات
           </Link>
           <Link
-            href="#"
+            href="/company/about-us"
             className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
           >
             <InfoIcon className="h-5 w-5" />
@@ -68,7 +74,7 @@ export default function MobileNav() {
             سبد خرید
           </Link>
           <Link
-            href="#"
+            href="/company/faq"
             className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
           >
             <FaQuestion className="h-5 w-5" />

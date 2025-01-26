@@ -3,8 +3,9 @@ import { Button } from "@/components/ui/button";
 import axios from "axios";
 import { Loader2 } from "lucide-react";
 import { Session } from "next-auth";
-import { FC, useEffect, useState } from "react";
+import { FC, useState } from "react";
 import Transaction from "./transaction";
+import useSWRInfinite from "swr/infinite";
 
 interface MyTransactionsProps {
   session: Session;
@@ -15,7 +16,7 @@ export interface TransactionType {
   amount: number;
   transaction_type: number;
   irani_time: string;
-  created: string; // ISO timestamp format
+  created: string;
 }
 
 interface ResponseData {
@@ -26,50 +27,93 @@ interface ResponseData {
 
 type SortByOption = "create" | "-create" | "amount" | "-amount" | "default";
 type TransactionSortType = "default" | number;
+
+export const fetcher = (url: string, session: Session) =>
+  axios
+    .get(url, {
+      headers: {
+        Authorization: `Bearer ${session?.access}`,
+        TOKEN: session?.token,
+      },
+    })
+    .then((res) => res.data);
+
+export function useFinishedOrders(
+  session: Session,
+  transactionSort: TransactionSortType,
+  sortBy: string
+) {
+  const getKey = (pageIndex: number, previousPageData: any) => {
+    if (pageIndex === 0 && !previousPageData) {
+      return `${
+        process.env.NEXT_PUBLIC_API_BASE_URL
+      }/account/api/mytransactions/?tr_type=${
+        transactionSort !== "default" ? transactionSort : ""
+      }&sort=${sortBy}&offset=0`;
+    }
+
+    if (previousPageData && previousPageData.length === 0) return null;
+
+    console.log("its fetching new data :(");
+
+    return `${
+      process.env.NEXT_PUBLIC_API_BASE_URL
+    }/account/api/mytransactions/?tr_type=${
+      transactionSort !== "default" ? transactionSort : ""
+    }&sort=${sortBy}&offset=${pageIndex * 5}`;
+  };
+
+  const { data, error, size, setSize, mutate } = useSWRInfinite(
+    getKey,
+    (url) => fetcher(url, session),
+    {
+      revalidateOnFocus: false,
+      revalidateIfStale: false,
+    }
+  );
+
+  const orders = data ? data.flat() : [];
+  const isLoading = !data && !error;
+  const currentData: ResponseData = data ? data[size - 1] : [];
+  const previousData: ResponseData = data ? data[size - 2] : [];
+
+  return {
+    orders,
+    error,
+    isLoading,
+    currentData,
+    previousData,
+    size,
+    setSize,
+    mutate,
+  };
+}
+
 const MyTransactions: FC<MyTransactionsProps> = ({ session }) => {
-  const [loading, setLoading] = useState(true);
-  const [data, setData] = useState<ResponseData>();
   const [sortBy, setSortBy] = useState<SortByOption>("default");
   const [transactionSort, setTransactionSort] =
     useState<TransactionSortType>("default");
+  const [pendingSortBy, setPendingSortBy] = useState<SortByOption>("default");
+  const [pendingTransactionSort, setPendingTransactionSort] =
+    useState<TransactionSortType>("default");
 
-  const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const value = e.target.value as SortByOption;
-    setSortBy(value);
+  const {
+    orders,
+    isLoading,
+    currentData,
+    previousData,
+    setSize,
+    error,
+    mutate,
+  } = useFinishedOrders(session, transactionSort, sortBy);
+
+  const handleFilterApply = () => {
+    setSortBy(pendingSortBy);
+    setTransactionSort(pendingTransactionSort);
+    mutate();
   };
 
-  const fetchFinishedOrders = async () => {
-    setLoading(true);
-    try {
-      const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/account/api/mytransactions/`,
-        {
-          params: {
-            tr_type: transactionSort !== "default" ? transactionSort : "",
-            sort: sortBy,
-          },
-          headers: {
-            Authorization: `Bearer ${session?.access}`,
-            TOKEN: session?.token,
-          },
-        }
-      );
-      if (response.status === 200) {
-        setData(response.data as ResponseData);
-        console.log(response.data);
-      }
-    } catch (error) {
-      console.error("Error fetching Orders:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchFinishedOrders();
-  }, []);
-
-  if (loading) {
+  if (isLoading) {
     return (
       <div className="w-full h-full justify-center items-center flex">
         <Loader2 className="animate-spin w-20 h-20 text-[#28D16C]" />
@@ -84,8 +128,8 @@ const MyTransactions: FC<MyTransactionsProps> = ({ session }) => {
           <div>
             <select
               id="sort-by"
-              value={sortBy}
-              onChange={handleSortChange}
+              value={pendingSortBy}
+              onChange={(e) => setPendingSortBy(e.target.value as SortByOption)}
               className="cursor-pointer px-1.5 py-1 border-2 border-[#A3A3A3] rounded text-xs sm:text-base"
             >
               <option value="default" disabled>
@@ -99,9 +143,9 @@ const MyTransactions: FC<MyTransactionsProps> = ({ session }) => {
           </div>
           <div>
             <select
-              value={transactionSort}
+              value={pendingTransactionSort}
               onChange={(e) =>
-                setTransactionSort(e.target.value as TransactionSortType)
+                setPendingTransactionSort(e.target.value as TransactionSortType)
               }
               className="cursor-pointer px-1.5 py-1 border-2 border-[#A3A3A3] rounded text-xs sm:text-base"
             >
@@ -117,7 +161,7 @@ const MyTransactions: FC<MyTransactionsProps> = ({ session }) => {
           </div>
           <div className="items-center flex">
             <Button
-              onClick={fetchFinishedOrders}
+              onClick={handleFilterApply}
               className="bg-[#F2B93B]"
               variant={"green"}
             >
@@ -127,20 +171,43 @@ const MyTransactions: FC<MyTransactionsProps> = ({ session }) => {
         </div>
         <table className="w-full">
           <thead className="text-center bg-[#EAEAEA] rounded-full">
-            <tr className="">
+            <tr>
               <th className="p-2  rounded-r-2xl">عنوان تراکنش</th>
               <th className="p-2">تاریخ</th>
               <th className="p-2 rounded-l-2xl">مقدار</th>
             </tr>
           </thead>
           <tbody>
-            {data?.data.map((transaction) => {
-              return (
+            {orders[orders.length - 1]?.data?.map(
+              (transaction: TransactionType) => (
                 <Transaction key={transaction.id} transaction={transaction} />
-              );
-            })}
+              )
+            )}
           </tbody>
         </table>
+      </div>
+
+      {error && error?.status === 429 ? (
+        <div className="text-red-600 text-center my-3">
+          لطفا کمی صبر کنید...
+        </div>
+      ) : (
+        <div className="text-red-600 text-center my-3">{error?.message}</div>
+      )}
+      <div className="text-center mt-8">
+        {
+          <Button
+            disabled={
+              !currentData?.data ||
+              currentData?.data?.length === previousData?.data?.length
+            }
+            className="disabled:bg-slate-500"
+            variant={"green"}
+            onClick={() => setSize((prev) => prev + 1)}
+          >
+            نمایش بیشتر
+          </Button>
+        }
       </div>
     </>
   );

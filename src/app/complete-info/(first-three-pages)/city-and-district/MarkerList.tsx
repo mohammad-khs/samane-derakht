@@ -1,10 +1,11 @@
 "use client";
 import { FC } from "react";
 import { handleMarkerClick } from "./plantTreeMap";
-import { ProvinceData } from "./page";
+
 import { Session } from "next-auth";
 import { useCompleteInfoContext } from "@/context/completeInfo";
 import { X } from "lucide-react";
+import { ProvinceData } from "@/types/complete-info";
 
 interface MarkerListProps {
   data: ProvinceData | null;

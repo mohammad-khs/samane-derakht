@@ -1,12 +1,22 @@
 "use client";
+
 import { FallbackImage } from "@/components/products/product/headerImages";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
 import { FC, useEffect, useRef, useState } from "react";
 import { MyTreeItem } from "./myTrees";
-import ModalMap from "./modalMap";
-import { latLng } from "leaflet";
+import dynamic from "next/dynamic";
+import { Loader2Icon } from "lucide-react";
+
+const DynamicModalMap = dynamic(() => import("./modalMap"), {
+  ssr: false,
+  loading: () => (
+    <div className="flex justify-center items-center">
+      <Loader2Icon className="animate-spin text-[#28D16C] h-12 w-12" />
+    </div>
+  ),
+});
 
 interface MyTreesSectionProps {
   item: MyTreeItem;
@@ -102,13 +112,10 @@ const MyTreesSection: FC<MyTreesSectionProps> = ({ item }) => {
         </div>
       </div>
       {openMapModal && (
-        <div className="w-full bg-[#56565656] lg:pr-64 h-full z-[50] absolute top-0 right-0 flex justify-center items-center">
+        <div className="w-full bg-[#56565656] h-full z-[50] absolute top-0 right-0 flex justify-center items-center">
           <div className="w-full px-8" ref={modalRef}>
-            <ModalMap
-              mapCenter={latLng(
-                parseFloat(item.latitud),
-                parseFloat(item.longtitud)
-              )}
+            <DynamicModalMap
+              mapCenter={[parseFloat(item.latitud), parseFloat(item.longtitud)]}
             />
           </div>
         </div>

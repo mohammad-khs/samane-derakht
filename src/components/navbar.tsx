@@ -21,13 +21,15 @@ const Navbar: FC<NavbarProps> = ({ isDashboard = false }) => {
     <>
       <nav
         className={`${
-          isDashboard ? "bg-[#FFFFFF] shadow-md lg:flex" : "bg-[#E4E7E5] mx-2 rounded-xl md:flex"
+          isDashboard
+            ? "bg-[#FFFFFF] shadow-md lg:flex"
+            : "bg-[#E4E7E5] mx-2 rounded-xl md:flex"
         }  flex-row py-2 hidden`}
       >
         <div className="flex justify-start items-center gap-4 ms-5 basis-1/3">
           <SignInModalParent>ثبت نام/ورود</SignInModalParent>
           <ShoppingCartButton />
-          <Notifications /> 
+          <Notifications />
         </div>
         <div className="w-full flex gap-1 lg:gap-4 justify-center items-center basis-1/3">
           <Button
@@ -40,28 +42,34 @@ const Navbar: FC<NavbarProps> = ({ isDashboard = false }) => {
             پشتیبانی
           </Button>
           <Button
-            className={`font-semibold ${
-              isActive("/contact") ? "bg-white" : ""
-            }`}
+            className={`font-semibold ${isActive("#") ? "bg-white" : ""}`}
             size={"resizble"}
             variant={"ghost"}
           >
             تماس با ما
           </Button>
-          <Button
-            className={`font-semibold ${isActive("/faq") ? "bg-white" : ""}`}
-            size={"resizble"}
-            variant={"ghost"}
-          >
-            سوالات متداول
-          </Button>
-          <Button
-            className={`font-semibold ${isActive("/about") ? "bg-white" : ""}`}
-            size={"resizble"}
-            variant={"ghost"}
-          >
-            درباره ما
-          </Button>
+          <Link href={"/company/faq"}>
+            <Button
+              className={`font-semibold ${
+                isActive("/company/faq") ? "bg-white" : ""
+              }`}
+              size={"resizble"}
+              variant={"ghost"}
+            >
+              سوالات متداول
+            </Button>
+          </Link>
+          <Link href={"/company/about-us"}>
+            <Button
+              className={`font-semibold ${
+                isActive("/company/about-us") ? "bg-white" : ""
+              }`}
+              size={"resizble"}
+              variant={"ghost"}
+            >
+              درباره ما
+            </Button>
+          </Link>
           <Link href="/products">
             <Button
               className={`font-semibold ${

@@ -8,7 +8,7 @@ import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility
 import { Icon, LatLng, latLng } from "leaflet";
 
 interface ModalMapProps {
-  mapCenter: LatLng;
+  mapCenter: [number, number];
 }
 
 const ModalMap: FC<ModalMapProps> = ({ mapCenter }) => {
@@ -38,7 +38,7 @@ const ModalMap: FC<ModalMapProps> = ({ mapCenter }) => {
         {
           <Marker
             icon={customIcon}
-            position={latLng(Number(mapCenter.lat), Number(mapCenter.lng))}
+            position={latLng(Number(mapCenter[0]), Number(mapCenter[1]))}
           />
         }
       </MapContainer>
