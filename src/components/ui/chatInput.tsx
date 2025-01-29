@@ -42,7 +42,10 @@ const ChatInput: FC<ChatInputProps> = () => {
       toast.error("لطفا احراز هویت فرمایید");
       return setIsModalOpen(true);
     }
-    if (!input) return;
+    if (!input) {
+      toast.error("پیامی برای ارسال نیست")
+      return
+    };
     setIsLoading(true);
 
     try {

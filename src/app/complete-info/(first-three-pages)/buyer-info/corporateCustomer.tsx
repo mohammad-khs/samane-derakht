@@ -91,7 +91,7 @@ const CorporateCustomer: FC<CorporateCustomerProps> = ({ setCustomer }) => {
               />
             </div>
           </div>
-          <div>
+          {/* <div>
             <label
               className="text-sm text-[#1F1F1F]"
               htmlFor="corporate-phone2"
@@ -112,7 +112,7 @@ const CorporateCustomer: FC<CorporateCustomerProps> = ({ setCustomer }) => {
               <sup>*</sup>در صورت جواب ندادن شماره خودتان، با این شماره تماس
               گرفته خواهد شد
             </p>
-          </div>
+          </div> */}
         </div>
         <div className="mt-8 text-sm">
           آیا شما یک شخص حقیقی هستید ؟{" "}

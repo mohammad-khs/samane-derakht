@@ -25,7 +25,7 @@ export interface Order {
 
 const MyOrders: FC<MyOrdersProps> = ({ session }) => {
   const [activeButton, setActiveButton] = useState<"waiting" | "finished">(
-    "finished"
+    "waiting"
   );
   const [finishedData, setFinishedData] = useState<Order[]>([]);
   const [waitingdata, setWaitingData] = useState<Order[]>([]);
@@ -96,25 +96,6 @@ const MyOrders: FC<MyOrdersProps> = ({ session }) => {
       <div className="flex gap-3 pb-1 border-b-2 border-[#A3A3A3] mb-4 relative">
         <button
           className={`relative pb-1 ${
-            activeButton === "finished"
-              ? "after:absolute after:left-0 after:bottom-[-6px] after:w-full after:h-[3px] after:bg-green-500"
-              : "text-[#5F6368]"
-          }`}
-          onClick={() => setActiveButton("finished")}
-        >
-          <div className="flex gap-1 justify-center items-center">
-            انجام شده{" "}
-            <div
-              className={`flex justify-center items-center text-xs leading-6 text-white rounded-md px-[4px] ${
-                activeButton === "finished" ? "bg-[#28D16C]" : "bg-[#D9D9D9]"
-              }`}
-            >
-              {finishedData.length}
-            </div>
-          </div>
-        </button>
-        <button
-          className={`relative pb-1 ${
             activeButton === "waiting"
               ? "after:absolute after:left-0 after:bottom-[-6px] after:w-full after:h-[3px] after:bg-green-500"
               : "text-[#5F6368]"
@@ -135,6 +116,25 @@ const MyOrders: FC<MyOrdersProps> = ({ session }) => {
               >
                 {waitingdata.length}
               </div>
+            </div>
+          </div>
+        </button>
+        <button
+          className={`relative pb-1 ${
+            activeButton === "finished"
+              ? "after:absolute after:left-0 after:bottom-[-6px] after:w-full after:h-[3px] after:bg-green-500"
+              : "text-[#5F6368]"
+          }`}
+          onClick={() => setActiveButton("finished")}
+        >
+          <div className="flex gap-1 justify-center items-center">
+            انجام شده{" "}
+            <div
+              className={`flex justify-center items-center text-xs leading-6 text-white rounded-md px-[4px] ${
+                activeButton === "finished" ? "bg-[#28D16C]" : "bg-[#D9D9D9]"
+              }`}
+            >
+              {finishedData.length}
             </div>
           </div>
         </button>

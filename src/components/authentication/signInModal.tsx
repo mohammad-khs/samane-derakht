@@ -4,7 +4,7 @@ import { signIn, useSession } from "next-auth/react";
 import toast from "react-hot-toast";
 import { Button } from "../ui/button";
 import { CaretLeftIcon } from "@radix-ui/react-icons";
-import { stringIsNotNumber } from "@/helper/validateNumber";
+import { formatMinutes, stringIsNotNumber } from "@/helper/validateNumber";
 
 interface SignInModalProps {
   isOpen: boolean;
@@ -69,7 +69,7 @@ const SignInModal: FC<SignInModalProps> = ({ isOpen, onClose }) => {
         const data = await response.json();
         setAuthResponse(data); // Store the token in authResponse
         setStep("otp");
-        setTimer(60); // Start 1-minute countdown
+        setTimer(120); // Start 1-minute countdown
         setError(undefined);
         console.log("Auth response received:", data);
       } else {
@@ -152,13 +152,13 @@ const SignInModal: FC<SignInModalProps> = ({ isOpen, onClose }) => {
             <Button
               onClick={handlePhoneSubmit}
               variant={"green"}
-              className="w-full"
+              className="w-full mt-4"
               disabled={loading || timer > 0}
             >
               {loading ? (
                 "درحال ارسال"
               ) : timer > 0 ? (
-                `${timer} زمان باقی مانده تا ارسال کد جدید`
+                `${formatMinutes(timer)} زمان باقی مانده تا ارسال کد جدید`
               ) : (
                 <div className="flex justify-center items-center text-sm">
                   <CaretLeftIcon className="h-8 w-8" /> ارسال کد
@@ -191,6 +191,22 @@ const SignInModal: FC<SignInModalProps> = ({ isOpen, onClose }) => {
               disabled={loading}
             >
               {loading ? "در حال تأیید..." : "مرحله بعدی"}
+            </Button>
+            <Button
+              onClick={handlePhoneSubmit}
+              variant={"green"}
+              className="w-full mt-4"
+              disabled={loading || timer > 0}
+            >
+              {loading ? (
+                "درحال ارسال"
+              ) : timer > 0 ? (
+                `${formatMinutes(timer)} زمان باقی مانده تا ارسال کد جدید`
+              ) : (
+                <div className="flex justify-center items-center text-sm">
+                  <CaretLeftIcon className="h-8 w-8" /> ارسال کد
+                </div>
+              )}
             </Button>
           </div>
         )}

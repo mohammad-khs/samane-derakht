@@ -1,20 +1,13 @@
-"use client";
-
 import { cn } from "@/lib/utils";
-import {
-  FC,
-  useEffect,
-  useState,
-} from "react";
+import { FC, useEffect } from "react";
 import { FaUser } from "react-icons/fa";
-import axios from "axios";
 import { Session } from "next-auth";
-import { Loader2Icon } from "lucide-react";
+import { Link, Loader2Icon } from "lucide-react";
+import useSWR from "swr";
 
 interface MessagesProps {
   session: Session | null;
   ticketChat: string;
-  successMessage: boolean;
 }
 
 export interface MessageType {
@@ -29,60 +22,37 @@ export interface MessageType {
   ticket: string;
 }
 
-const Messages: FC<MessagesProps> = ({
-  session,
-  ticketChat,
-  successMessage,
-}) => {
-  const [chatData, setChatData] = useState<MessageType[]>();
-  const [loading, setLoading] = useState<boolean>(false);
-
-  const fetchTicketChat = async () => {
-    setLoading(true);
-    try {
-      const data = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/account/api/myticketmessage/${ticketChat}`,
-        {
-          headers: {
-            Authorization: session?.access ? `Bearer ${session.access}` : "",
-            TOKEN: session?.token || "",
-          },
-        }
-      );
-
-      if (data.status !== 200) {
-        throw new Error("Failed to fetch ticketMessage");
-      }
-      if (data.status === 200) {
-        console.log(data);
-        setChatData(data.data as MessageType[]);
-        return data;
-      }
-    } catch (error) {
-      console.error("Error fetching ticketMessage:", error);
-    } finally {
-      setLoading(false);
-    }
+const Messages: FC<MessagesProps> = ({ session, ticketChat }) => {
+  const fetcher = async (url: string) => {
+    const response = await fetch(url, {
+      headers: {
+        Authorization: session?.access ? `Bearer ${session.access}` : "",
+        TOKEN: session?.token || "",
+      },
+    });
+    if (!response.ok) throw new Error("Failed to fetch messages");
+    return response.json();
   };
 
-  useEffect(() => {
-    fetchTicketChat();
-  }, [successMessage]);
+  const { data: chatData, isLoading } = useSWR<MessageType[]>(
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/account/api/myticketmessage/${ticketChat}`,
+    fetcher,
+    {
+      revalidateOnFocus: true,
+    }
+  );
 
   useEffect(() => {
-    {
-      window.scrollTo(0, document.body.scrollHeight);
-    }
+    window.scrollTo(0, document.body.scrollHeight);
   }, [chatData]);
 
-  if (loading) {
+  if (isLoading) {
     return (
       <div className="h-full w-full flex justify-center items-center">
         <Loader2Icon className="animate-spin h-10 text-[#28D16C] w-10" />
       </div>
     );
   }
-
   // useEffect(() => {
   //   const messageHandler = (message: MessageType) => {
   //     setMessages((prev) => {
@@ -102,8 +72,6 @@ const Messages: FC<MessagesProps> = ({
     <div className="flex h-full flex-1 flex-col-reverse gap-4 md:p-3">
       {chatData?.map((message, index) => {
         const isCurrentUser = message.receiver_messager !== "admin";
-        console.log(isCurrentUser);
-
         const hasNextMessageFromSameUser =
           chatData[index - 1]?.sender_user_phone ===
           chatData[index].sender_user_phone;
@@ -138,9 +106,24 @@ const Messages: FC<MessagesProps> = ({
                   })}
                 >
                   {message.message}{" "}
-                  <span className="ml-2 text-xs text-gray-400">
-                    {/* {formatTimestamp(message.timeStamp)} */}
-                  </span>
+                  {message.message_file && (
+                    <div
+                      key={message.id}
+                      className="flex items-center justify-between gap-1 border rounded-md p-2"
+                    >
+                      <a
+                        download={true}
+                        target="_blank"
+                        href={`${process.env.NEXT_PUBLIC_API_BASE_URL}${message.message_file}`}
+                        className="text-xs sm:text-sm truncate w-16"
+                      >
+                        {message.message_file}
+                      </a>
+                    </div>
+                  )}
+                  {/* <span className="ml-2 text-xs text-gray-400">
+                    {formatTimestamp(message.timeStamp)}
+                  </span> */}
                 </span>
               </div>
 

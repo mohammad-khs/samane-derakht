@@ -18,7 +18,7 @@ const DepositModal: FC<DepositModalProps> = ({ onClose, session }) => {
 
   const handleDeposit = async () => {
     setLoading(true);
-    const amountNotEnough = parseInt(depositValue) < 1000000;
+    const amountNotEnough = parseInt(depositValue) < 100000;
     if (amountNotEnough) {
       toast.error("مبلغ وارد شده کمتر از حداقل مقدار واریزی است", {
         duration: 7000,
@@ -103,10 +103,12 @@ const DepositModal: FC<DepositModalProps> = ({ onClose, session }) => {
                 type="text"
                 variant="default"
                 size="lg"
-                placeholder="شماره تماس خود را وارد نمایید"
+                placeholder="مبلغ به ریال است"
               />
             </div>
           </div>
+          <p className="mb-2 text-sm">مبلغ به ریال است</p>
+          <p className="mb-2 text-sm">حداقل مبلغ واریزی ۱۰ هزار تومان است </p>
 
           <Button
             disabled={loading}

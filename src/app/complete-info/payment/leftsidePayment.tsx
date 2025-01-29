@@ -66,13 +66,13 @@ const LeftsidePayment: FC<LeftsidePaymentProps> = ({ session }) => {
           style={{ direction: "rtl" }}
         >
           <div className="flex flex-col">
-            <h3 className="text-sm">مجموع کالا ها:</h3>
+            <h3 className="font-semibold text-lg">مجموع کالا ها:</h3>
             <div className="text-xs text-[#9F9F9F]">
               {authority?.products_count}
               کالا{" "}
             </div>
           </div>
-          <div className="flex justify-center items-center gap-1">
+          <div className="flex justify-center items-center gap-1 font-semibold text-lg">
             {authority?.all_price
               ? formatNumberWithCommas(authority.all_price)
               : 0}
@@ -176,7 +176,7 @@ const LeftsidePayment: FC<LeftsidePaymentProps> = ({ session }) => {
           <div className="flex flex-col">
             <h3 className="font-semibold">مبلغ نهایی:</h3>
           </div>
-          <div className="flex justify-center items-center gap-1">
+          <div className="flex justify-center items-center gap-1 font-semibold text-lg">
             {authority?.all_price && authority.all_price_with_off
               ? formatNumberWithCommas(authority.all_price_with_off)
               : 0}

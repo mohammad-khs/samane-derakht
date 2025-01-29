@@ -6,7 +6,7 @@ import { FC, useEffect, useState } from "react";
 import RightSideShoppingCart from "./rightSideShoppingCart";
 import { useSession } from "next-auth/react";
 import toast from "react-hot-toast";
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 import LeftSideShoppingCart from "./leftSideShoppingCart";
 
 interface ShoppingCartProps {}
@@ -35,6 +35,7 @@ const ShoppingCart: FC<ShoppingCartProps> = () => {
   const [cartData, setCartData] = useState<any>(null);
   const [refresh, setRefresh] = useState(false);
   const [isLoading, setIsloading] = useState(true);
+  const [resCount, setResCount] = useState();
 
   // Fetch session and cart data on component mount or when `refresh` changes
   useEffect(() => {
@@ -57,6 +58,9 @@ const ShoppingCart: FC<ShoppingCartProps> = () => {
 
         if (response.status === 200) {
           setCartData(response.data);
+          if (response.data.all_products_count !== 0) {
+            setResCount(response.data.all_products_count);
+          }
         } else {
           throw new Error(`Unexpected response status: ${response.status}`);
         }
@@ -73,12 +77,11 @@ const ShoppingCart: FC<ShoppingCartProps> = () => {
   }, [refresh, session?.status]);
 
   const triggerRefresh = () => setRefresh((prev) => !prev);
-
   return (
     <>
       <div className="bg-[#EBEBEB]">
         <div className="md:container md:mx-auto md:pt-5 min-h-[65vh]">
-          <Navbar />
+          <Navbar count={resCount} />
           <MobileNav />
           <main>
             {!isLoading || cartData ? (

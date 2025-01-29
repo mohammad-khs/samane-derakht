@@ -8,14 +8,24 @@ import axios from "axios";
 import { useSession } from "next-auth/react";
 import SignInModal from "../authentication/signInModal";
 
-interface ShoppingCartButtonProps {}
+interface ShoppingCartButtonProps {
+  propCount?: number | undefined;
+}
 
-const ShoppingCartButton: FC<ShoppingCartButtonProps> = () => {
+const ShoppingCartButton: FC<ShoppingCartButtonProps> = ({ propCount }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { data: session, status } = useSession();
 
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState<number | undefined>(propCount);
 
+  // Update count whenever propCount changes
+  useEffect(() => {
+    if (propCount !== undefined && propCount !== 0) {
+      setCount(propCount);
+    }
+  }, [propCount]);
+
+  // Fetch cart count from API if user is authenticated and propCount is not provided
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -29,16 +39,18 @@ const ShoppingCartButton: FC<ShoppingCartButtonProps> = () => {
             },
           }
         );
-        setCount(response.data.count);
+        if (propCount === undefined && response.data.count !== 0) {
+          setCount(response.data.count);
+        }
       } catch (error) {
         console.error("Failed to fetch cart count:", error);
       }
     };
 
-    if (status === "authenticated") {
+    if (status === "authenticated" && propCount === undefined) {
       fetchData();
     }
-  }, [session, status]);
+  }, [session, status, propCount]);
 
   return (
     <>
@@ -54,7 +66,7 @@ const ShoppingCartButton: FC<ShoppingCartButtonProps> = () => {
                   src="/svgs/shoppingCart.svg"
                 />
               </div>
-              {count > 0 && (
+              {count && count > 0 && (
                 <div className="rounded-full h-4 w-4 flex justify-center items-center text-white font-semibold bg-red-600">
                   <div className="text-[10px] leading-none">
                     {count > 9 ? `+9` : count}
@@ -79,7 +91,7 @@ const ShoppingCartButton: FC<ShoppingCartButtonProps> = () => {
                 src="/svgs/shoppingCart.svg"
               />
             </div>
-            {count > 0 && (
+            {count && count > 0 && (
               <div className="rounded-full h-4 w-4 flex justify-center items-center text-white font-semibold bg-red-600">
                 <div className="text-[10px] leading-none">{count}</div>
               </div>

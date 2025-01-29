@@ -2,31 +2,28 @@
 
 import axios from "axios";
 import { Session } from "next-auth";
-import { Dispatch, FC, SetStateAction, useRef, useState } from "react";
+import { FC, useRef, useState } from "react";
 import { toast } from "react-hot-toast";
 import TextareaAutosize from "react-textarea-autosize";
 import TicketFileUploader from "./ticketFileUpload";
 import { FileStatus } from "@/types/complete-info";
 import { PaperPlaneIcon } from "@radix-ui/react-icons";
 import { Loader2 } from "lucide-react";
+import { mutate } from "swr";
 
 interface TicketChatInputProps {
   chatId: string;
   session: Session | null;
-  setSuccessMessage: Dispatch<SetStateAction<boolean>>;
 }
 
-const TicketChatInput: FC<TicketChatInputProps> = ({
-  chatId,
-  session,
-  setSuccessMessage,
-}) => {
+const TicketChatInput: FC<TicketChatInputProps> = ({ chatId, session }) => {
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [input, setInput] = useState<string>("");
   const [files, setFiles] = useState<FileStatus[]>([]);
+
   const sendMessage = async () => {
-    if (!input) return;
+    if (!input.trim() && files.length === 0) return;
     setIsLoading(true);
 
     const formData = new FormData();
@@ -50,7 +47,10 @@ const TicketChatInput: FC<TicketChatInputProps> = ({
       );
 
       if (res.status === 200) {
-        setSuccessMessage((prev) => !prev);
+        // Trigger SWR revalidation
+        mutate(
+          `${process.env.NEXT_PUBLIC_API_BASE_URL}/account/api/myticketmessage/${chatId}`
+        );
         setInput("");
         setFiles([]);
         textareaRef.current?.focus();

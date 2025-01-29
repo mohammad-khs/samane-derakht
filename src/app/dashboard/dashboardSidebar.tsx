@@ -52,7 +52,11 @@ const DashboardSidebar = () => {
               label: "برداشت مالی",
               href: "/dashboard/wallet",
             },
-            { icon: <FaUserCircle />, label: "صفحه اختصاصی", href: "" },
+            {
+              icon: <FaUserCircle />,
+              label: "پنل کاربری",
+              href: "/dashboard/profile-settings",
+            },
           ].map(({ icon, label, href }, index) => (
             <Link
               key={index}

@@ -1,8 +1,8 @@
 "use client";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { CaretLeftIcon } from "@radix-ui/react-icons";
-import Link from "next/link";
 import { Dispatch, FC, SetStateAction } from "react";
 import { FaPhoneAlt } from "react-icons/fa";
 import { TreeUserIcon } from "./page";
@@ -20,10 +20,6 @@ const IndividualCustomer: FC<IndividualCustomerProps> = ({ setCustomer }) => {
   const handleIndividualCustomer = () => {
     if (name === "") {
       toast.error("لطفا نام و نام خانوادگی خود را وارد کنید");
-      return;
-    }
-    if (email === "") {
-      toast.error("لطفا ایمیل خود را وارد کنید");
       return;
     }
     router.push("city-and-district");
@@ -78,7 +74,7 @@ const IndividualCustomer: FC<IndividualCustomerProps> = ({ setCustomer }) => {
               />
             </div>
           </div>
-          <div>
+          {/* <div>
             <label className="text-sm text-[#1F1F1F]" htmlFor="phone2">
               شماره تماس دوم
             </label>
@@ -96,7 +92,7 @@ const IndividualCustomer: FC<IndividualCustomerProps> = ({ setCustomer }) => {
               <sup>*</sup>در صورت جواب ندادن شماره خودتان، با این شماره تماس
               گرفته خواهد شد
             </p>
-          </div>
+          </div> */}
         </div>
         <div className="mt-8 text-sm">
           آیا شما یک شخص حقوقی هستید ؟{" "}

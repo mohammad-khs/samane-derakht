@@ -1,6 +1,6 @@
 "use client";
 import { TreeComment } from "@/types/products";
-import { FC, useState } from "react";
+import { FC } from "react";
 
 import useSWRInfinite from "swr/infinite";
 import { fetcher } from "@/lib/utils";
@@ -28,11 +28,8 @@ export function useComments(productSlug: string) {
 }
 
 const CommentSection: FC<CommentSectionProps> = ({}) => {
-  const { comments, userComment, productId, productSlug, textareaRef } =
-    useCommentAndChatSectionContext();
-  const { data, setSize, size, isLoading, error } = useComments(
-    productSlug || ""
-  );
+  const { userComment, productSlug } = useCommentAndChatSectionContext();
+  const { data, setSize, size, isLoading } = useComments(productSlug || "");
   const currentPageData = data ? data[size - 1] : [];
   const previousPageData = data ? data[size - 2] : [];
 
@@ -80,7 +77,7 @@ const CommentSection: FC<CommentSectionProps> = ({}) => {
           onClick={() => setSize(size + 1)}
           variant={"green"}
           size={"lg"}
-          className="disabled:opacity-50 disabled:bg-gray-800"
+          className="disabled:opacity-50 disabled:bg-gray-800 mt-4"
         >
           {(!previousPageData && !currentPageData) ||
           (currentPageData?.[2]?.comments?.length ?? 0) ===

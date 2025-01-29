@@ -29,7 +29,6 @@ const ChildCommentLayout: FC<ChildCommentLayoutProps> = ({
   childOfAll,
   setSize,
   previousPageData,
-  currentPageData,
   size,
   parentCommentId,
   setTriggerFetch,
@@ -140,7 +139,9 @@ const ChildCommentLayout: FC<ChildCommentLayoutProps> = ({
           size={"lg"}
           className="disabled:opacity-50 disabled:bg-gray-800 mt-3"
         >
-          نمایش بیشتر
+          {!childOfAll || childOfAll?.length === previousPageData?.data.length
+            ? "پیغامی نیست"
+            : "نمایش بیشتر"}
         </Button>
       </div>
     </>

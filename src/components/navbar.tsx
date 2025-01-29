@@ -10,9 +10,10 @@ import Notifications from "./ui/notifications";
 
 interface NavbarProps {
   isDashboard?: boolean;
+  count?: number | undefined;
 }
 
-const Navbar: FC<NavbarProps> = ({ isDashboard = false }) => {
+const Navbar: FC<NavbarProps> = ({ isDashboard = false, count }) => {
   const pathName = usePathname();
 
   const isActive = (path: string) => pathName === path;
@@ -28,7 +29,7 @@ const Navbar: FC<NavbarProps> = ({ isDashboard = false }) => {
       >
         <div className="flex justify-start items-center gap-4 ms-5 basis-1/3">
           <SignInModalParent>ثبت نام/ورود</SignInModalParent>
-          <ShoppingCartButton />
+          <ShoppingCartButton propCount={count} />
           <Notifications />
         </div>
         <div className="w-full flex gap-1 lg:gap-4 justify-center items-center basis-1/3">

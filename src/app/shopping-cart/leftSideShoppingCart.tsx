@@ -33,12 +33,12 @@ const LeftSideShoppingCart: FC<LeftSideShoppingCartProps> = ({
           style={{ direction: "rtl" }}
         >
           <div className="flex flex-col">
-            <h3 className="text-sm">مجموع کالا ها:</h3>
+            <h3 className="font-semibold">مجموع کالا ها:</h3>
             <div className="text-xs text-[#9F9F9F]">
               {allProductsCount} کالا{" "}
             </div>
           </div>
-          <div className="flex justify-center items-center gap-1">
+          <div className="flex justify-center items-center gap-1 font-semibold text-lg">
             {formatNumberWithCommas(allPrice?.all_price)}
             <span className="text-[#9F9F9F] text-xs">تومان</span>{" "}
           </div>
@@ -65,7 +65,7 @@ const LeftSideShoppingCart: FC<LeftSideShoppingCartProps> = ({
           <div className="flex flex-col">
             <h3 className="font-semibold">مبلغ نهایی:</h3>
           </div>
-          <div className="flex justify-center items-center gap-1">
+          <div className="flex justify-center items-center gap-1 font-semibold text-lg">
             {formatNumberWithCommas(allPriceWithOff?.all_price_off)}
             <span className="text-[#28D16C] text-xs">تومان</span>{" "}
           </div>
