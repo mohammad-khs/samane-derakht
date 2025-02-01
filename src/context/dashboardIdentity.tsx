@@ -21,14 +21,14 @@ const DashboardIdentityContext = createContext<
 
 interface DashboardIdentityProviderProps {
   children: ReactNode;
+  serverUserIdentity?: UserIdentity; // Add this prop
 }
 
 export const DashboardIdentityProvider: React.FC<
   DashboardIdentityProviderProps
-> = ({ children }) => {
-  const [userIdentity, setUserIdentity] = useState<UserIdentity>();
+> = ({ children, serverUserIdentity }) => { // Destructure the new prop
+  const [userIdentity, setUserIdentity] = useState<UserIdentity | undefined>(serverUserIdentity); // Initialize with server data
 
-  
   return (
     <DashboardIdentityContext.Provider
       value={{

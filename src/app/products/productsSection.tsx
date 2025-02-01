@@ -8,22 +8,28 @@ import Loading from "./productsLoading";
 import ProductCard from "@/components/products/productCard";
 import { fetcher } from "@/lib/utils";
 import { Loader2 } from "lucide-react";
-interface ProductsSectionProps {}
 
-export function useProducts() {
+interface ProductsSectionProps {
+  searchQuery?: string;
+}
+
+export function useProducts(searchQuery?: string) {
   const getKey = (pageIndex: number, previousPageData: any) => {
-    // If no previous data (initial fetch), fetch 12 items
-    if (pageIndex === 0 && previousPageData === null) {
-      return `${process.env.NEXT_PUBLIC_API_BASE_URL}/order/api/trees/?offset=12`;
-    }
+    // Correctly check previous page's data array length
+    if (previousPageData && previousPageData.data.length === 0) return null;
 
-    // If no more data to fetch
-    if (previousPageData && previousPageData.length === 0) return null;
+    const baseUrl = searchQuery
+      ? `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/search/`
+      : `${process.env.NEXT_PUBLIC_API_BASE_URL}/order/api/trees/`;
 
-    // For subsequent pages, fetch 4 items
-    return `${process.env.NEXT_PUBLIC_API_BASE_URL}/order/api/trees/?offset=${
-      12 + pageIndex * 4
-    }`;
+    const params = new URLSearchParams();
+    if (searchQuery) params.append("query", searchQuery);
+
+    // Start offset at 0 and increment by 4 per page
+    const offset = 12 + pageIndex * 4;
+    params.append("offset", offset.toString());
+
+    return `${baseUrl}?${params.toString()}`;
   };
 
   return useSWRInfinite(getKey, fetcher, {
@@ -32,8 +38,10 @@ export function useProducts() {
   });
 }
 
-const ProductsSection: FC<ProductsSectionProps> = () => {
-  const { data, setSize, size, isLoading, error } = useProducts();
+const ProductsSection: FC<ProductsSectionProps> = ({ searchQuery }) => {
+  const { data, setSize, size, isLoading, error } = useProducts(searchQuery);
+  console.log("this is size : ", size);
+  console.log("this is data : ", data);
 
   if (isLoading && !data) {
     return <Loading />;

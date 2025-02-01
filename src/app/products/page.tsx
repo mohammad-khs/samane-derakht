@@ -6,9 +6,13 @@ import MobileNav from "@/components/mobile-nav";
 import ProductsSection from "./productsSection";
 import ProductsLoading from "./productsLoading";
 
-interface ProductsProps {}
+interface ProductsProps {
+  searchParams?: {
+    search?: string;
+  };
+}
 
-const Products: FC<ProductsProps> = () => {
+const Products: FC<ProductsProps> = ({ searchParams }) => {
   return (
     <>
       <div className="bg-[#EBEBEB]">
@@ -42,7 +46,7 @@ const Products: FC<ProductsProps> = () => {
           </div>
 
           <Suspense fallback={<ProductsLoading />}>
-            <ProductsSection />
+            <ProductsSection searchQuery={searchParams?.search} />
           </Suspense>
         </main>
         <Footer sponsors={false} />

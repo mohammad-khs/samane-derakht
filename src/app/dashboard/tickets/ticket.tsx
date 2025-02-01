@@ -12,8 +12,8 @@ const Ticket: FC<TicketProps> = ({ allData }) => {
   return allData.map((data) => {
     const dateInfo = DateFormatDMY(data.irani);
     return (
-      <>
-        <div key={data.id} className="rounded-xl my-2 bg-white">
+      <div key={data.id} >
+        <div className="rounded-xl my-2 bg-white">
           <br />
           <div className="mx-4 flex justify-between items-center" dir="rtl">
             <div>
@@ -22,13 +22,15 @@ const Ticket: FC<TicketProps> = ({ allData }) => {
             </div>
             <div>
               {data.ticket_type === "بسته" ? (
-                <Button
-                  disabled={true}
-                  className="bg-slate-500"
-                  variant={"green"}
-                >
-                  وضعیت {data.ticket_type}
-                </Button>
+                <Link href={`tickets/${data.id}/`}>
+                  <Button
+                    disabled={true}
+                    className="bg-slate-500"
+                    variant={"green"}
+                  >
+                    وضعیت {data.ticket_type}
+                  </Button>
+                </Link>
               ) : (
                 <Link href={`tickets/${data.id}/`}>
                   <Button variant={"lightGray"}>
@@ -46,7 +48,7 @@ const Ticket: FC<TicketProps> = ({ allData }) => {
           </div>
           <br />
         </div>
-      </>
+      </div>
     );
   });
 };

@@ -1,8 +1,6 @@
 import Navbar from "@/components/navbar";
 import type { Metadata } from "next";
-import MobileNavDashboard from "./mobileNavDashboard";
 import ClientDashboardLayout from "./clientDashboardLayout";
-
 
 export const metadata: Metadata = {
   title: "داشبورد",
@@ -14,7 +12,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     <div className="bg-[#EBEBEB] min-h-screen">
       <header className="z-30 lg:shadow-md fixed top-0 left-0 w-full">
         <Navbar isDashboard />
-        <MobileNavDashboard />
       </header>
 
       <div className="flex pt-[56px]" dir="rtl">

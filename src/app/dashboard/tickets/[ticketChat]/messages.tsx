@@ -1,13 +1,16 @@
 import { cn } from "@/lib/utils";
-import { FC, useEffect } from "react";
+import { Dispatch, FC, SetStateAction, useEffect } from "react";
 import { FaUser } from "react-icons/fa";
 import { Session } from "next-auth";
 import { Link, Loader2Icon } from "lucide-react";
 import useSWR from "swr";
+import { TicketType } from "../myTickets";
 
 interface MessagesProps {
   session: Session | null;
   ticketChat: string;
+  setTicketStatus: Dispatch<SetStateAction<TicketType | undefined>>;
+  ticketStatus: TicketType | undefined;
 }
 
 export interface MessageType {
@@ -22,7 +25,17 @@ export interface MessageType {
   ticket: string;
 }
 
-const Messages: FC<MessagesProps> = ({ session, ticketChat }) => {
+interface TicketMessages {
+  messages: MessageType[];
+  ticket: TicketType;
+}
+
+const Messages: FC<MessagesProps> = ({
+  session,
+  ticketChat,
+  setTicketStatus,
+  ticketStatus,
+}) => {
   const fetcher = async (url: string) => {
     const response = await fetch(url, {
       headers: {
@@ -34,7 +47,7 @@ const Messages: FC<MessagesProps> = ({ session, ticketChat }) => {
     return response.json();
   };
 
-  const { data: chatData, isLoading } = useSWR<MessageType[]>(
+  const { data: chatData, isLoading } = useSWR<TicketMessages>(
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/account/api/myticketmessage/${ticketChat}`,
     fetcher,
     {
@@ -43,38 +56,25 @@ const Messages: FC<MessagesProps> = ({ session, ticketChat }) => {
   );
 
   useEffect(() => {
+    setTicketStatus(chatData?.ticket);
     window.scrollTo(0, document.body.scrollHeight);
   }, [chatData]);
 
-  if (isLoading) {
+  if (isLoading && ticketStatus === undefined) {
     return (
       <div className="h-full w-full flex justify-center items-center">
         <Loader2Icon className="animate-spin h-10 text-[#28D16C] w-10" />
       </div>
     );
   }
-  // useEffect(() => {
-  //   const messageHandler = (message: MessageType) => {
-  //     setMessages((prev) => {
-  //       if (prev) {
-  //         return [message, ...prev];
-  //       }
-  //     });
-  //   };
-  //   setMessages(chatData);
-  // }, [messages]);
-
-  // const formatTimestamp = (timestamp: number) => {
-  //   return format(timestamp, "HH:mm");
-  // };
 
   return (
     <div className="flex h-full flex-1 flex-col-reverse gap-4 md:p-3">
-      {chatData?.map((message, index) => {
+      {chatData?.messages.map((message: MessageType, index: number) => {
         const isCurrentUser = message.receiver_messager !== "admin";
         const hasNextMessageFromSameUser =
-          chatData[index - 1]?.sender_user_phone ===
-          chatData[index].sender_user_phone;
+          chatData.messages[index - 1]?.sender_user_phone ===
+          chatData.messages[index].sender_user_phone;
 
         return (
           <div

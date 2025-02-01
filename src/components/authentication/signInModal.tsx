@@ -1,10 +1,11 @@
 "use client";
 import { useState, useEffect, FC } from "react";
-import { signIn, useSession } from "next-auth/react";
+import { signIn } from "next-auth/react";
 import toast from "react-hot-toast";
 import { Button } from "../ui/button";
 import { CaretLeftIcon } from "@radix-ui/react-icons";
 import { formatMinutes, stringIsNotNumber } from "@/helper/validateNumber";
+import TermsAndConditions from "./termsAndConditions";
 
 interface SignInModalProps {
   isOpen: boolean;
@@ -143,11 +144,7 @@ const SignInModal: FC<SignInModalProps> = ({ isOpen, onClose }) => {
             {phone.length > 0 && error?.message ? (
               <div className="text-red-600  mb-5 text-sm">{error?.message}</div>
             ) : (
-              <div className="text-xs mb-5" style={{ direction: "rtl" }}>
-                ورود شما به منزله پذیرش{" "}
-                <span className="text-blue-500">قوانین</span> و{" "}
-                <span className="text-blue-500">حریم خصوصی</span> می‌باشد.
-              </div>
+              <TermsAndConditions />
             )}
             <Button
               onClick={handlePhoneSubmit}

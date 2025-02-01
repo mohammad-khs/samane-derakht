@@ -41,6 +41,8 @@ const IndividualDashboard: FC<IndividualDashboardProps> = ({ session }) => {
           email: userIdentity?.email,
           username: userIdentity?.username,
           name: userIdentity?.first_last_name,
+          ////// this should not be null its just temp
+          image: null,
         },
         {
           headers: {
@@ -64,6 +66,7 @@ const IndividualDashboard: FC<IndividualDashboardProps> = ({ session }) => {
           phone: data?.phone,
           username: data?.username,
           first_last_name: data?.first_last_name,
+          image: "",
         });
         console.log(data);
         toast.success("تغییرات شما با موفقیت ثبت گردید");

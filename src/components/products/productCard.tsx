@@ -14,7 +14,6 @@ const ProductCard: FC<ProductCardProps> = ({
   name,
   price,
   price_off,
-  id,
   slug,
 }) => {
   return (
