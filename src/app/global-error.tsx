@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect } from 'react';
+import { useEffect } from "react";
 
-export default function ErrorPage({
+export default function GlobalError({
   error,
   reset,
 }: {
@@ -19,9 +19,11 @@ export default function ErrorPage({
         <h1 className="text-3xl font-bold text-red-600 mb-4">
           مشکلی پیش آمده.
         </h1>
-        
+
         <div className="mb-6">
-          <h2 className="text-xl font-semibold text-gray-800 mb-2">جزئیات ارور:</h2>
+          <h2 className="text-xl font-semibold text-gray-800 mb-2">
+            جزئیات ارور:
+          </h2>
           <p className="text-gray-600 mb-1">
             <span className="font-medium">Message:</span> {error.message}
           </p>

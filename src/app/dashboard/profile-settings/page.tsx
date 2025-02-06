@@ -50,7 +50,7 @@ const Dashboard = async () => {
   }
 
   if (!userIdentity) {
-    redirect("/error");
+    return Error;
   }
 
   return (
