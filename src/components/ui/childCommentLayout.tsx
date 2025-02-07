@@ -2,16 +2,12 @@ import { Dispatch, FC, SetStateAction } from "react";
 import { Button } from "./button";
 import Image from "next/image";
 import { FaUser } from "react-icons/fa";
-import {
-  AlertOctagonIcon,
-  ReplyIcon,
-  ThumbsDown,
-  ThumbsUp,
-} from "lucide-react";
+import { ReplyIcon } from "lucide-react";
 import { handleReply } from "@/lib/utils";
 import { DateFormatDMY } from "@/helper/dateHandler";
 import { TreeChildComment } from "@/types/products";
 import { useCommentAndChatSectionContext } from "@/app/products/[productName]/commentAndChatSection";
+import LikeDislikeButtons from "./LikeDislikeButtons"; // Make sure this path is correct
 
 interface ChildCommentLayoutProps {
   childOfAll: TreeChildComment[];
@@ -38,7 +34,9 @@ const ChildCommentLayout: FC<ChildCommentLayoutProps> = ({
     setCommentToReplyUsername,
     textareaRef,
     setProfileId,
+    session,
   } = useCommentAndChatSectionContext();
+
   return (
     <>
       <div>
@@ -51,35 +49,33 @@ const ChildCommentLayout: FC<ChildCommentLayoutProps> = ({
                     <div>
                       {(() => {
                         const dateInfo = DateFormatDMY(childComment.irani);
-                        if (dateInfo) {
-                          return (
-                            <>
-                              {dateInfo.day}/{dateInfo.month}/{dateInfo.year}
-                            </>
-                          );
-                        }
-                        return null;
+                        return dateInfo
+                          ? `${dateInfo.day}/${dateInfo.month}/${dateInfo.year}`
+                          : null;
                       })()}
                     </div>
                   )}
                 </div>
-                <div className="mt-auto flex gap-4">
-                  <ThumbsDown className="text-[#909090] w-5 h-5" />
-                  <ThumbsUp className="text-[#909090] w-5 h-5" />
-                  <AlertOctagonIcon className="text-[#909090] w-5 h-5" />
-                </div>
+
+                <LikeDislikeButtons
+                  commentId={childComment.id}
+                  initialLikeCount={childComment.likes_count}
+                  initialDislikeCount={childComment.dislikes_count}
+                  has_user_disliked={childComment.has_user_disliked}
+                  has_user_liked={childComment.has_user_liked}
+                  session={session}
+                />
               </div>
+
               <div className="flex flex-col w-full">
                 <div className="text-xl sm:text-2xl font-semibold">
                   {childComment?.user_username ? (
-                    <>
-                      <div className="flex gap-2 justify-end items-center">
-                        <span className="text-xs text-[##3D3D3D]">
-                          ( در پاسخ به کاربر {replyedTo})
-                        </span>
-                        <div>{childComment?.user_username}</div>
-                      </div>
-                    </>
+                    <div className="flex gap-2 justify-end items-center">
+                      <span className="text-xs text-[##3D3D3D]">
+                        ( در پاسخ به کاربر {replyedTo})
+                      </span>
+                      <div>{childComment?.user_username}</div>
+                    </div>
                   ) : (
                     <div className="">کاربر ناشناس</div>
                   )}
@@ -88,6 +84,7 @@ const ChildCommentLayout: FC<ChildCommentLayoutProps> = ({
                 <div className="text-[#757575] text-sm">
                   {childComment?.text}
                 </div>
+
                 <div>
                   <Button
                     className="text-[#757575] gap-1 my-3"
@@ -109,13 +106,15 @@ const ChildCommentLayout: FC<ChildCommentLayoutProps> = ({
                   </Button>
                 </div>
               </div>
+
               <div className="justify-end flex w-full sm:block sm:w-auto">
                 <div className="relative rounded-full p-2 sm:p-4 bg-[#EAEAEA]">
                   {childComment?.user_profileimage ? (
                     <Image
                       alt={`پروفایل ${childComment?.user_username}`}
                       fill
-                      src={`${childComment?.user_profileimage}`}
+                      src={childComment.user_profileimage}
+                      style={{ objectFit: "cover" }}
                     />
                   ) : (
                     <FaUser className="h-7 w-7 text-[#5F6368]" />
@@ -126,6 +125,7 @@ const ChildCommentLayout: FC<ChildCommentLayoutProps> = ({
           </div>
         ))}
       </div>
+
       <div className="mb-3">
         <Button
           onClick={() => {

@@ -32,6 +32,10 @@ export interface TreeChildComment {
   user_profileimage: string | null;
   profile_id: string;
   irani: string;
+  likes_count: number;
+  dislikes_count: number;
+  has_user_liked: boolean;
+  has_user_disliked: boolean;
 }
 
 export interface TreeComment {
@@ -44,4 +48,8 @@ export interface TreeComment {
   count_of_child: number;
   profile_id: string;
   irani: string;
+  likes_count: number;
+  dislikes_count: number;
+  has_user_liked: boolean;
+  has_user_disliked: boolean;
 }
