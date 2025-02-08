@@ -1,10 +1,8 @@
 import Footer from "@/components/footer";
 import MobileNav from "@/components/mobile-nav";
 import Navbar from "@/components/navbar";
-import { CompleteInfoProvider } from "@/context/completeInfo";
 import type { Metadata } from "next";
 import Image from "next/image";
-import MobileNavDashboard from "../dashboard/mobileNavDashboard";
 
 export const metadata: Metadata = {
   title: "درگاه خرید",

@@ -4,8 +4,10 @@ import HeaderImages from "@/components/products/product/headerImages";
 import { TreeData } from "@/types/products";
 import { FC, useState } from "react";
 import {
+  FaCommentAlt,
   FaFacebook,
   FaShareAlt,
+  FaStar,
   FaTelegram,
   FaTruck,
   FaTwitter,
@@ -19,12 +21,16 @@ import {
 } from "react-share";
 import Head from "next/head";
 import { usePathname } from "next/navigation";
+import AddToCardButton from "./addToCardButton";
+import { formatNumberWithCommas } from "@/helper/formatNumberWithCommas";
+import { Session } from "next-auth";
 
 interface TreeHeadInfoProps {
   treeData: TreeData;
+  session: Session | null;
 }
 
-const TreeHeadInfo: FC<TreeHeadInfoProps> = ({ treeData }) => {
+const TreeHeadInfo: FC<TreeHeadInfoProps> = ({ treeData, session }) => {
   const title = treeData.tree?.name || "عنوان پیش‌فرض";
   const description = treeData.tree?.name || "توضیحات پیش‌فرض برای این محصول."; // Update description to be based on actual data
   const imageUrl = treeData.tree?.image || "/default-image.jpg"; // مسیر پیش‌فرض در صورت نبود تصویر
@@ -118,6 +124,50 @@ const TreeHeadInfo: FC<TreeHeadInfoProps> = ({ treeData }) => {
               >
                 <FaTruck className="text-[#5F6368]" />
                 <span>زمان کاشت درخت 7 تا 10 روز کاری می‌باشد</span>
+              </div>
+            </div>
+          </div>
+          <div className="flex flex-col sm:flex-row justify-between">
+            <div className="flex flex-col gap-5">
+              <div
+                className="flex justify-center sm:justify-end items-center gap-1"
+                style={{ direction: "rtl" }}
+              >
+                {treeData.tree?.price ? (
+                  <>
+                    <h2 className="text-2xl font-semibold flex items-center">
+                      {formatNumberWithCommas(treeData.tree?.price)}
+                    </h2>
+                    <span className="text-[#28D16C] text-xs">تومان</span>
+                  </>
+                ) : (
+                  <div className="w-full text-center text-red-600 font-semibold">
+                    بدون قیمت
+                  </div>
+                )}
+              </div>
+              <div className="flex justify-center mb-5 sm:mb-0">
+                <AddToCardButton session={session} treeData={treeData} />
+              </div>
+            </div>
+            <div className="flex justify-between gap-4">
+              <div className="mt-auto">
+                <div className="flex justify-center items-center gap-2">
+                  <span className="text-[#797979]">امتیاز</span>
+                  <span>
+                    {treeData.avg?.toFixed(1) ||
+                      treeData.tree?.avg?.toFixed(1) ||
+                      0}
+                  </span>
+                  <FaStar className="text-[#F2B93B] mb-1" />
+                </div>
+              </div>
+              <div className="mt-auto">
+                <div className=" flex justify-center items-center gap-2">
+                  <span className="text-[#797979]">کامنت</span>
+                  <span>{treeData?.comment_count}</span>
+                  <FaCommentAlt className="text-[#C0C0C0]" />
+                </div>
               </div>
             </div>
           </div>

@@ -79,7 +79,7 @@ const Product: FC<ProductProps> = async ({ params }) => {
     images: data[1]?.images,
     comments: data[2]?.comments,
     related: data[3]?.related,
-    commnet_count: data[4]?.commnet_count,
+    comment_count: data[4]?.comment_count,
     avg: data[5]?.avg,
     comment_offset: data[6]?.comment_offset,
     in_cart: data[7]?.in_cart,
@@ -91,7 +91,7 @@ const Product: FC<ProductProps> = async ({ params }) => {
         <div className="md:container md:mx-auto md:pt-5 min-h-[65vh]">
           <Navbar />
           <MobileNav />
-          <TreeHeadInfo treeData={treeData} />
+          <TreeHeadInfo session={session} treeData={treeData} />
           <main>
             <TreeMainInfo
               avg={treeData?.avg}

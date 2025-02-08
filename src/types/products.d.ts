@@ -18,7 +18,7 @@ export interface TreeData {
   images?: { image: string; id: string }[];
   comments?: TreeComment[];
   related?: mainCarouselCardData[];
-  commnet_count?: number;
+  comment_count?: number;
   avg?: number | null;
   comment_offset?: number;
   in_cart: boolean;
