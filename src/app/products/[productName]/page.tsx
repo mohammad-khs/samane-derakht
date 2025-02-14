@@ -52,7 +52,6 @@ const Product: FC<ProductProps> = async ({ params }) => {
   };
 
   const data = await fetchProductData(session, params.productName);
-  console.log("this is data inside the component : ", data);
 
   if (data === undefined) {
     return (
@@ -77,12 +76,9 @@ const Product: FC<ProductProps> = async ({ params }) => {
   const treeData: TreeData = {
     tree: data[0]?.tree,
     images: data[1]?.images,
-    comments: data[2]?.comments,
-    related: data[3]?.related,
-    comment_count: data[4]?.comment_count,
-    avg: data[5]?.avg,
-    comment_offset: data[6]?.comment_offset,
-    in_cart: data[7]?.in_cart,
+    related: data[2]?.related,
+    comment_count: data[3]?.comment_count,
+    avg: data[4]?.avg,
   };
 
   return (
@@ -97,7 +93,6 @@ const Product: FC<ProductProps> = async ({ params }) => {
               avg={treeData?.avg}
               productId={treeData?.tree?.id}
               productSlug={params.productName}
-              comments={treeData.comments}
             />
             <div className="mb-8">
               <MainCarousel

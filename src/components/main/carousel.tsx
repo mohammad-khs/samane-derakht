@@ -10,6 +10,7 @@ import { mainCarouselCardData } from "@/types/mainCarousels";
 import { apiNameToIconName } from "@/helper/nameToIcon";
 import { Frown } from "lucide-react";
 import { DateFormatDMY, monthNumToMonthName } from "@/helper/dateHandler";
+import Link from "next/link";
 
 interface CarouselProps {
   hasPrevNextBtn: boolean;
@@ -104,6 +105,7 @@ const Carousel: FC<CarouselProps> = ({
                       </div>
                     </div>
                     <div className="m-3">
+                      <Link href={`/myTree/${item.id}`}>
                       <h1 className=" flex text-sm font-semibold">
                         <span className="">
                           {item.desc}{" "}
@@ -121,7 +123,7 @@ const Carousel: FC<CarouselProps> = ({
                             />
                           </div>
                         </div>
-                      </h1>
+                      </h1></Link>
 
                       <div className="text-sm flex justify-end w-full my-2">
                         <span className="">

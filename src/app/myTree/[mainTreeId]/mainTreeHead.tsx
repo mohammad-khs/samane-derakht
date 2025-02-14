@@ -131,13 +131,17 @@ const MainTreeHead: FC<MainTreeHeadProps> = ({ data }) => {
         </div>
         <div className="border-b-2 border-b-[#E1E1E1] w-full"></div>
       </div>
-      <div className="mb-8 relative">
-        <ImageCarousel
-          background="bg-white"
-          hasPrevNextBtn={true}
-          cardsData={data.data.images_list[0]}
-        />
-      </div>
+      {data.data.images_list[0].length > 0 ? (
+        <div className="mb-8 relative">
+          <ImageCarousel
+            background="bg-white"
+            hasPrevNextBtn={true}
+            cardsData={data.data.images_list[0]}
+          />
+        </div>
+      ) : (
+        <div className="text-red-600 font-semibold m-3 ">بدون عکس</div>
+      )}
 
       <div className="flex justify-center items-center w-full mt-6">
         <div className="flex justify-center items-center">
@@ -152,11 +156,15 @@ const MainTreeHead: FC<MainTreeHeadProps> = ({ data }) => {
         </div>
         <div className="border-b-2 border-b-[#E1E1E1] w-full"></div>
       </div>
-      <div className=" border-[#D2D2D2] p-1 flex justify-center items-center rounded-lg w-full h-full sm:w-[480px] sm:h-[320px] my-8 sm:my-0">
-        <Video
-          vidoAddress={`${process.env.NEXT_PUBLIC_API_BASE_URL}${data.data.video}`}
-        />
-      </div>
+      {data.data.video ? (
+        <div className=" border-[#D2D2D2] p-1 flex justify-center items-center rounded-lg w-full h-full sm:w-[480px] sm:h-[320px] my-8 sm:my-0">
+          <Video
+            vidoAddress={`${process.env.NEXT_PUBLIC_API_BASE_URL}${data.data.video}`}
+          />
+        </div>
+      ) : (
+        <div className="text-red-600 font-semibold m-3 ">بدون ویدیو</div>
+      )}
 
       <div className="flex justify-center items-center w-full mt-6">
         <div className="flex justify-center items-center">
@@ -171,7 +179,7 @@ const MainTreeHead: FC<MainTreeHeadProps> = ({ data }) => {
         </div>
         <div className="border-b-2 border-b-[#E1E1E1] w-full"></div>
       </div>
-      <div className="flex items-center w-full lg:w-8/12 justify-between p-2 my-8">
+      {data.data.voice ?<div className="flex items-center w-full lg:w-8/12 justify-between p-2 my-8">
         <div className="w-full">
           <audio className="w-full" controls>
             <source
@@ -181,7 +189,7 @@ const MainTreeHead: FC<MainTreeHeadProps> = ({ data }) => {
             مرورگر شما این فایل صوتی را پشتیبانی نمیکند
           </audio>
         </div>
-      </div>
+      </div> :<div className="text-red-600 font-semibold m-3 ">بدون ویس</div> }
 
       <div className="flex justify-center items-center w-full mt-6">
         <div className="flex justify-center items-center">

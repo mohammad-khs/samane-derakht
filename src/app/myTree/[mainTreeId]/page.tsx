@@ -58,14 +58,14 @@ const MainTree: FunctionComponent<MainTreeProps> = async ({
   } catch (error) {
     console.error("Error fetching main tree data:", error);
     return (
-      <div className="p-4 text-red-600">
+      <div className="p-4 text-red-600 text-center h-screen">
         خطا در بارگذاری داده‌ها. لطفاً دوباره تلاش کنید.
       </div>
     );
   }
 
   if (!data) {
-    return <div className="p-4">در حال بارگذاری...</div>;
+    return <div className="p-4 text-center h-screen">در حال بارگذاری...</div>;
   }
 
   return (

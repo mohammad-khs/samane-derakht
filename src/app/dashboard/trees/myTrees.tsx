@@ -94,12 +94,13 @@ const MyTrees: FC<MyTreesProps> = ({ session }) => {
       ) : (
         <div className="text-red-600 text-center my-3">{error?.message}</div>
       )}
-      <div className="text-center mt-8">
+      <div className={`text-center mt-8 ${!currentData?.data ||
+              currentData?.data?.length === previousData?.data?.length || currentData?.data?.length < 7 ? "hidden" : ""}`}>
         {
           <Button
             disabled={
               !currentData?.data ||
-              currentData?.data?.length === previousData?.data?.length
+              currentData?.data?.length === previousData?.data?.length 
             }
             className="disabled:bg-slate-500"
             variant={"green"}
