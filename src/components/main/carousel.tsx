@@ -144,24 +144,22 @@ const Carousel: FC<CarouselProps> = ({
             })}
           </div>
         </div>
-        {hasPrevNextBtn ? (
-          <>
-            <button
-              className="embla__prev absolute  bg-white rounded-full left-[-50px] top-32 z-50  hidden md:block"
-              onClick={scrollPrev}
-            >
-              <CaretLeftIcon className="h-12 w-12  text-[#999999]" />
-            </button>
-            <button
-              className="embla__next absolute bg-white rounded-full right-[-50px] top-32 hidden md:block"
-              onClick={scrollNext}
-            >
-              <CaretRightIcon className="h-12 w-12  text-[#999999]" />
-            </button>
-          </>
-        ) : (
-          ""
-        )}
+        {hasPrevNextBtn && (
+        <div className="flex justify-between absolute top-1/2 -translate-y-1/2 w-full px-4">
+          <button
+            onClick={scrollPrev}
+            className="bg-white rounded-full p-3 shadow-lg hover:scale-105 transition-transform hidden md:block"
+          >
+            <CaretLeftIcon className="h-6 w-6 text-[#999999]" />
+          </button>
+          <button
+            onClick={scrollNext}
+            className="bg-white rounded-full p-3 shadow-lg hover:scale-105 transition-transform hidden md:block"
+          >
+            <CaretRightIcon className="h-6 w-6 text-[#999999]" />
+          </button>
+        </div>
+      )}
 
         <div className="embla__dots flex gap-3 justify-center items-center">
           {scrollSnaps.map((_, index) => (

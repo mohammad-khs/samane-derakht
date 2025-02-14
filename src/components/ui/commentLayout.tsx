@@ -5,7 +5,7 @@ import { useCommentAndChatSectionContext } from "@/app/products/[productName]/co
 import { Button } from "@/components/ui/button";
 import { DateFormatDMY } from "@/helper/dateHandler";
 import { TreeComment } from "@/types/products";
-import { AlertOctagonIcon, ReplyIcon } from "lucide-react";
+import { ReplyIcon } from "lucide-react";
 import Image from "next/image";
 import { FaUser } from "react-icons/fa";
 import { handleReply } from "@/lib/utils";
@@ -22,6 +22,7 @@ const CommentLayout: FC<CommentLayoutProps> = ({ comment }) => {
     setCommentToReplyUsername,
     setProfileId,
     session,
+    isInTree,
   } = useCommentAndChatSectionContext();
 
   if (!comment) return null;
@@ -46,6 +47,7 @@ const CommentLayout: FC<CommentLayoutProps> = ({ comment }) => {
         </div>
 
         <LikeDislikeButtons
+          isInTree={isInTree}
           commentId={comment.id}
           initialLikeCount={comment.likes_count}
           initialDislikeCount={comment.dislikes_count}

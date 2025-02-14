@@ -24,6 +24,7 @@ const ChatInput: FC<ChatInputProps> = () => {
     setcommentToreplyId,
     profileId,
     setProfileId,
+    inputCommentApi,
   } = useCommentAndChatSectionContext();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [input, setInput] = useState<string>("");
@@ -43,14 +44,14 @@ const ChatInput: FC<ChatInputProps> = () => {
       return setIsModalOpen(true);
     }
     if (!input) {
-      toast.error("پیامی برای ارسال نیست")
-      return
-    };
+      toast.error("پیامی برای ارسال نیست");
+      return;
+    }
     setIsLoading(true);
 
     try {
       await axios.post(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/order/api/${
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}${inputCommentApi}${
           commentToreplyId ? `replyComment` : `addComment`
         }/${productId}/${commentToreplyId ? `${commentToreplyId}/` : ""}`,
         { text: input, profile_id: profileId },
@@ -72,6 +73,10 @@ const ChatInput: FC<ChatInputProps> = () => {
         user_username: "شما",
         child_of_all: [],
         profile_id: "",
+        dislikes_count: 0,
+        has_user_disliked: false,
+        has_user_liked: false,
+        likes_count: 0,
       });
       setInput("");
       setCommentToReplyUsername(null);

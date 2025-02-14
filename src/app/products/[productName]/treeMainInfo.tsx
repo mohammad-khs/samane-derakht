@@ -4,7 +4,6 @@ import { FaRegCommentAlt, FaStar } from "react-icons/fa";
 import CommentAndChatSection from "./commentAndChatSection";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
-import { getSession } from "next-auth/react";
 
 interface TreeMainInfoProps {
   comments?: TreeComment[];
@@ -57,13 +56,16 @@ const TreeMainInfo: FC<TreeMainInfoProps> = async ({
             </div>
           </div>
         </div>
-
         <div>
           <CommentAndChatSection
             productSlug={productSlug}
             session={session}
             comments={comments}
             productId={productId}
+            childCommentApi="/order/api/child/"
+            parentCommentApi="/order/api/treeComments/"
+            inputCommentApi="/order/api/"
+            isInTree={false}
           />
         </div>
       </div>

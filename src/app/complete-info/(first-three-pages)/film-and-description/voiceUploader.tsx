@@ -122,7 +122,7 @@ const VoiceUploader: FC<VoiceUploaderProps> = ({ maxFiles = 1 }) => {
                       src={URL.createObjectURL(file.file)}
                       type="audio/mpeg"
                     />
-                    Your browser does not support the audio element.
+                    مرورگر شما این فایل صوتی را پشتیبانی نمیکند
                   </audio>
                 </div>
               </div>

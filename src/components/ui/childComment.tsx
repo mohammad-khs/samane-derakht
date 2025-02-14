@@ -3,8 +3,9 @@
 import { FC, useState } from "react";
 import useSWRInfinite from "swr/infinite";
 import { fetcher } from "@/lib/utils";
-import { TreeChildComment, TreeComment } from "@/types/products";
+import { TreeChildComment } from "@/types/products";
 import ChildCommentLayout from "./childCommentLayout";
+import { useCommentAndChatSectionContext } from "@/app/products/[productName]/commentAndChatSection";
 
 interface ChildCommentProps {
   parentCommentId: string | undefined;
@@ -17,15 +18,18 @@ interface CurrentPageDataType {
   data: TreeChildComment[];
 }
 
-export function useChildComments(productId: string, triggerFetch: boolean) {
+export function useChildComments(
+  productId: string,
+  triggerFetch: boolean,
+  childCommentApi: string
+) {
   const getKey = (pageIndex: number, previousPageData: CurrentPageDataType) => {
     if (!triggerFetch) return null;
     if (previousPageData && previousPageData.data.length === 0) return null;
     return `${
       process.env.NEXT_PUBLIC_API_BASE_URL
-    }/order/api/child/${productId}/?child_offset=${pageIndex * 5 + 5}`;
+    }${childCommentApi}${productId}/?child_offset=${pageIndex * 5 + 5}`;
   };
-
   return useSWRInfinite(getKey, fetcher, {
     revalidateOnFocus: false,
     revalidateIfStale: false,
@@ -38,10 +42,11 @@ const ChildComment: FC<ChildCommentProps> = ({
   childOfAll,
 }) => {
   const [triggerFetch, setTriggerFetch] = useState(false);
-  
+  const { childCommentApi } = useCommentAndChatSectionContext();
   const { data, setSize, size, isLoading } = useChildComments(
     parentCommentId || "",
-    triggerFetch
+    triggerFetch,
+    childCommentApi
   );
 
   const currentPageData: CurrentPageDataType = data
@@ -64,7 +69,7 @@ const ChildComment: FC<ChildCommentProps> = ({
       <>
         <ChildCommentLayout
           childOfAll={childOfAll}
-          replyedTo={replyedTo}
+          replyedTo={replyedTo}   
           currentPageData={currentPageData}
           previousPageData={previousPageData}
           setSize={setSize}

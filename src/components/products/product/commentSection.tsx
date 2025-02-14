@@ -1,7 +1,6 @@
 "use client";
 import { TreeComment } from "@/types/products";
 import { FC } from "react";
-
 import useSWRInfinite from "swr/infinite";
 import { fetcher } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -11,14 +10,14 @@ import ChildComment from "@/components/ui/childComment";
 
 interface CommentSectionProps {}
 
-export function useComments(productSlug: string) {
+export function useComments(productSlug: string, parentCommentApi: string) {
   const getKey = (pageIndex: number, previousPageData: any) => {
     // If no more data to fetch
     if (previousPageData && previousPageData.length === 0) return null;
 
     return `${
       process.env.NEXT_PUBLIC_API_BASE_URL
-    }/order/api/tree/${productSlug}/?comment_offset=${pageIndex * 10}`;
+    }${parentCommentApi}${productSlug}/?comment_offset=${pageIndex * 10}`;
   };
 
   return useSWRInfinite(getKey, fetcher, {
@@ -27,11 +26,17 @@ export function useComments(productSlug: string) {
   });
 }
 
-const CommentSection: FC<CommentSectionProps> = ({}) => {
-  const { userComment, productSlug } = useCommentAndChatSectionContext();
-  const { data, setSize, size, isLoading } = useComments(productSlug || "");
+const CommentSection: FC<CommentSectionProps> = () => {
+  const { userComment, productSlug, parentCommentApi, comments } =
+    useCommentAndChatSectionContext();
+  const { data, setSize, size, isLoading } = useComments(
+    productSlug || "",
+    parentCommentApi
+  );
   const currentPageData = data ? data[size - 1] : [];
   const previousPageData = data ? data[size - 2] : [];
+  console.log("this is current page data 2: ", currentPageData);
+  console.log("this is previous page data 2: ", previousPageData);
 
   if (isLoading || currentPageData === undefined) {
     return (
@@ -51,10 +56,10 @@ const CommentSection: FC<CommentSectionProps> = ({}) => {
             </div>
           </div>
         )}
-        {currentPageData?.[2]?.comments?.map((comment: TreeComment) => (
+        {currentPageData?.comments?.map((comment: TreeComment) => (
           <div key={comment.id}>
             <CommentLayout comment={comment} />
-            {comment?.count_of_child > 0 && (
+            {comment?.child_of_all.length > 0 && (
               <div className="relative border-2 z-10 mr-11 sm:mx-20 rounded-xl pe-3 bg-white border-[#EAEAEA]">
                 <div className="border-r-2 -top-12 w-[40px] -right-10 sm:-right-14 border-dashed border-b-2 absolute border-[#EAEAEA] h-1/3"></div>
                 <div>
@@ -68,23 +73,36 @@ const CommentSection: FC<CommentSectionProps> = ({}) => {
             )}
           </div>
         ))}
-        <Button
-          disabled={
+        <div
+          className={`mb-3 ${
             (!previousPageData && !currentPageData) ||
-            (currentPageData?.[2]?.comments?.length ?? 0) ===
-              (previousPageData?.[2]?.comments?.length ?? 0)
-          }
-          onClick={() => setSize(size + 1)}
-          variant={"green"}
-          size={"lg"}
-          className="disabled:opacity-50 disabled:bg-gray-800 mt-4"
+            (currentPageData?.comments?.length ?? 0) ===
+              (previousPageData?.comments?.length ?? 0) ||
+            currentPageData?.comments?.length < 10
+              ? "hidden"
+              : ""
+          }`}
         >
-          {(!previousPageData && !currentPageData) ||
-          (currentPageData?.[2]?.comments?.length ?? 0) ===
-            (previousPageData?.[2]?.comments?.length ?? 0)
-            ? "پیغامی نیست"
-            : "نمایش بیشتر"}
-        </Button>
+          <Button
+            disabled={
+              (!previousPageData && !currentPageData) ||
+              (currentPageData?.comments?.length ?? 0) ===
+                (previousPageData?.comments?.length ?? 0) ||
+              currentPageData?.comments?.length < 10
+            }
+            onClick={() => setSize(size + 1)}
+            variant={"green"}
+            size={"lg"}
+            className="disabled:opacity-50 disabled:bg-gray-800 mt-4 "
+          >
+            {(!previousPageData && !currentPageData) ||
+            (currentPageData?.comments?.length ?? 0) ===
+              (previousPageData?.comments?.length ?? 0) ||
+            currentPageData?.comments?.length < 10
+              ? "پیغامی نیست"
+              : "نمایش بیشتر"}
+          </Button>
+        </div>
       </>
     );
   }

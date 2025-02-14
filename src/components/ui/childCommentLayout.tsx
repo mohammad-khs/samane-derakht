@@ -35,6 +35,7 @@ const ChildCommentLayout: FC<ChildCommentLayoutProps> = ({
     textareaRef,
     setProfileId,
     session,
+    isInTree,
   } = useCommentAndChatSectionContext();
 
   return (
@@ -58,6 +59,7 @@ const ChildCommentLayout: FC<ChildCommentLayoutProps> = ({
                 </div>
 
                 <LikeDislikeButtons
+                  isInTree={isInTree}
                   commentId={childComment.id}
                   initialLikeCount={childComment.likes_count}
                   initialDislikeCount={childComment.dislikes_count}
@@ -126,7 +128,15 @@ const ChildCommentLayout: FC<ChildCommentLayoutProps> = ({
         ))}
       </div>
 
-      <div className="mb-3">
+      <div
+        className={`mb-3 ${
+          !childOfAll ||
+          childOfAll?.length === previousPageData?.data.length ||
+          childOfAll.length < 5
+            ? "hidden"
+            : ""
+        }`}
+      >
         <Button
           onClick={() => {
             setTriggerFetch(true);
@@ -134,12 +144,16 @@ const ChildCommentLayout: FC<ChildCommentLayoutProps> = ({
           }}
           variant={"green"}
           disabled={
-            !childOfAll || childOfAll?.length === previousPageData?.data.length
+            !childOfAll ||
+            childOfAll?.length === previousPageData?.data.length ||
+            childOfAll.length < 5
           }
           size={"lg"}
           className="disabled:opacity-50 disabled:bg-gray-800 mt-3"
         >
-          {!childOfAll || childOfAll?.length === previousPageData?.data.length
+          {!childOfAll ||
+          childOfAll?.length === previousPageData?.data.length ||
+          childOfAll.length < 5
             ? "پیغامی نیست"
             : "نمایش بیشتر"}
         </Button>

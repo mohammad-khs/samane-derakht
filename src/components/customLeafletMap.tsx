@@ -11,6 +11,7 @@ import { MainMapType } from "./main/mapSection";
 import { apiNameToIconName } from "@/helper/nameToIcon";
 import { Button } from "./ui/button";
 import { FullscreenIcon, X } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 interface CustomMapboxProps {
   zoom?: number;
@@ -24,7 +25,7 @@ const CustomMapbox: FC<CustomMapboxProps> = ({
   mapMarkerData,
 }) => {
   const [isModalOpen, setModalOpen] = useState(false);
-
+  const router = useRouter();
   const openModal = () => setModalOpen(true);
   const closeModal = () => setModalOpen(false);
 
@@ -34,7 +35,12 @@ const CustomMapbox: FC<CustomMapboxProps> = ({
 
       {/* Initial map with original sizing */}
       <div className="relative rounded-3xl w-full z-40 h-80">
-        <Button className="absolute top-4 right-4 z-50" size={"icon"} variant={"green"} onClick={openModal}>
+        <Button
+          className="absolute top-4 right-4 z-50"
+          size={"icon"}
+          variant={"green"}
+          onClick={openModal}
+        >
           <FullscreenIcon />
         </Button>
         <MapContainer
@@ -66,6 +72,11 @@ const CustomMapbox: FC<CustomMapboxProps> = ({
                   Number(marker.longtitud)
                 )}
                 key={marker.id}
+                eventHandlers={{
+                  click: () => {
+                    router.push(`/myTree/${marker.id}/`);
+                  },
+                }}
               />
             );
           })}
@@ -111,6 +122,11 @@ const CustomMapbox: FC<CustomMapboxProps> = ({
                       Number(marker.longtitud)
                     )}
                     key={marker.id}
+                    eventHandlers={{
+                      click: () => {
+                        router.push(`/myTree/${marker.id}/`);
+                      },
+                    }}
                   />
                 );
               })}

@@ -12,6 +12,7 @@ interface LikeDislikeButtonsProps {
   session: Session | null | undefined;
   has_user_disliked: boolean;
   has_user_liked: boolean;
+  isInTree: boolean;
 }
 
 const LikeDislikeButtons = ({
@@ -21,6 +22,7 @@ const LikeDislikeButtons = ({
   session,
   has_user_disliked,
   has_user_liked,
+  isInTree,
 }: LikeDislikeButtonsProps) => {
   const [likeCount, setLikeCount] = useState(initialLikeCount);
   const [dislikeCount, setDislikeCount] = useState(initialDislikeCount);
@@ -35,7 +37,9 @@ const LikeDislikeButtons = ({
 
     try {
       const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/tree/api/${action}/${commentId}/`,
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/tree/api/${
+          isInTree ? "tree" : ""
+        }${action}/${commentId}/`,
         null,
         {
           headers: {
@@ -50,18 +54,17 @@ const LikeDislikeButtons = ({
         setIsLiked(response.data.liked);
         if (response.data.liked) {
           setIsDisliked(false); // Like action cancels any existing dislike
-          setDislikeCount(prev => prev - (isDisliked ? 1 : 0));
+          setDislikeCount((prev) => prev - (isDisliked ? 1 : 0));
         }
         setLikeCount(response.data.likes);
       } else {
         setIsDisliked(response.data.disliked);
         if (response.data.disliked) {
           setIsLiked(false); // Dislike action cancels any existing like
-          setLikeCount(prev => prev - (isLiked ? 1 : 0));
+          setLikeCount((prev) => prev - (isLiked ? 1 : 0));
         }
         setDislikeCount(response.data.dislikes);
       }
-
     } catch (error) {
       console.error(`${action} error:`, error);
       toast.error("خطایی رخ داده است. لطفا مجددا تلاش کنید");
@@ -74,7 +77,12 @@ const LikeDislikeButtons = ({
     setIsDisliked(has_user_disliked);
     setLikeCount(initialLikeCount);
     setDislikeCount(initialDislikeCount);
-  }, [has_user_liked, has_user_disliked, initialLikeCount, initialDislikeCount]);
+  }, [
+    has_user_liked,
+    has_user_disliked,
+    initialLikeCount,
+    initialDislikeCount,
+  ]);
 
   return (
     <div className="mt-auto flex gap-4 items-center">

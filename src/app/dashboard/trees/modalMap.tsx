@@ -5,7 +5,7 @@ import { MapContainer, Marker, TileLayer } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import "leaflet-defaulticon-compatibility";
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
-import { Icon, LatLng, latLng } from "leaflet";
+import { Icon, latLng } from "leaflet";
 
 interface ModalMapProps {
   mapCenter: [number, number];

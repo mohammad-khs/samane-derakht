@@ -19,6 +19,10 @@ interface CommentAndChatSectionProps {
   comments?: TreeComment[];
   session?: Session | null;
   productSlug?: string;
+  parentCommentApi: string;
+  childCommentApi: string;
+  inputCommentApi: string;
+  isInTree: boolean
 }
 
 interface CommentAndChatSectionContext extends CommentAndChatSectionProps {
@@ -41,6 +45,10 @@ const CommentAndChatSection: FC<CommentAndChatSectionProps> = ({
   productId,
   comments,
   session,
+  parentCommentApi,
+  childCommentApi,
+  inputCommentApi,
+  isInTree
 }) => {
   const [userComment, setUserComment] = useState<TreeComment | undefined>();
   const [commentToreplyId, setcommentToreplyId] = useState<string | undefined>(
@@ -69,6 +77,10 @@ const CommentAndChatSection: FC<CommentAndChatSectionProps> = ({
           setCommentToReplyUsername,
           profileId,
           setProfileId,
+          parentCommentApi,
+          childCommentApi,
+          inputCommentApi,
+          isInTree,
         }}
       >
         <div className="md:w-3/4 ms-auto">
