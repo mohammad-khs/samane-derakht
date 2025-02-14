@@ -87,16 +87,19 @@ const CommentLayout: FC<CommentLayoutProps> = ({ comment }) => {
       </div>
 
       <div className="justify-end flex w-full sm:block sm:w-auto">
-        <div className="relative rounded-full p-2 sm:p-4 bg-[#EAEAEA]">
+        <div className="relative h-16 w-16 rounded-full  flex justify-center items-center  bg-[#EAEAEA]">
           {comment.user_profileimage ? (
-            <Image
+            <div className="relative h-14 w-14">
+              <Image
               alt={`پروفایل ${comment.user_username}`}
               fill
-              src={comment.user_profileimage}
+              className="w-full h-full rounded-full"
+              src={`${process.env.NEXT_PUBLIC_API_BASE_URL}${comment.user_profileimage}`}
               style={{ objectFit: "cover" }}
             />
+            </div>
           ) : (
-            <FaUser className="h-7 w-7 text-[#5F6368]" />
+            <FaUser className="h-8 w-8 text-[#5F6368] rounded-full" />
           )}
         </div>
       </div>

@@ -2,15 +2,19 @@
 import { TreeComment } from "@/types/products";
 import { FC } from "react";
 import useSWRInfinite from "swr/infinite";
-import { fetcher } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import CommentLayout from "@/components/ui/commentLayout";
 import { useCommentAndChatSectionContext } from "@/app/products/[productName]/commentAndChatSection";
 import ChildComment from "@/components/ui/childComment";
+import { Fetcher } from "swr";
 
 interface CommentSectionProps {}
 
-export function useComments(productSlug: string, parentCommentApi: string) {
+export function useComments(
+  productSlug: string,
+  parentCommentApi: string,
+  fetcher: Fetcher<any, string>
+) {
   const getKey = (pageIndex: number, previousPageData: any) => {
     // If no more data to fetch
     if (previousPageData && previousPageData.length === 0) return null;
@@ -27,16 +31,25 @@ export function useComments(productSlug: string, parentCommentApi: string) {
 }
 
 const CommentSection: FC<CommentSectionProps> = () => {
-  const { userComment, productSlug, parentCommentApi, comments } =
+  const { userComment, productSlug, parentCommentApi, session } =
     useCommentAndChatSectionContext();
+
+  const customFetcher = (url: string) =>
+    fetch(url, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: session?.access ? `Bearer ${session.access}` : "",
+        TOKEN: session?.token ?? "",
+      },
+    }).then((res) => res.json());
+
   const { data, setSize, size, isLoading } = useComments(
     productSlug || "",
-    parentCommentApi
+    parentCommentApi,
+    customFetcher
   );
   const currentPageData = data ? data[size - 1] : [];
   const previousPageData = data ? data[size - 2] : [];
-  console.log("this is current page data 2: ", currentPageData);
-  console.log("this is previous page data 2: ", previousPageData);
 
   if (isLoading || currentPageData === undefined) {
     return (

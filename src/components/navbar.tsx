@@ -33,7 +33,7 @@ const Navbar: FC<NavbarProps> = ({ isDashboard = false, count }) => {
           <Notifications />
         </div>
         <div className="w-full flex gap-1 lg:gap-4 justify-center items-center basis-1/3">
-          <Button
+          {/* <Button
             className={`font-semibold ${
               isActive("/support") ? "bg-white" : ""
             }`}
@@ -41,14 +41,14 @@ const Navbar: FC<NavbarProps> = ({ isDashboard = false, count }) => {
             variant={"ghost"}
           >
             پشتیبانی
-          </Button>
-          <Button
+          </Button> */}
+          {/* <Button
             className={`font-semibold ${isActive("#") ? "bg-white" : ""}`}
             size={"resizble"}
             variant={"ghost"}
           >
             تماس با ما
-          </Button>
+          </Button> */}
           <Link href={"/company/faq"}>
             <Button
               className={`font-semibold ${

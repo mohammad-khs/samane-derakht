@@ -2,10 +2,10 @@
 
 import { FC, useState } from "react";
 import useSWRInfinite from "swr/infinite";
-import { fetcher } from "@/lib/utils";
 import { TreeChildComment } from "@/types/products";
 import ChildCommentLayout from "./childCommentLayout";
 import { useCommentAndChatSectionContext } from "@/app/products/[productName]/commentAndChatSection";
+import { Fetcher } from "swr";
 
 interface ChildCommentProps {
   parentCommentId: string | undefined;
@@ -21,7 +21,8 @@ interface CurrentPageDataType {
 export function useChildComments(
   productId: string,
   triggerFetch: boolean,
-  childCommentApi: string
+  childCommentApi: string,
+  fetcher: Fetcher<any, string>
 ) {
   const getKey = (pageIndex: number, previousPageData: CurrentPageDataType) => {
     if (!triggerFetch) return null;
@@ -42,11 +43,22 @@ const ChildComment: FC<ChildCommentProps> = ({
   childOfAll,
 }) => {
   const [triggerFetch, setTriggerFetch] = useState(false);
-  const { childCommentApi } = useCommentAndChatSectionContext();
+  const { childCommentApi, session } = useCommentAndChatSectionContext();
+
+  const customFetcher = (url: string) =>
+    fetch(url, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: session?.access ? `Bearer ${session.access}` : "",
+        TOKEN: session?.token ?? "",
+      },
+    }).then((res) => res.json());
+
   const { data, setSize, size, isLoading } = useChildComments(
     parentCommentId || "",
     triggerFetch,
-    childCommentApi
+    childCommentApi,
+    customFetcher
   );
 
   const currentPageData: CurrentPageDataType = data

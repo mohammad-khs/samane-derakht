@@ -1,4 +1,3 @@
-// config/dashboard.tsx
 import { FaShoppingCart, FaHeart, FaEnvelope, FaChartLine, FaTree, FaComments, FaWallet, FaUserCircle, FaQuestion, FaHeadphones } from "react-icons/fa";
 import { Package2, Info, ShoppingCart, Users } from "lucide-react";
 

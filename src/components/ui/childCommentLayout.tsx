@@ -110,16 +110,19 @@ const ChildCommentLayout: FC<ChildCommentLayoutProps> = ({
               </div>
 
               <div className="justify-end flex w-full sm:block sm:w-auto">
-                <div className="relative rounded-full p-2 sm:p-4 bg-[#EAEAEA]">
-                  {childComment?.user_profileimage ? (
-                    <Image
-                      alt={`پروفایل ${childComment?.user_username}`}
-                      fill
-                      src={childComment.user_profileimage}
-                      style={{ objectFit: "cover" }}
-                    />
+                <div className="relative h-16 w-16 rounded-full  flex justify-center items-center  bg-[#EAEAEA]">
+                  {childComment.user_profileimage ? (
+                    <div className="relative h-14 w-14">
+                      <Image
+                        alt={`پروفایل ${childComment.user_username}`}
+                        fill
+                        className="w-full h-full rounded-full"
+                        src={`${process.env.NEXT_PUBLIC_API_BASE_URL}${childComment.user_profileimage}`}
+                        style={{ objectFit: "cover" }}
+                      />
+                    </div>
                   ) : (
-                    <FaUser className="h-7 w-7 text-[#5F6368]" />
+                    <FaUser className="h-8 w-8 text-[#5F6368] rounded-full" />
                   )}
                 </div>
               </div>
