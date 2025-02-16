@@ -5,11 +5,12 @@ import { Input } from "@/components/ui/input";
 import { CaretLeftIcon } from "@radix-ui/react-icons";
 import { Dispatch, FC, SetStateAction } from "react";
 import { FaPhoneAlt } from "react-icons/fa";
-import { TreeUserIcon } from "./page";
+
 import PersianDatePicker from "@/components/ui/persianDateInputs";
 import { useCompleteInfoContext } from "@/context/completeInfo";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import TreeUserIcon from "@/components/ui/treeUserIcon";
 
 interface IndividualCustomerProps {
   setCustomer: Dispatch<SetStateAction<"HA" | "HO">>;

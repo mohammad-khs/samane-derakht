@@ -5,9 +5,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import { redirect } from "next/navigation";
 
-interface CityAndDistrictProps {}
-
-const CityAndDistrict: FC<CityAndDistrictProps> = async () => {
+const CityAndDistrict: FC = async () => {
   const session = await getServerSession(authOptions);
 
   if (session === null) {

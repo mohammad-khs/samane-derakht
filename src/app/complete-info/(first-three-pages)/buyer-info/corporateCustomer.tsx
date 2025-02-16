@@ -3,7 +3,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useCompleteInfoContext } from "@/context/completeInfo";
 import { CaretLeftIcon } from "@radix-ui/react-icons";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Dispatch, FC, SetStateAction } from "react";
 import toast from "react-hot-toast";

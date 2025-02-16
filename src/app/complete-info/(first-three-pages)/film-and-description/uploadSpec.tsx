@@ -18,7 +18,6 @@ interface UploadSpecProps {
 
 const UploadSpec: FC<UploadSpecProps> = ({ session }) => {
   const router = useRouter();
-  const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const {
     customer,
@@ -33,7 +32,6 @@ const UploadSpec: FC<UploadSpecProps> = ({ session }) => {
     videoFiles,
     audioFiles,
     description,
-    authority,
     setAuthority,
   } = useCompleteInfoContext();
 
@@ -50,7 +48,6 @@ const UploadSpec: FC<UploadSpecProps> = ({ session }) => {
     }
 
     setLoading(true);
-    setError(null);
     const markerIds: string[] = [];
     selectedMarkers.map((marker) => {
       markerIds.push(marker.id);
@@ -117,10 +114,6 @@ const UploadSpec: FC<UploadSpecProps> = ({ session }) => {
       router.push("payment");
     } catch (err: unknown) {
       setAuthority(null);
-      const message =
-        err instanceof Error
-          ? err.message
-          : "مشکلی پیش آمد لطفا مجدد تلاش فرمایید";
       console.error("Error:", err);
       if (err === "email is not valid") {
         toast.error("ایمیلتان اشتباه است");

@@ -1,23 +1,13 @@
 import { FC } from "react";
 import ProgressBar from "../../progressBar";
-import { FaUserAlt } from "react-icons/fa";
 import CorporateAndIndividual from "./corporateAndIndividual";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import { redirect } from "next/navigation";
 import DecoyForSettingCustomer from "./decoyForSettingCustomer";
 
-interface CompleteInfoProps {}
 
-export function TreeUserIcon() {
-  return (
-    <div className="inline-block rounded-full ring-2 w-5 h-5 overflow-hidden ring-[#5F6368] relative">
-      <FaUserAlt className="text-[#5F6368] text-base absolute bottom-0 w-full" />
-    </div>
-  );
-}
-
-const CompleteInfo: FC<CompleteInfoProps> = async () => {
+const CompleteInfo: FC = async () => {
   const session = await getServerSession(authOptions);
   if (session === null) {
     redirect("/");

@@ -1,7 +1,7 @@
 "use client";
 
 import { FC, useState } from "react";
-import { MinusIcon, PlusIcon } from "./Icons";
+import { MinusIcon, PlusIcon } from "../Icons";
 
 interface FAQItemProps {
   question: string;

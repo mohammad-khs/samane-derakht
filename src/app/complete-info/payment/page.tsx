@@ -2,14 +2,13 @@ import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import { getServerSession } from "next-auth";
 
 import { FC } from "react";
-import ProgressBar from "../progressBar";
 import { redirect } from "next/navigation";
 import LeftsidePayment from "./leftsidePayment";
 import RightsidePayment from "./rightsidePayment";
 
-interface PaymentProps {}
 
-const Payment: FC<PaymentProps> = async () => {
+
+const Payment: FC = async () => {
   const session = await getServerSession(authOptions);
 
   if (session === null) {

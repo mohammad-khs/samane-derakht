@@ -5,9 +5,9 @@ import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import { redirect } from "next/navigation";
 import UploadSpec from "./uploadSpec";
 
-interface FilmAndDescriptionProps {}
 
-const FilmAndDescription: FC<FilmAndDescriptionProps> = async () => {
+
+const FilmAndDescription: FC = async () => {
   const session = await getServerSession(authOptions);
 
   if (session === null) {

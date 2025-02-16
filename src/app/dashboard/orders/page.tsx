@@ -4,9 +4,8 @@ import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import { redirect } from "next/navigation";
 import MyOrders from "./myOrders";
 
-interface OrdersProps {}
 
-const Orders: FC<OrdersProps> = async () => {
+const Orders: FC = async () => {
   const session = await getServerSession(authOptions);
   if (session === null) {
     redirect("/");

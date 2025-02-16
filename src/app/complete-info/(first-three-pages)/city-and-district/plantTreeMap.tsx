@@ -6,7 +6,7 @@ import { MapContainer, Marker, TileLayer } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import "leaflet-defaulticon-compatibility";
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
-import { Icon, latLng, LatLng } from "leaflet";
+import { Icon, latLng, LatLng, Map } from "leaflet";
 import { FullscreenIcon, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -77,7 +77,7 @@ const PlantTreeMap: FC<PlantTreeMapProps> = ({
   const [isModalOpen, setModalOpen] = useState(false);
   const [mapCenter, setMapCenter] = useState(initialPostion);
 
-  const mapRef = useRef<any>(null);
+  const mapRef = useRef<Map | null>(null);
 
   useEffect(() => {
     if (searchedProvince) {

@@ -239,7 +239,7 @@ export const PlusIcon = () => {
   );
 };
 
-export default {
+const icons = {
   TelegramIcon,
   InstagramIcon,
   FacebookIcon,
@@ -253,3 +253,5 @@ export default {
   MinusIcon,
   PlusIcon,
 };
+
+export default icons;

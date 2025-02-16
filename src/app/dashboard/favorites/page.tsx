@@ -4,9 +4,9 @@ import { redirect } from "next/navigation";
 import { FC } from "react";
 import MyFavorites from "./myFavorites";
 
-interface FavoritesProps {}
 
-const Favorites: FC<FavoritesProps> = async () => {
+
+const Favorites: FC = async () => {
   const session = await getServerSession(authOptions);
   if (session === null) {
     redirect("/");

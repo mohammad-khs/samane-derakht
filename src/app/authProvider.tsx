@@ -51,7 +51,7 @@ export default function AuthContext({ children }: AuthContextProps) {
               redirect: true,
             });
           }
-        } catch (e) {
+        } catch {
           console.log("Non-JSON response or parsing error");
         }
       }

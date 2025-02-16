@@ -3,7 +3,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import PersianDatePicker from "@/components/ui/persianDateInputs";
 import { FC, useRef, useState } from "react";
-import { TreeUserIcon } from "../../complete-info/(first-three-pages)/buyer-info/page";
 import { CaretLeftIcon } from "@radix-ui/react-icons";
 import TextareaAutosize from "react-textarea-autosize";
 import { useDashboardIdentityContext } from "@/context/dashboardIdentity";
@@ -12,6 +11,7 @@ import { Session } from "next-auth";
 import axios from "axios";
 import { UserIdentity } from "./page";
 import toast from "react-hot-toast";
+import TreeUserIcon from "@/components/ui/treeUserIcon";
 
 interface IndividualDashboardProps {
   session: Session;

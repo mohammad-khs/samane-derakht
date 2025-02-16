@@ -1,6 +1,6 @@
 import IndividualAndCorporateDashboard from "./individualAndCorporateDashboard";
 import { DashboardIdentityProvider } from "@/context/dashboardIdentity";
-import { getServerSession, Session } from "next-auth";
+import { getServerSession } from "next-auth";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import { redirect } from "next/navigation";
 

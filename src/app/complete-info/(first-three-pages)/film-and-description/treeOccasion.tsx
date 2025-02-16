@@ -43,7 +43,7 @@ const TreeOccasion: FC<TreeOccasionProps> = ({ session }) => {
         }
       };
       fetchTreeOccasion();
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.log(typeof error);
 
       console.error("Error fetching treeTheme:", error);

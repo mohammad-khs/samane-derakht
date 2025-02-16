@@ -1,13 +1,6 @@
 "use client";
-import { FallbackImage } from "@/components/products/product/headerImages";
-import { Button } from "@/components/ui/button";
-import { formatNumberWithCommas } from "@/helper/formatNumberWithCommas";
-import axios from "axios";
-import { Loader2, Trash2 } from "lucide-react";
 import { Session } from "next-auth";
-import Image from "next/image";
-import Link from "next/link";
-import { FC, useEffect, useState } from "react";
+import { FC} from "react";
 
 interface MyFavoritesProps {
   session: Session;

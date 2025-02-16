@@ -7,7 +7,8 @@ import {
   TwitterIcon,
   YoutubeIcon,
   CallIcon,
-} from "../components/Icons";
+} from "../Icons";
+
 import Image from "next/image";
 import Video from "@/components/ui/video";
 import { Loader2Icon, MapPin, Phone } from "lucide-react";

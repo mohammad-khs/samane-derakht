@@ -1,5 +1,5 @@
 "use client";
-import { TreeUserIcon } from "@/app/complete-info/(first-three-pages)/buyer-info/page";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useDashboardIdentityContext } from "@/context/dashboardIdentity";
@@ -11,6 +11,7 @@ import IndividualModal from "./individualModal";
 import axios from "axios";
 import { UserIdentity } from "./page";
 import toast from "react-hot-toast";
+import TreeUserIcon from "@/components/ui/treeUserIcon";
 
 interface CorporateDashboardProps {
   session: Session;

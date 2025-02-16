@@ -1,13 +1,11 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import Video from "@/components/ui/video";
 import { useCompleteInfoContext } from "@/context/completeInfo";
-import { PlayIcon, PlaySquare, PlaySquareIcon, Trash2, X } from "lucide-react";
+import { Trash2 } from "lucide-react";
 import { FC, useState } from "react";
 import toast from "react-hot-toast";
 import { FaPlay } from "react-icons/fa";
 
-interface VoiceUploaderProps {}
 
 interface VoiceUploaderProps {
   maxFiles?: number;
@@ -128,7 +126,7 @@ const VoiceUploader: FC<VoiceUploaderProps> = ({ maxFiles = 1 }) => {
               </div>
               <div className="flex justify-center gap-2 items-center text-center">
                 <Button
-                  onClick={(e) => handleFileRemove(file.id)}
+                  onClick={() => handleFileRemove(file.id)}
                   variant={"outline"}
                 >
                   <Trash2 className="w-4 h-4 ms-2 me-1 text-red-600" /> حذف

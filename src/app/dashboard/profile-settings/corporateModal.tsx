@@ -56,6 +56,7 @@ const CorporateModal: FC<CorporateModalProps> = ({ onClose, session }) => {
           phone: data?.phone,
           username: data?.username,
           first_last_name: data?.first_last_name,
+          image: data?.image || null,
         });
         console.log(data);
         toast.success("تغییرات شما با موفقیت ثبت گردید");

@@ -2,10 +2,9 @@
 import { Button } from "@/components/ui/button";
 import { useCompleteInfoContext } from "@/context/completeInfo";
 import { formatNumberWithCommas } from "@/helper/formatNumberWithCommas";
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 import { Loader2 } from "lucide-react";
 import { Session } from "next-auth";
-import { useRouter } from "next/navigation";
 import { FC, useState } from "react";
 import toast from "react-hot-toast";
 import { FaTruck } from "react-icons/fa";

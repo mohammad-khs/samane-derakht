@@ -142,9 +142,8 @@ const SelectAddress: FC<SelectAddressProps> = ({ session }) => {
         if (selectedCity) {
           setCityId(selectedCity.id);
         }
-      } catch (error: any) {
+      } catch (error: unknown) {
         console.error("Error fetching city and district:", error);
-
         if (axios.isAxiosError(error)) {
           if (error.response && error.response.status === 404) {
             toast.error("منطقه مورد نظر یافت نشد");
@@ -155,7 +154,6 @@ const SelectAddress: FC<SelectAddressProps> = ({ session }) => {
           toast.error("خطای غیرمنتظره‌ای رخ داد");
         }
 
-        // Set fallback data regardless of error type
         setData({
           province: { id: "", name: "", longtitud: "", latitud: "" },
           cities: [],

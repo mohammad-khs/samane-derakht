@@ -5,7 +5,6 @@ import { Input } from "@/components/ui/input";
 import { useDashboardIdentityContext } from "@/context/dashboardIdentity";
 import { validatePhoneNumber } from "@/helper/validateNumber";
 import axios from "axios";
-import { error } from "console";
 import { Session } from "next-auth";
 import { FC, useState } from "react";
 import toast from "react-hot-toast";
@@ -66,6 +65,7 @@ const IndividualModal: FC<IndividualModalProps> = ({ onClose, session }) => {
           phone: data?.phone,
           username: data?.username,
           first_last_name: data?.first_last_name,
+          image: data?.image || null,
         });
         console.log(data);
         toast.success("تغییرات شما با موفقیت ثبت گردید");

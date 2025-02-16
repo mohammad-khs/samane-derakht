@@ -10,7 +10,7 @@ import toast from "react-hot-toast";
 import axios from "axios";
 import { Session } from "next-auth";
 import { FileStatus } from "@/types/complete-info";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 interface AddTicketSectionProps {
   session: Session | null;
@@ -64,7 +64,7 @@ const AddTicketSection: FC<AddTicketSectionProps> = ({ session }) => {
         toast.error("منطقه مورد نظر یافت نشد");
         return;
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error("Error in sending tikcet:", error);
 
       if (axios.isAxiosError(error)) {

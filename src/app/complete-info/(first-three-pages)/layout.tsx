@@ -1,7 +1,6 @@
 import Footer from "@/components/footer";
 import MobileNav from "@/components/mobile-nav";
 import Navbar from "@/components/navbar";
-import { CompleteInfoProvider } from "@/context/completeInfo";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {

@@ -1,12 +1,10 @@
 "use client";
-import { FC, useState } from "react";
+import { FC } from "react";
 import CorporateCustomer from "./corporateCustomer";
 import IndividualCustomer from "./individualCustomer";
 import { useCompleteInfoContext } from "@/context/completeInfo";
 
-interface CorporateAndIndividualProps {}
-
-const CorporateAndIndividual: FC<CorporateAndIndividualProps> = () => {
+const CorporateAndIndividual: FC = () => {
   const { setCustomer, customer } = useCompleteInfoContext();
   return (
     <>

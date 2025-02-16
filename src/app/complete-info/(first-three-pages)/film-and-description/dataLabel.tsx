@@ -10,9 +10,7 @@ import { FaCheck, FaImage, FaMicrophone, FaPlay } from "react-icons/fa";
 import { cn } from "@/lib/utils";
 import VoiceUploader from "./voiceUploader";
 
-interface DataLabelProps {}
-
-const DataLabel: FC<DataLabelProps> = () => {
+const DataLabel: FC = () => {
   const [uploadSection, setUploadSection] = useState<
     "image" | "video" | "voice"
   >("image");
@@ -33,7 +31,7 @@ const DataLabel: FC<DataLabelProps> = () => {
           </div>
           <div className="mt-2 md:mt-0 items-center">
             <Button
-              onClick={(e) => [setImageFiles([]), setVideoFiles([])]}
+              onClick={() => [setImageFiles([]), setVideoFiles([])]}
               variant={"outline"}
             >
               <Trash2 className="w-4 h-4 ms-2 me-1 text-red-600" /> پاک کردن
@@ -43,7 +41,7 @@ const DataLabel: FC<DataLabelProps> = () => {
         </div>
         <div className="flex gap-1 sm:gap-4 mt-8">
           <Button
-            onClick={(e) => setUploadSection("image")}
+            onClick={() => setUploadSection("image")}
             variant={
               uploadSection === "image"
                 ? "green"
@@ -63,7 +61,7 @@ const DataLabel: FC<DataLabelProps> = () => {
             )}
           </Button>
           <Button
-            onClick={(e) => setUploadSection("video")}
+            onClick={() => setUploadSection("video")}
             variant={
               uploadSection === "video"
                 ? "green"
@@ -92,7 +90,7 @@ const DataLabel: FC<DataLabelProps> = () => {
             )}
           </Button>
           <Button
-            onClick={(e) => setUploadSection("voice")}
+            onClick={() => setUploadSection("voice")}
             variant={
               uploadSection === "voice"
                 ? "green"
