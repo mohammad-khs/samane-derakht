@@ -7,14 +7,13 @@ import { handleReply } from "@/lib/utils";
 import { DateFormatDMY } from "@/helper/dateHandler";
 import { TreeChildComment } from "@/types/products";
 import { useCommentAndChatSectionContext } from "@/app/products/[productName]/commentAndChatSection";
-import LikeDislikeButtons from "./LikeDislikeButtons"; // Make sure this path is correct
+import LikeDislikeButtons from "./LikeDislikeButtons";
 
 interface ChildCommentLayoutProps {
   childOfAll: TreeChildComment[];
   replyedTo: string;
-  setSize: any;
-  previousPageData: any;
-  currentPageData: any;
+  setSize: Dispatch<SetStateAction<number>>;
+  previousPageData: { data: TreeChildComment[] } | undefined;
   size: number;
   setTriggerFetch: Dispatch<SetStateAction<boolean>>;
   parentCommentId: string | undefined;

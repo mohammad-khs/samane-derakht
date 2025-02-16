@@ -8,29 +8,30 @@ import { useCommentAndChatSectionContext } from "@/app/products/[productName]/co
 import ChildComment from "@/components/ui/childComment";
 import { Fetcher } from "swr";
 
-interface CommentSectionProps {}
+interface CommentPage {
+  comments: TreeComment[];
+}
 
 export function useComments(
   productSlug: string,
   parentCommentApi: string,
-  fetcher: Fetcher<any, string>
+  fetcher: Fetcher<CommentPage, string>
 ) {
-  const getKey = (pageIndex: number, previousPageData: any) => {
-    // If no more data to fetch
-    if (previousPageData && previousPageData.length === 0) return null;
+  const getKey = (pageIndex: number, previousPageData: CommentPage | null) => {
+    if (previousPageData && previousPageData.comments.length === 0) return null;
 
     return `${
       process.env.NEXT_PUBLIC_API_BASE_URL
     }${parentCommentApi}${productSlug}/?comment_offset=${pageIndex * 10}`;
   };
 
-  return useSWRInfinite(getKey, fetcher, {
+  return useSWRInfinite<CommentPage>(getKey, fetcher, {
     revalidateOnFocus: false,
     revalidateIfStale: false,
   });
 }
 
-const CommentSection: FC<CommentSectionProps> = () => {
+const CommentSection: FC = () => {
   const { userComment, productSlug, parentCommentApi, session } =
     useCommentAndChatSectionContext();
 
@@ -41,15 +42,15 @@ const CommentSection: FC<CommentSectionProps> = () => {
         Authorization: session?.access ? `Bearer ${session.access}` : "",
         TOKEN: session?.token ?? "",
       },
-    }).then((res) => res.json());
+    }).then((res) => res.json() as Promise<CommentPage>);
 
   const { data, setSize, size, isLoading } = useComments(
     productSlug || "",
     parentCommentApi,
     customFetcher
   );
-  const currentPageData = data ? data[size - 1] : [];
-  const previousPageData = data ? data[size - 2] : [];
+  const currentPageData = data ? data[size - 1] : undefined;
+  const previousPageData = data ? data[size - 2] : undefined;
 
   if (isLoading || currentPageData === undefined) {
     return (
@@ -59,66 +60,64 @@ const CommentSection: FC<CommentSectionProps> = () => {
     );
   }
 
-  if (size >= 1) {
-    return (
-      <>
-        {userComment && (
-          <div className="relative">
-            <div className="opacity-40">
-              <CommentLayout comment={userComment} />
-            </div>
+  return (
+    <>
+      {userComment && (
+        <div className="relative">
+          <div className="opacity-40">
+            <CommentLayout comment={userComment} />
           </div>
-        )}
-        {currentPageData?.comments?.map((comment: TreeComment) => (
-          <div key={comment.id}>
-            <CommentLayout comment={comment} />
-            {comment?.child_of_all.length > 0 && (
-              <div className="relative border-2 z-10 mr-11 sm:mx-20 rounded-xl pe-3 bg-white border-[#EAEAEA]">
-                <div className="border-r-2 -top-12 w-[40px] -right-10 sm:-right-14 border-dashed border-b-2 absolute border-[#EAEAEA] h-1/3"></div>
-                <div>
-                  <ChildComment
-                    childOfAll={comment.child_of_all}
-                    parentCommentId={comment.id}
-                    replyedTo={comment.user_username}
-                  />
-                </div>
+        </div>
+      )}
+      {currentPageData?.comments?.map((comment: TreeComment) => (
+        <div key={comment.id}>
+          <CommentLayout comment={comment} />
+          {comment?.child_of_all.length > 0 && (
+            <div className="relative border-2 z-10 mr-11 sm:mx-20 rounded-xl pe-3 bg-white border-[#EAEAEA]">
+              <div className="border-r-2 -top-12 w-[40px] -right-10 sm:-right-14 border-dashed border-b-2 absolute border-[#EAEAEA] h-1/3"></div>
+              <div>
+                <ChildComment
+                  childOfAll={comment.child_of_all}
+                  parentCommentId={comment.id}
+                  replyedTo={comment.user_username}
+                />
               </div>
-            )}
-          </div>
-        ))}
-        <div
-          className={`mb-3 ${
+            </div>
+          )}
+        </div>
+      ))}
+      <div
+        className={`mb-3 ${
+          (!previousPageData && !currentPageData) ||
+          (currentPageData?.comments?.length ?? 0) ===
+            (previousPageData?.comments?.length ?? 0) ||
+          currentPageData?.comments?.length < 10
+            ? "hidden"
+            : ""
+        }`}
+      >
+        <Button
+          disabled={
             (!previousPageData && !currentPageData) ||
             (currentPageData?.comments?.length ?? 0) ===
               (previousPageData?.comments?.length ?? 0) ||
             currentPageData?.comments?.length < 10
-              ? "hidden"
-              : ""
-          }`}
+          }
+          onClick={() => setSize(size + 1)}
+          variant={"green"}
+          size={"lg"}
+          className="disabled:opacity-50 disabled:bg-gray-800 mt-4 "
         >
-          <Button
-            disabled={
-              (!previousPageData && !currentPageData) ||
-              (currentPageData?.comments?.length ?? 0) ===
-                (previousPageData?.comments?.length ?? 0) ||
-              currentPageData?.comments?.length < 10
-            }
-            onClick={() => setSize(size + 1)}
-            variant={"green"}
-            size={"lg"}
-            className="disabled:opacity-50 disabled:bg-gray-800 mt-4 "
-          >
-            {(!previousPageData && !currentPageData) ||
-            (currentPageData?.comments?.length ?? 0) ===
-              (previousPageData?.comments?.length ?? 0) ||
-            currentPageData?.comments?.length < 10
-              ? "پیغامی نیست"
-              : "نمایش بیشتر"}
-          </Button>
-        </div>
-      </>
-    );
-  }
+          {(!previousPageData && !currentPageData) ||
+          (currentPageData?.comments?.length ?? 0) ===
+            (previousPageData?.comments?.length ?? 0) ||
+          currentPageData?.comments?.length < 10
+            ? "پیغامی نیست"
+            : "نمایش بیشتر"}
+        </Button>
+      </div>
+    </>
+  );
 };
 
 export default CommentSection;

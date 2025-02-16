@@ -1,5 +1,4 @@
 "use client";
-
 import { FC, useState } from "react";
 import useSWRInfinite from "swr/infinite";
 import { TreeChildComment } from "@/types/products";
@@ -22,16 +21,20 @@ export function useChildComments(
   productId: string,
   triggerFetch: boolean,
   childCommentApi: string,
-  fetcher: Fetcher<any, string>
+  fetcher: Fetcher<CurrentPageDataType, string>
 ) {
-  const getKey = (pageIndex: number, previousPageData: CurrentPageDataType) => {
+  const getKey = (
+    pageIndex: number,
+    previousPageData: CurrentPageDataType | null
+  ) => {
     if (!triggerFetch) return null;
     if (previousPageData && previousPageData.data.length === 0) return null;
     return `${
       process.env.NEXT_PUBLIC_API_BASE_URL
     }${childCommentApi}${productId}/?child_offset=${pageIndex * 5 + 5}`;
   };
-  return useSWRInfinite(getKey, fetcher, {
+
+  return useSWRInfinite<CurrentPageDataType>(getKey, fetcher, {
     revalidateOnFocus: false,
     revalidateIfStale: false,
   });
@@ -52,7 +55,7 @@ const ChildComment: FC<ChildCommentProps> = ({
         Authorization: session?.access ? `Bearer ${session.access}` : "",
         TOKEN: session?.token ?? "",
       },
-    }).then((res) => res.json());
+    }).then((res) => res.json() as Promise<CurrentPageDataType>);
 
   const { data, setSize, size, isLoading } = useChildComments(
     parentCommentId || "",
@@ -61,12 +64,14 @@ const ChildComment: FC<ChildCommentProps> = ({
     customFetcher
   );
 
-  const currentPageData: CurrentPageDataType = data
-    ? data[size - 1]
-    : { child_offset: 0, data: [] };
-  const previousPageData: CurrentPageDataType = data
-    ? data[size - 2]
-    : { child_offset: 0, data: [] };
+  const currentPageData: CurrentPageDataType = data?.[size - 1] || {
+    child_offset: 0,
+    data: [],
+  };
+  const previousPageData: CurrentPageDataType = data?.[size - 2] || {
+    child_offset: 0,
+    data: [],
+  };
 
   if (isLoading) {
     return (
@@ -76,39 +81,17 @@ const ChildComment: FC<ChildCommentProps> = ({
     );
   }
 
-  if (childOfAll.length > 0 && triggerFetch === false) {
-    return (
-      <>
-        <ChildCommentLayout
-          childOfAll={childOfAll}
-          replyedTo={replyedTo}   
-          currentPageData={currentPageData}
-          previousPageData={previousPageData}
-          setSize={setSize}
-          size={size}
-          parentCommentId={parentCommentId}
-          setTriggerFetch={setTriggerFetch}
-        />
-      </>
-    );
-  }
-
-  if (triggerFetch) {
-    return (
-      <>
-        <ChildCommentLayout
-          childOfAll={currentPageData?.data}
-          replyedTo={replyedTo}
-          currentPageData={currentPageData}
-          previousPageData={previousPageData}
-          setSize={setSize}
-          size={size}
-          setTriggerFetch={setTriggerFetch}
-          parentCommentId={parentCommentId}
-        />
-      </>
-    );
-  }
+  return (
+    <ChildCommentLayout
+      childOfAll={triggerFetch ? currentPageData?.data : childOfAll}
+      replyedTo={replyedTo}
+      previousPageData={previousPageData}
+      setSize={setSize}
+      size={size}
+      parentCommentId={parentCommentId}
+      setTriggerFetch={setTriggerFetch}
+    />
+  );
 };
 
 export default ChildComment;
