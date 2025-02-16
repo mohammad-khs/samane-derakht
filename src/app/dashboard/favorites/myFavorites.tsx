@@ -1,12 +1,14 @@
 "use client";
 import { Session } from "next-auth";
-import { FC} from "react";
+import { FC } from "react";
 
 interface MyFavoritesProps {
   session: Session;
 }
 
 const MyFavorites: FC<MyFavoritesProps> = ({ session }) => {
+  console.log(session);
+
   return <>favorites</>;
 
   // const [loading, setLoading] = useState(true);

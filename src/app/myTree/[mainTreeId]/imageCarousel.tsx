@@ -58,7 +58,7 @@ const ImageCarousel: FC<ImageCarouselProps> = ({
                       fill
                       referrerPolicy="no-referrer"
                       unoptimized
-                      src={`https://treeone.liara.run/${item?.image}` || "#"}
+                      src={`${process.env.NEXT_PUBLIC_API_BASE_URL}/${item?.image}` || "#"}
                       alt="Carousel image"
                     />
                   ) : (

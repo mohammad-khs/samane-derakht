@@ -43,7 +43,7 @@ export function useFinishedOrders(
   transactionSort: TransactionSortType,
   sortBy: string
 ) {
-  const getKey = (pageIndex: number, previousPageData: any) => {
+  const getKey = (pageIndex: number, previousPageData: unknown[]) => {
     if (pageIndex === 0 && !previousPageData) {
       return `${
         process.env.NEXT_PUBLIC_API_BASE_URL
@@ -53,8 +53,6 @@ export function useFinishedOrders(
     }
 
     if (previousPageData && previousPageData.length === 0) return null;
-
-    console.log("its fetching new data :(");
 
     return `${
       process.env.NEXT_PUBLIC_API_BASE_URL

@@ -2,7 +2,7 @@ import { cn } from "@/lib/utils";
 import { Dispatch, FC, SetStateAction, useEffect } from "react";
 import { FaUser } from "react-icons/fa";
 import { Session } from "next-auth";
-import { Link, Loader2Icon } from "lucide-react";
+import { Loader2Icon } from "lucide-react";
 import useSWR from "swr";
 import { TicketType } from "../myTickets";
 

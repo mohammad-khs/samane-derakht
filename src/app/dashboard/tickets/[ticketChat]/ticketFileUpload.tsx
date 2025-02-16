@@ -1,7 +1,7 @@
 "use client";
 import { FileStatus } from "@/types/complete-info";
-import { LucidePaperclip, Pin, PinIcon, X } from "lucide-react";
-import React, { Dispatch, FC, SetStateAction, useState } from "react";
+import { X } from "lucide-react";
+import React, { Dispatch, FC, SetStateAction } from "react";
 import toast from "react-hot-toast";
 
 interface TicketFileUploaderProps {

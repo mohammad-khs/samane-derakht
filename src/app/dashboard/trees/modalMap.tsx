@@ -5,14 +5,14 @@ import { MapContainer, Marker, TileLayer } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import "leaflet-defaulticon-compatibility";
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
-import { Icon, latLng } from "leaflet";
+import { Icon, latLng, Map } from "leaflet";
 
 interface ModalMapProps {
   mapCenter: [number, number];
 }
 
 const ModalMap: FC<ModalMapProps> = ({ mapCenter }) => {
-  const mapRef = useRef<any>(null);
+  const mapRef = useRef<Map>(null);
 
   const customIcon = new Icon({
     iconUrl: `/svgs/map_svgs/selectedMarker.svg`,

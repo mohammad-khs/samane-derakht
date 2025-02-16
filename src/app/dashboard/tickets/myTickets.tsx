@@ -1,9 +1,7 @@
 "use client";
-import { Button } from "@/components/ui/button";
-import { DateFormatDMY, monthNumToMonthName } from "@/helper/dateHandler";
+
 import axios from "axios";
 import { Session } from "next-auth";
-import Link from "next/link";
 import { FC, useEffect, useState } from "react";
 import Ticket from "./ticket";
 
@@ -58,8 +56,8 @@ const MyTickets: FC<MyTicketsProps> = ({ session }) => {
   }, []);
 
   useEffect(() => {
-    const reviewing: any = [];
-    const answered: any = [];
+    const reviewing: TicketType[] = [];
+    const answered: TicketType[] = [];
 
     allData.forEach((ticket) => {
       if (ticket.ticket_type === "درحال برسی") {

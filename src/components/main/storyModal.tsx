@@ -110,7 +110,7 @@ const StoryModal: React.FC<StoryModalProps> = ({
                   <Image
                     fill
                     className="rounded-lg animate-in fade-in duration-300"
-                    src={`https://treeone.liara.run/${imageData.image}`}
+                    src={`${process.env.NEXT_PUBLIC_API_BASE_URL}/${imageData.image}`}
                     alt={imageData.title}
                   />
                   <div className="absolute right-14 flex items-center justify-center gap-4">

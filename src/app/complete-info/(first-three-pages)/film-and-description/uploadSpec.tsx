@@ -90,7 +90,7 @@ const UploadSpec: FC<UploadSpecProps> = ({ session }) => {
 
       // Send API request
       const response = await fetch(
-        "https://treeone.liara.run/order/api/addOrder/",
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/order/api/addOrder/`,
         {
           method: "POST",
           body: formData,

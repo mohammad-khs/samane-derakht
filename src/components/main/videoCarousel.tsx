@@ -57,7 +57,7 @@ const VideoCarousel: FC<VideoCarouselProps> = ({
                         <div className="m-2 border-2 border-[#E3E5E9] p-1 rounded-3xl relative">
                           <Suspense fallback={<Loader2Icon />}>
                             <Video
-                              vidoAddress={`https://treeone.liara.run/${item.film}`}
+                              vidoAddress={`${process.env.NEXT_PUBLIC_API_BASE_URL}/${item.film}`}
                             />
                           </Suspense>
                         </div>

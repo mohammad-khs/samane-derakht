@@ -7,9 +7,9 @@ import { redirect } from "next/navigation";
 import { FC } from "react";
 import MyTickets from "./myTickets";
 
-interface TickestsProps {}
 
-const Tickets: FC<TickestsProps> = async () => {
+
+const Tickets: FC = async () => {
   const session = await getServerSession(authOptions);
 
   if (session === null) {

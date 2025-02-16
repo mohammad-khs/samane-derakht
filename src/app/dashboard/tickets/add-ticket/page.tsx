@@ -4,9 +4,8 @@ import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import AddTicketSection from "./addTicketSection";
 import { redirect } from "next/navigation";
 
-interface AddTicketProps {}
 
-const AddTicket: FC<AddTicketProps> = async () => {
+const AddTicket: FC = async () => {
   const session = await getServerSession(authOptions);
   if (session === null) {
     redirect("/");

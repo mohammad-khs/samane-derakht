@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ["cdn.pixabay.com", "treeone.liara.run"],
+    domains: ["cdn.pixabay.com", "treeone.liara.run",process.env.NEXT_PUBLIC_API_BASE_URL],
   },
 
   reactStrictMode: true,

@@ -23,14 +23,14 @@ const FallbackThumbnail = () => (
 
 const HeaderImages: FC<HeaderImagesProps> = ({ treeData }) => {
   const mainImageUrl = treeData.tree?.image
-    ? `https://treeone.liara.run/${treeData.tree.image}`
+    ? `${process.env.NEXT_PUBLIC_API_BASE_URL}/${treeData.tree.image}`
     : null;
 
   const [selectedImage, setSelectedImage] = useState(mainImageUrl);
   const [thumbnailImages, setThumbnailImages] = useState(
     treeData.images?.map((image) => ({
       id: image.id,
-      url: `https://treeone.liara.run/${image.image}`,
+      url: `${process.env.NEXT_PUBLIC_API_BASE_URL}/${image.image}`,
     })) || []
   );
 
