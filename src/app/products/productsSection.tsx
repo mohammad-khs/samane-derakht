@@ -14,7 +14,7 @@ interface ProductsSectionProps {
 }
 
 export function useProducts(searchQuery?: string) {
-  const getKey = (pageIndex: number, previousPageData: any) => {
+  const getKey = (pageIndex: number, previousPageData: { data: [] }) => {
     // Correctly check previous page's data array length
     if (previousPageData && previousPageData.data.length === 0) return null;
 

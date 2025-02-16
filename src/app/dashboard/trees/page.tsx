@@ -4,9 +4,8 @@ import { redirect } from "next/navigation";
 import { FC } from "react";
 import MyTrees from "./myTrees";
 
-interface TreesProps {}
 
-const Trees: FC<TreesProps> = async () => {
+const Trees: FC = async () => {
   const session = await getServerSession(authOptions);
   if (session === null) {
     redirect("/");

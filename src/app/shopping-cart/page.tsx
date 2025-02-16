@@ -9,8 +9,6 @@ import toast from "react-hot-toast";
 import axios from "axios";
 import LeftSideShoppingCart from "./leftSideShoppingCart";
 
-interface ShoppingCartProps {}
-
 export interface TreeType {
   id: string;
   name: string;
@@ -30,12 +28,27 @@ export interface TreeItem {
   each_cost: number;
 }
 
-const ShoppingCart: FC<ShoppingCartProps> = () => {
+interface PriceSummary {
+  all_price: number;
+}
+
+interface DiscountedPriceSummary {
+  all_price_off: number;
+}
+
+interface CartData {
+  items: TreeItem[];
+  all_price: PriceSummary;
+  all_price_with_off: DiscountedPriceSummary;
+  all_products_count: number;
+}
+
+const ShoppingCart: FC = () => {
   const session = useSession();
-  const [cartData, setCartData] = useState<any>(null);
+  const [cartData, setCartData] = useState<CartData | null>(null);
   const [refresh, setRefresh] = useState(false);
   const [isLoading, setIsloading] = useState(true);
-  const [resCount, setResCount] = useState();
+  const [resCount, setResCount] = useState<number | undefined>();
 
   // Fetch session and cart data on component mount or when `refresh` changes
   useEffect(() => {
@@ -89,9 +102,9 @@ const ShoppingCart: FC<ShoppingCartProps> = () => {
                 <div>
                   <LeftSideShoppingCart
                     session={session?.data}
-                    allPrice={cartData?.all_price}
-                    allPriceWithOff={cartData?.all_price_with_off}
-                    allProductsCount={cartData?.all_products_count}
+                    allPrice={cartData?.all_price.all_price ?? 0}
+                    allPriceWithOff={cartData?.all_price_with_off.all_price_off ?? 0}
+                    allProductsCount={cartData?.all_products_count ?? 0}
                   />
                 </div>
                 <div>

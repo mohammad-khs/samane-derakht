@@ -1,12 +1,13 @@
-import NextAuth from "next-auth";
+import "next-auth";
+import "next-auth/jwt";
 
 declare module "next-auth" {
-  interface User {
+  interface Session {
     access: string;
     token: string;
   }
 
-  interface Session {
+  interface User {
     access: string;
     token: string;
   }

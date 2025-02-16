@@ -13,7 +13,7 @@ interface SignInModalParentProps {
 
 const SignInModalParent: FC<SignInModalParentProps> = ({ children }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { data: session, status } = useSession();
+  const { status } = useSession();
   return (
     <div>
       {status === "unauthenticated" ? (

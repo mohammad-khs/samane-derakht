@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { Button } from "@/components/ui/button";
 import { formatNumberWithCommas } from "@/helper/formatNumberWithCommas";
 import { Session } from "next-auth";
@@ -6,12 +6,8 @@ import Link from "next/link";
 import { FC } from "react";
 import { FaTruck } from "react-icons/fa";
 interface LeftSideShoppingCartProps {
-  allPrice: {
-    all_price: number;
-  };
-  allPriceWithOff: {
-    all_price_off: number;
-  };
+  allPrice: number;
+  allPriceWithOff: number;
   session: Session | null;
   allProductsCount: number;
 }
@@ -39,7 +35,7 @@ const LeftSideShoppingCart: FC<LeftSideShoppingCartProps> = ({
             </div>
           </div>
           <div className="flex justify-center items-center gap-1 font-semibold text-lg">
-            {formatNumberWithCommas(allPrice?.all_price)}
+            {formatNumberWithCommas(allPrice)}
             <span className="text-[#9F9F9F] text-xs">تومان</span>{" "}
           </div>
         </div>
@@ -52,7 +48,7 @@ const LeftSideShoppingCart: FC<LeftSideShoppingCartProps> = ({
           </div>
           <div className="flex justify-center items-center gap-1">
             {formatNumberWithCommas(
-              allPrice?.all_price - allPriceWithOff?.all_price_off
+              allPrice - allPriceWithOff
             )}
             <span className="text-[#9F9F9F] text-xs">تومان</span>{" "}
           </div>
@@ -66,7 +62,7 @@ const LeftSideShoppingCart: FC<LeftSideShoppingCartProps> = ({
             <h3 className="font-semibold">مبلغ نهایی:</h3>
           </div>
           <div className="flex justify-center items-center gap-1 font-semibold text-lg">
-            {formatNumberWithCommas(allPriceWithOff?.all_price_off)}
+            {formatNumberWithCommas(allPriceWithOff)}
             <span className="text-[#28D16C] text-xs">تومان</span>{" "}
           </div>
         </div>

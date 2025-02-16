@@ -39,7 +39,7 @@ const AddToCardButton: FC<AddToCardButtonProps> = ({ treeData, session }) => {
           }
         );
         setIsInCart(response.data.in_cart);
-      } catch (error) {
+      } catch  {
         toast.error(
           "مشکلی در دریافت محتویات سبد خرید پیش آمده لطفا صفحه را رفرش کنید"
         );

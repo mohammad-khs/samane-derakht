@@ -5,9 +5,9 @@ import { FC } from "react";
 import MyWallet from "./myWallet";
 import MyTransactions from "../transactions/myTransactions";
 
-interface WalletProps {}
 
-const Wallet: FC<WalletProps> = async () => {
+
+const Wallet: FC = async () => {
   const session = await getServerSession(authOptions);
   if (session === null) {
     redirect("/");

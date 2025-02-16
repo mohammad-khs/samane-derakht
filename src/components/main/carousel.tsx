@@ -60,7 +60,7 @@ const Carousel: FC<CarouselProps> = ({
                           referrerPolicy="no-referrer"
                           unoptimized
                           src={
-                            `${process.env.NEXT_PUBLIC_API_BASE_URL}/${item?.image}` || "#"
+                            `${process.env.NEXT_PUBLIC_API_BASE_URL}${item?.image}` || "#"
                           }
                           alt={"null"}
                         />

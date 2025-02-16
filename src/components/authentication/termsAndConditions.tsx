@@ -2,9 +2,9 @@
 import { FC, useState } from "react";
 import { Button } from "../ui/button";
 
-interface TermsAndConditionsProps {}
 
-const TermsAndConditions: FC<TermsAndConditionsProps> = () => {
+
+const TermsAndConditions: FC = () => {
   const [showTermsModal, setShowTermsModal] = useState(false);
   const [showPrivacyModal, setShowPrivacyModal] = useState(false);
 

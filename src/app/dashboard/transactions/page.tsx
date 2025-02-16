@@ -4,9 +4,9 @@ import { redirect } from "next/navigation";
 import { FC } from "react";
 import MyTransactions from "./myTransactions";
 
-interface TransactionsProps {}
 
-const Transactions: FC<TransactionsProps> = async () => {
+
+const Transactions: FC = async () => {
   const session = await getServerSession(authOptions);
   if (session === null) {
     redirect("/");

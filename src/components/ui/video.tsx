@@ -1,5 +1,5 @@
 "use client";
-import { FC, useRef, useState } from "react";
+import { FC, useRef } from "react";
 
 interface VideoProps {
   vidoAddress: string;
@@ -7,7 +7,6 @@ interface VideoProps {
 
 const Video: FC<VideoProps> = ({ vidoAddress }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [isPlaying, setIsPlaying] = useState(false);
 
   // const handleTogglePlayPause = () => {
   //   if (videoRef.current) {

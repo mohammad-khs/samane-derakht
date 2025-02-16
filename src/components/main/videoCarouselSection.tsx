@@ -1,9 +1,6 @@
 import { FC } from "react";
-
-import CustomerReviewsCarousel from "./customerReviewsCarousel";
 import VideoCarousel from "./videoCarousel";
 
-interface VideoCarouselSectionProps {}
 const fetchVideos = async (): Promise<[]> => {
   try {
     const res = await fetch(
@@ -20,7 +17,7 @@ const fetchVideos = async (): Promise<[]> => {
   }
 };
 
-const VideoCarouselSection: FC<VideoCarouselSectionProps> = async () => {
+const VideoCarouselSection: FC = async () => {
   const data = await fetchVideos();
 
   return (

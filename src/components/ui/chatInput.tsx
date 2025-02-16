@@ -11,9 +11,8 @@ import { useCommentAndChatSectionContext } from "@/app/products/[productName]/co
 import { useSession } from "next-auth/react";
 import { X } from "lucide-react";
 
-interface ChatInputProps {}
 
-const ChatInput: FC<ChatInputProps> = () => {
+const ChatInput: FC = () => {
   const {
     productId,
     setUserComment,

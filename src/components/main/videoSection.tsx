@@ -3,9 +3,9 @@ import Video from "../ui/video";
 import Image from "next/image";
 import { Loader2Icon } from "lucide-react";
 
-interface VideoSectionProps {}
 
-const VideoSection: FC<VideoSectionProps> = () => {
+
+const VideoSection: FC = () => {
   return (
     <>
       <section className="flex flex-col md:flex-row justify-center mx-5 md:mx-10 items-center my-20">

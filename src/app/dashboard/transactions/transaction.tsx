@@ -3,7 +3,6 @@ import { DateFormatDMY } from "@/helper/dateHandler";
 import {
   ArrowBottomLeftIcon,
   ArrowTopRightIcon,
-  CaretLeftIcon,
   QuestionMarkIcon,
 } from "@radix-ui/react-icons";
 import { FC } from "react";
@@ -27,8 +26,7 @@ const Transaction: FC<TransactionProps> = ({ transaction }) => {
       case 5:
         return "برداشت";
       default:
-        "تراکنش نامشخص";
-        break;
+        return "تراکنش نامشخص";
     }
   };
 

@@ -45,7 +45,7 @@ export const fetcher = (url: string, session: Session) =>
     .then((res) => res.data);
 
 const MyTrees: FC<MyTreesProps> = ({ session }) => {
-  const getKey = (pageIndex: number, previousPageData: any) => {
+  const getKey = (pageIndex: number, previousPageData: { data: [] }) => {
     // If no previous data (initial fetch), start fetching
     if (pageIndex === 0 && previousPageData === null) {
       return `${process.env.NEXT_PUBLIC_API_BASE_URL}/account/api/mytrees/?limit=12`;
@@ -94,13 +94,20 @@ const MyTrees: FC<MyTreesProps> = ({ session }) => {
       ) : (
         <div className="text-red-600 text-center my-3">{error?.message}</div>
       )}
-      <div className={`text-center mt-8 ${!currentData?.data ||
-              currentData?.data?.length === previousData?.data?.length || currentData?.data?.length < 7 ? "hidden" : ""}`}>
+      <div
+        className={`text-center mt-8 ${
+          !currentData?.data ||
+          currentData?.data?.length === previousData?.data?.length ||
+          currentData?.data?.length < 7
+            ? "hidden"
+            : ""
+        }`}
+      >
         {
           <Button
             disabled={
               !currentData?.data ||
-              currentData?.data?.length === previousData?.data?.length 
+              currentData?.data?.length === previousData?.data?.length
             }
             className="disabled:bg-slate-500"
             variant={"green"}

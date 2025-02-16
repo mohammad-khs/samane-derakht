@@ -6,9 +6,7 @@ import { Frown } from "lucide-react";
 import Link from "next/link";
 import { formatNumberWithCommas } from "@/helper/formatNumberWithCommas";
 
-interface ProductCardProps extends TreeCard {}
-
-const ProductCard: FC<ProductCardProps> = ({
+const ProductCard: FC<TreeCard> = ({
   image,
   in_stock,
   name,

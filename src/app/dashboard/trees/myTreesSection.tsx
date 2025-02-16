@@ -93,7 +93,7 @@ const MyTreesSection: FC<MyTreesSectionProps> = ({ item }) => {
               </div>
               <div className="leading-7">
                 آدرس: {item.province_name} {item.city_name} {item.location_name}{" "}
-                <button onClick={(e) => setOpenMapModal(true)} className="">
+                <button onClick={() => setOpenMapModal(true)} className="">
                   <span className="font-semibold underline text-[#3F3F3F]">
                     نمایش روی نقشه
                   </span>

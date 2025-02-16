@@ -6,9 +6,9 @@ import { Button } from "../components/ui/button";
 import Image from "next/image";
 import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
 
-interface HeroProps {}
 
-const Hero: FC<HeroProps> = () => {
+
+const Hero: FC = () => {
   const router = useRouter();
   const [searchValue, setSearchValue] = useState("");
 

@@ -1,9 +1,9 @@
 import { FC } from "react";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-interface ProductsLoadingProps {}
 
-const ProductsLoading: FC<ProductsLoadingProps> = () => {
+
+const ProductsLoading: FC = () => {
   const length = Array(16).fill(0);
   return (
     <>

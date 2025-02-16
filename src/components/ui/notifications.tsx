@@ -7,7 +7,7 @@ import { useSession } from "next-auth/react";
 import { MailIcon } from "lucide-react";
 import Link from "next/link";
 
-interface NotificationsProps {}
+
 
 interface NotificationType {
   id: string;
@@ -18,7 +18,7 @@ interface NotificationType {
   url_for_transaction: string | null;
 }
 
-const Notifications: FC<NotificationsProps> = () => {
+const Notifications: FC = () => {
   const { data: session, status } = useSession();
   const [count, setCount] = useState(0);
   const [notifications, setNotifications] = useState<NotificationType[]>([]);

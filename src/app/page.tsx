@@ -1,4 +1,3 @@
-import Carousel from "@/components/main/mainCarousel";
 import CustomerReviews from "@/components/main/customerReviewsSection";
 import FeatureSection from "@/app/featureSection";
 import Hero from "@/app/hero";

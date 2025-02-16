@@ -2,7 +2,7 @@
 import { FallbackImage } from "@/components/products/product/headerImages";
 import { Minus, Plus } from "lucide-react";
 import Image from "next/image";
-import { Dispatch, FC, SetStateAction } from "react";
+import { FC } from "react";
 import { FaCommentAlt, FaStar } from "react-icons/fa";
 import { TreeItem } from "./page";
 import Link from "next/link";

@@ -72,7 +72,7 @@ const MyWallet: FC<MyWalletProps> = ({ session }) => {
           </div>
           <div className="flex gap-4">
             <Button
-              onClick={(e) => setDepositModalIsOpen(true)}
+              onClick={() => setDepositModalIsOpen(true)}
               className="w-full"
               variant={"green"}
             >
