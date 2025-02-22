@@ -5,17 +5,18 @@ import { Input } from "@/components/ui/input";
 import { stringIsNotNumber } from "@/helper/validateNumber";
 import axios from "axios";
 import { Session } from "next-auth";
+import { useRouter } from "next/navigation";
 import { FC, useState } from "react";
 import toast from "react-hot-toast";
 interface DepositModalProps {
-  onClose: () => void; // Optional callback for closing the modal
+  onClose: () => void;
   session: Session | null;
 }
 
 const DepositModal: FC<DepositModalProps> = ({ onClose, session }) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [depositValue, setDepositValue] = useState("");
-
+  const router = useRouter()
   const handleDeposit = async () => {
     setLoading(true);
     const amountNotEnough = parseInt(depositValue) < 100000;
@@ -52,7 +53,7 @@ const DepositModal: FC<DepositModalProps> = ({ onClose, session }) => {
         console.log(data);
         toast.success("به صفحه پرداخت هدایت می‌شوید");
         onClose();
-        window.open(`${response.data.url}`);
+        router.replace(`${response.data.url}`)
       }
     } catch (error) {
       if (axios.isAxiosError(error)) {

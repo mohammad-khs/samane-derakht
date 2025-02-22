@@ -5,12 +5,11 @@ import { Button } from "./button";
 import axios from "axios";
 import { useSession } from "next-auth/react";
 import { MailIcon } from "lucide-react";
-import Link from "next/link";
-
-
+import { useRouter } from "next/navigation";
 
 interface NotificationType {
   id: string;
+  slug: string;
   notif_type: number;
   url_for_order: string | null;
   url_for_reply_comment: string | null;
@@ -24,6 +23,47 @@ const Notifications: FC = () => {
   const [notifications, setNotifications] = useState<NotificationType[]>([]);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const router = useRouter();
+
+  const handleNotifClick = (notification: NotificationType) => {
+    if (notification.url_for_order) {
+      router.replace("/dashboard/orders");
+    }
+    if (notification.url_for_transaction) {
+      router.replace("/dashboard/transactions");
+    }
+    if (notification.url_for_reply_comment) {
+      router.replace(`products/${notification.slug}`);
+    }
+    if (notification.url_for_ticket) {
+      router.replace(`products/${notification.slug}`);
+    }
+    if (notification.url_for_reply_comment) {
+      const fetchData = async () => {
+        try {
+          const response = await axios.get(
+            `${process.env.NEXT_PUBLIC_API_BASE_URL}${notification.url_for_reply_comment}`,
+            {
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: session?.access
+                  ? `Bearer ${session.access}`
+                  : "",
+                TOKEN: session?.token ?? "",
+              },
+            }
+          );
+          console.log(response);
+        } catch (error) {
+          console.error("Failed to fetch notifications:", error);
+        }
+      };
+
+      if (status === "authenticated") {
+        fetchData();
+      }
+    }
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -120,7 +160,8 @@ const Notifications: FC = () => {
           </Button>
 
           {isDropdownOpen && (
-            <div className="absolute right-0 mt-2 w-64 bg-white border border-gray-200 rounded-lg shadow-lg z-50">
+            <div className="flex justify-center ">
+                <div className="absolute mt-3 w-64 max-h-96 overflow-y-auto bg-white border border-gray-200 rounded-lg shadow-lg z-50 ">
               <div className="p-4">
                 {notifications.length > 0 ? (
                   <ul className="space-y-2">
@@ -130,21 +171,16 @@ const Notifications: FC = () => {
                         className="text-sm p-2 rounded bg-gray-50 hover:bg-gray-100 cursor-pointer"
                       >
                         <p>{getNotificationMessage(notification.notif_type)}</p>
-                        {notification.url_for_reply_comment && (
-                          <Link
-                            href={'/products/چنار'}
+                        {(notification.url_for_order ||
+                          notification.url_for_reply_comment ||
+                          notification.url_for_ticket ||
+                          notification.url_for_transaction) && (
+                          <button
+                            onClick={() => handleNotifClick(notification)}
                             className="text-xs text-[#28D16C] hover:underline"
                           >
-                            دیدن کامنت
-                          </Link>
-                        )}
-                        {notification.url_for_order && (
-                          <Link
-                            href={notification.url_for_order}
-                            className="text-xs text-[#28D16C] hover:underline"
-                          >
-                            دیدن سفارش
-                          </Link>
+                            مشاهده
+                          </button>
                         )}
                       </li>
                     ))}
@@ -153,7 +189,7 @@ const Notifications: FC = () => {
                   <p className="text-sm text-gray-500">هیچ پیام جدیدی نیست</p>
                 )}
               </div>
-            </div>
+            </div></div>
           )}
         </div>
       )}

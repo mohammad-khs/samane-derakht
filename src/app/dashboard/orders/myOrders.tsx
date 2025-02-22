@@ -141,9 +141,9 @@ const MyOrders: FC<MyOrdersProps> = ({ session }) => {
       </div>
 
       {activeButton === "finished" ? (
-        <MyOrdersSection data={finishedData} />
+        <MyOrdersSection isWaitingData={false} data={finishedData} />
       ) : (
-        <MyOrdersSection data={waitingdata} />
+        <MyOrdersSection isWaitingData={true} data={waitingdata} />
       )}
     </>
   );

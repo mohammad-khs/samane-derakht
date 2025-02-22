@@ -22,7 +22,6 @@ export const useDashboardUser = (session: Session | null) => {
               Authorization: `Bearer ${session.access}`,
               TOKEN: session.token,
             },
-            cache: "no-store",
           }
         );
 

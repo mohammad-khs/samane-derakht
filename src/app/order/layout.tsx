@@ -4,8 +4,8 @@ import Navbar from "@/components/navbar";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "خرید موفقیت آمیز",
-  description: "خرید شما با موفقیت به ثبت رسید",
+  title: "وضعیت خرید",
+  description: "وضعیت خرید شما در این صفحه نمایش داده میشود",
 };
 
 export default function Layout({

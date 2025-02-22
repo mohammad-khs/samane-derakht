@@ -5,6 +5,7 @@ import { formatNumberWithCommas } from "@/helper/formatNumberWithCommas";
 import axios from "axios";
 import { Loader2 } from "lucide-react";
 import { Session } from "next-auth";
+import { useRouter } from "next/navigation";
 import { FC, useState } from "react";
 import toast from "react-hot-toast";
 import { FaTruck } from "react-icons/fa";
@@ -16,6 +17,7 @@ interface LeftsidePaymentProps {
 const LeftsidePayment: FC<LeftsidePaymentProps> = ({ session }) => {
   const { authority, method } = useCompleteInfoContext();
   const [loading, setLoading] = useState(false);
+  const router = useRouter()
   console.log(authority);
   console.log(authority?.all_price);
   console.log(authority?.all_price_with_off);
@@ -40,7 +42,7 @@ const LeftsidePayment: FC<LeftsidePaymentProps> = ({ session }) => {
       );
       if (response.status === 200) {
         console.log("this is data: ", response.data);
-        window.open(`${response.data.authority}`);
+        router.replace(`${response.data.authority}`);
       }
     } catch (error) {
       if (axios.isAxiosError(error)) {

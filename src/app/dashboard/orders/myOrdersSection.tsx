@@ -9,10 +9,11 @@ import { Order } from "./myOrders";
 
 interface MyOrdersSectionProps {
   data: Order[];
+  isWaitingData: boolean;
 }
 
-const MyOrdersSection: FC<MyOrdersSectionProps> = ({ data }) => {
-  const [expandedOrders, setExpandedOrders] = useState<string[]>([]); // Track expanded orders
+const MyOrdersSection: FC<MyOrdersSectionProps> = ({ data, isWaitingData }) => {
+  const [expandedOrders, setExpandedOrders] = useState<string[]>([]);
   const toggleOrderDetails = (orderId: string) => {
     if (expandedOrders.includes(orderId)) {
       setExpandedOrders(expandedOrders.filter((id) => id !== orderId));
@@ -61,6 +62,12 @@ const MyOrdersSection: FC<MyOrdersSectionProps> = ({ data }) => {
                   {formatNumberWithCommas(order.final_price)}
                 </span>{" "}
                 تومان
+              </div>
+              
+              <div hidden={!isWaitingData} >
+              <Button variant={"green"} size={"resizble"}>
+                درگاه پرداخت
+              </Button>
               </div>
 
               <Button

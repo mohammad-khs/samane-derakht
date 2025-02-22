@@ -1,6 +1,7 @@
 import Navbar from "@/components/navbar";
 import type { Metadata } from "next";
 import ClientDashboardLayout from "./clientDashboardLayout";
+import { DashboardIdentityProvider } from "@/context/dashboardIdentity";
 
 export const metadata: Metadata = {
   title: "داشبورد",
@@ -15,7 +16,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       </header>
 
       <div className="flex pt-[56px]" dir="rtl">
-        <ClientDashboardLayout>{children}</ClientDashboardLayout>
+        <DashboardIdentityProvider>
+          <ClientDashboardLayout>{children}</ClientDashboardLayout>
+        </DashboardIdentityProvider>
       </div>
     </div>
   );
