@@ -3,6 +3,7 @@ import { DashboardIdentityProvider } from "@/context/dashboardIdentity";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import { redirect } from "next/navigation";
+import { DateFormatDMY } from "@/helper/dateHandler";
 
 export type UserIdentity = {
   username: string;
@@ -51,6 +52,11 @@ const Dashboard = async () => {
 
   if (!userIdentity) {
     return Error;
+  }
+
+  if (userIdentity.birthday) {
+    const birthday = DateFormatDMY(userIdentity.birthday);
+    console.log("birthday : ", birthday);
   }
 
   return (
