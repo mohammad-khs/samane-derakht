@@ -33,6 +33,9 @@ const UploadSpec: FC<UploadSpecProps> = ({ session }) => {
     audioFiles,
     description,
     setAuthority,
+    setAudioFiles,
+    setVideoFiles,
+    setImageFiles,
   } = useCompleteInfoContext();
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
@@ -128,7 +131,15 @@ const UploadSpec: FC<UploadSpecProps> = ({ session }) => {
       <div className="mx-4 sm:mx-24" dir="rtl">
         <TreeOccasion session={session} />
         <div className="border-b-2 border-[#A3A3A3] my-8"></div>
-        <DataLabel />
+        <DataLabel
+          audioFiles={audioFiles}
+          imageFiles={imageFiles}
+          videoFiles={videoFiles}
+          setAudioFiles={setAudioFiles}
+          setImageFiles={setImageFiles}
+          setVideoFiles={setVideoFiles}
+          notInPaymentSection={false}
+        />
         <div className="flex justify-end gap-4">
           <div className="flex justify-end mt-8">
             <Link href={"city-and-district"}>

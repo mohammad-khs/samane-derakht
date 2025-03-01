@@ -1,11 +1,10 @@
-import Footer from "@/components/footer";
 import MobileNav from "@/components/mobile-nav";
 import Navbar from "@/components/navbar";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "درخت های کاشته شده",
-  description: "صفحه درخت کاشته شده",
+  title: "داشبورد",
+  description: "داشبورد شما",
 };
 
 export default function Layout({ children }: { children: React.ReactNode }) {
@@ -19,9 +18,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <main className="p-2 sm:p-8 container" dir="rtl">
         {children}
       </main>
-      <div className="mt-auto">
-        <Footer sponsors={false} />
-      </div>
     </div>
   );
 }

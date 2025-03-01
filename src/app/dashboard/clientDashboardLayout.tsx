@@ -39,7 +39,7 @@ export default function ClientDashboardLayout({
         )}
       </button>
       <main
-        className={`flex-1 m-4 md:my-8 sm:p-4 relative 
+        className={`flex-1 m-4 md:my-8 sm:p-4 relative container
             transition-margin duration-300 ease-in-out ${
               isOpen ? "lg:mr-[300px]" : "lg:mr-12"
             }`}

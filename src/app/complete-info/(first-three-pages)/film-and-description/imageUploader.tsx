@@ -1,17 +1,24 @@
-"use client"
-import { useCompleteInfoContext } from "@/context/completeInfo";
+"use client";
+
+import { FileStatus } from "@/types/complete-info";
 import { X } from "lucide-react";
-import React, { FC, useState } from "react";
+import React, { Dispatch, FC, SetStateAction, useState } from "react";
 import toast from "react-hot-toast";
 import { FaImage } from "react-icons/fa";
 
-
 interface ImageUploaderProps {
   maxFiles?: number;
+  imageFiles: FileStatus[];
+  setImageFiles: Dispatch<SetStateAction<FileStatus[]>>;
+  notInPaymentSection: boolean;
 }
 
-const ImageUploader: FC<ImageUploaderProps> = ({ maxFiles = 10 }) => {
-  const { imageFiles, setImageFiles } = useCompleteInfoContext();
+const ImageUploader: FC<ImageUploaderProps> = ({
+  maxFiles = 10,
+  imageFiles,
+  setImageFiles,
+  notInPaymentSection,
+}) => {
   const [isDragging, setIsDragging] = useState(false);
 
   const handleFileUpload = (filesList: FileList | null) => {
@@ -64,9 +71,13 @@ const ImageUploader: FC<ImageUploaderProps> = ({ maxFiles = 10 }) => {
         <FaImage className="text-[#565656]" />
         آپلود عکس
       </h3>
-      <p className="text-xs text-[#565656] mb-2">
-        افزودن این قابلیت باعث اضاف شدن هزینه پرداخت میشود
-      </p>
+      {notInPaymentSection ? (
+        ""
+      ) : (
+        <p className="text-xs text-[#565656] mb-2">
+          افزودن این قابلیت باعث اضاف شدن هزینه پرداخت میشود
+        </p>
+      )}
 
       {/* Drag-and-Drop Area */}
       <div

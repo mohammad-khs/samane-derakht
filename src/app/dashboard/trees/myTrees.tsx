@@ -15,7 +15,7 @@ export interface MyTreeItem {
   id: string;
   tree_name: string;
   scan_numbers: number;
-  allowed_to_ask_for_status: boolean;
+  allowed_to_ask_for_status: boolean | string;
   button_status: boolean;
   city_name: string;
   latitud: string;
@@ -84,7 +84,7 @@ const MyTrees: FC<MyTreesProps> = ({ session }) => {
     <>
       <div>
         {data?.[data.length - 1].data?.map((treeItem: MyTreeItem) => (
-          <MyTreesSection key={treeItem.id} item={treeItem} />
+          <MyTreesSection key={treeItem.id} item={treeItem} session={session} />
         ))}
       </div>
       {error && error?.status === 429 ? (

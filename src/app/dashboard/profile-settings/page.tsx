@@ -36,8 +36,6 @@ const Dashboard = async () => {
           Authorization: `Bearer ${session.access}`,
           TOKEN: session.token,
         },
-
-        // cache: "no-store",
       }
     );
 

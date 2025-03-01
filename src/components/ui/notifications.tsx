@@ -14,7 +14,7 @@ interface NotificationType {
   url_for_order: string | null;
   url_for_reply_comment: string | null;
   url_for_ticket: string | null;
-  url_for_transaction: string | null;
+  url_for_transactiont: string | null;
 }
 
 const Notifications: FC = () => {
@@ -25,18 +25,20 @@ const Notifications: FC = () => {
   const dropdownRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
 
+  console.log("notification : ", notifications);
+  
   const handleNotifClick = (notification: NotificationType) => {
     if (notification.url_for_order) {
       router.replace("/dashboard/orders");
     }
-    if (notification.url_for_transaction) {
+    if (notification.url_for_transactiont) {
       router.replace("/dashboard/transactions");
     }
     if (notification.url_for_reply_comment) {
-      router.replace(`products/${notification.slug}`);
+      router.replace(`/products/${notification.slug}`);
     }
     if (notification.url_for_ticket) {
-      router.replace(`products/${notification.slug}`);
+      router.replace(`/dashboard/tickets/${notification.url_for_ticket}`);
     }
     if (notification.url_for_reply_comment) {
       const fetchData = async () => {
@@ -174,7 +176,7 @@ const Notifications: FC = () => {
                         {(notification.url_for_order ||
                           notification.url_for_reply_comment ||
                           notification.url_for_ticket ||
-                          notification.url_for_transaction) && (
+                          notification.url_for_transactiont) && (
                           <button
                             onClick={() => handleNotifClick(notification)}
                             className="text-xs text-[#28D16C] hover:underline"

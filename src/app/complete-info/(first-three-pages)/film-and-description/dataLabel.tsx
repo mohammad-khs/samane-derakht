@@ -1,21 +1,38 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { LucidePaperclip, Trash2 } from "lucide-react";
-import { FC, useState } from "react";
+import { Dispatch, FC, SetStateAction, useState } from "react";
 
 import ImageUploader from "./imageUploader";
 import VideoUploader from "./videoUploader";
-import { useCompleteInfoContext } from "@/context/completeInfo";
 import { FaCheck, FaImage, FaMicrophone, FaPlay } from "react-icons/fa";
 import { cn } from "@/lib/utils";
 import VoiceUploader from "./voiceUploader";
+import { FileStatus } from "@/types/complete-info";
 
-const DataLabel: FC = () => {
+interface DataLabelProps {
+  imageFiles: FileStatus[];
+  videoFiles: FileStatus[];
+  audioFiles: FileStatus[];
+  setImageFiles: Dispatch<SetStateAction<FileStatus[]>>;
+  setVideoFiles: Dispatch<SetStateAction<FileStatus[]>>;
+  setAudioFiles: Dispatch<SetStateAction<FileStatus[]>>;
+  notInPaymentSection?: boolean
+}
+
+const DataLabel: FC<DataLabelProps> = ({
+  imageFiles,
+  videoFiles,
+  setImageFiles,
+  setVideoFiles,
+  audioFiles,
+  setAudioFiles,
+  notInPaymentSection = false,
+}) => {
   const [uploadSection, setUploadSection] = useState<
     "image" | "video" | "voice"
   >("image");
-  const { imageFiles, videoFiles, setImageFiles, setVideoFiles, audioFiles } =
-    useCompleteInfoContext();
+
   return (
     <>
       <div>
@@ -31,7 +48,11 @@ const DataLabel: FC = () => {
           </div>
           <div className="mt-2 md:mt-0 items-center">
             <Button
-              onClick={() => [setImageFiles([]), setVideoFiles([])]}
+              onClick={() => [
+                setImageFiles([]),
+                setVideoFiles([]),
+                setAudioFiles([]),
+              ]}
               variant={"outline"}
             >
               <Trash2 className="w-4 h-4 ms-2 me-1 text-red-600" /> پاک کردن
@@ -112,9 +133,27 @@ const DataLabel: FC = () => {
         </div>
         <div className="border-b-2 border-[#A3A3A3] mb-8 mt-2"></div>
         <div className=" sm:px-10">
-          {uploadSection === "image" && <ImageUploader />}
-          {uploadSection === "video" && <VideoUploader />}
-          {uploadSection === "voice" && <VoiceUploader />}
+          {uploadSection === "image" && (
+            <ImageUploader
+              imageFiles={imageFiles}
+              setImageFiles={setImageFiles}
+              notInPaymentSection={notInPaymentSection}
+            />
+          )}
+          {uploadSection === "video" && (
+            <VideoUploader
+              videoFiles={videoFiles}
+              setVideoFiles={setVideoFiles}
+              notInPaymentSection={notInPaymentSection}
+            />
+          )}
+          {uploadSection === "voice" && (
+            <VoiceUploader
+              audioFiles={audioFiles}
+              setAudioFiles={setAudioFiles}
+              notInPaymentSection={notInPaymentSection}
+            />
+          )}
         </div>
       </div>
     </>

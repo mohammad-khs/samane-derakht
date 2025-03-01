@@ -1,18 +1,24 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { useCompleteInfoContext } from "@/context/completeInfo";
+import { FileStatus } from "@/types/complete-info";
 import { Trash2 } from "lucide-react";
-import { FC, useState } from "react";
+import { Dispatch, FC, SetStateAction, useState } from "react";
 import toast from "react-hot-toast";
-import { FaPlay } from "react-icons/fa";
-
+import { FaMicrophone } from "react-icons/fa";
 
 interface VoiceUploaderProps {
   maxFiles?: number;
+  audioFiles: FileStatus[];
+  setAudioFiles: Dispatch<SetStateAction<FileStatus[]>>;
+  notInPaymentSection?: boolean;
 }
 
-const VoiceUploader: FC<VoiceUploaderProps> = ({ maxFiles = 1 }) => {
-  const { audioFiles, setAudioFiles } = useCompleteInfoContext();
+const VoiceUploader: FC<VoiceUploaderProps> = ({
+  maxFiles = 1,
+  audioFiles,
+  setAudioFiles,
+  notInPaymentSection = false,
+}) => {
   const [isDragging, setIsDragging] = useState(false);
 
   const handleFileUpload = (filesList: FileList | null) => {
@@ -64,13 +70,17 @@ const VoiceUploader: FC<VoiceUploaderProps> = ({ maxFiles = 1 }) => {
       <div>
         <h3 className="flex gap-4  items-center text-lg font-semibold mb-4">
           <div className="bg-[#565656] rounded-sm p-1">
-            <FaPlay className="w-3 h-2 text-white" />
+             <FaMicrophone className="w-3 h-3 text-white" />
           </div>
           آپلود ویس
         </h3>
-        <p className="text-xs text-[#565656] mb-2">
-          افزودن این قابلیت باعث اضاف شدن هزینه پرداخت میشود
-        </p>
+        {notInPaymentSection ? (
+          ""
+        ) : (
+          <p className="text-xs text-[#565656] mb-2">
+            افزودن این قابلیت باعث اضاف شدن هزینه پرداخت میشود
+          </p>
+        )}
 
         {/* Drag-and-Drop Area */}
         <div

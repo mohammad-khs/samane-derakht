@@ -1,19 +1,25 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import Video from "@/components/ui/video";
-import { useCompleteInfoContext } from "@/context/completeInfo";
+import { FileStatus } from "@/types/complete-info";
 import { Trash2 } from "lucide-react";
-import { FC, useState } from "react";
+import { Dispatch, FC, SetStateAction, useState } from "react";
 import toast from "react-hot-toast";
 import { FaPlay } from "react-icons/fa";
 
-
 interface VideoUploaderProps {
   maxFiles?: number;
+  videoFiles: FileStatus[];
+  setVideoFiles: Dispatch<SetStateAction<FileStatus[]>>;
+  notInPaymentSection: boolean;
 }
 
-const VideoUploader: FC<VideoUploaderProps> = ({ maxFiles = 1 }) => {
-  const { videoFiles, setVideoFiles } = useCompleteInfoContext();
+const VideoUploader: FC<VideoUploaderProps> = ({
+  maxFiles = 1,
+  videoFiles,
+  setVideoFiles,
+  notInPaymentSection,
+}) => {
   const [isDragging, setIsDragging] = useState(false);
 
   const handleFileUpload = (filesList: FileList | null) => {
@@ -69,9 +75,13 @@ const VideoUploader: FC<VideoUploaderProps> = ({ maxFiles = 1 }) => {
           </div>
           آپلود فیلم
         </h3>
-        <p className="text-xs text-[#565656] mb-2">
-          افزودن این قابلیت باعث اضاف شدن هزینه پرداخت میشود
-        </p>
+        {notInPaymentSection ? (
+          ""
+        ) : (
+          <p className="text-xs text-[#565656] mb-2">
+            افزودن این قابلیت باعث اضاف شدن هزینه پرداخت میشود
+          </p>
+        )}
 
         {/* Drag-and-Drop Area */}
         <div
