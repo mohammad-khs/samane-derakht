@@ -5,9 +5,10 @@ import axios from "axios";
 import { Session } from "next-auth";
 import { FC, useState } from "react";
 import { FaHeart } from "react-icons/fa";
+import { MyMainTreeData } from "./page";
 
 interface SaveAndDeleteProps {
-  data: any;
+  data: MyMainTreeData;
   session: Session | null;
 }
 

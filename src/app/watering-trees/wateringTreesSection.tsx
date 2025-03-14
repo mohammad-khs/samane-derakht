@@ -18,7 +18,7 @@ const DynamicModalMap = dynamic(() => import("../dashboard/trees/modalMap"), {
 
 interface WateringTreesSectionProps {
   isWaitingData: boolean;
-  data: any;
+  data: never[];
 }
 
 const WateringTreesSection: FC<WateringTreesSectionProps> = () => {

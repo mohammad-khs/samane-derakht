@@ -1,9 +1,6 @@
 import Navbar from "@/components/navbar";
 import type { Metadata } from "next";
 
-import { DashboardIdentityProvider } from "@/context/dashboardIdentity";
-import Footer from "@/components/footer";
-
 export const metadata: Metadata = {
   title: "داشبورد",
   description: "داشبورد شما",
