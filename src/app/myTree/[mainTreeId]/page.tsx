@@ -37,6 +37,7 @@ export interface MyMainTreeData {
     latitud: string;
     comments: TreeComment[];
   };
+  saved: boolean;
 }
 
 const MainTree: FunctionComponent<MainTreeProps> = async ({
@@ -47,7 +48,13 @@ const MainTree: FunctionComponent<MainTreeProps> = async ({
 
   try {
     const resp = await fetch(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}/account/api/mytree/${mainTreeId}/`
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}/account/api/mytree/${mainTreeId}/`,
+      {
+        headers: {
+          Authorization: session?.access ? `Bearer ${session?.access}` : "",
+          TOKEN: session?.token ?? "",
+        },
+      }
     );
 
     if (!resp.ok) {
@@ -96,7 +103,7 @@ const MainTree: FunctionComponent<MainTreeProps> = async ({
         </div>
 
         <div className="w-full rounded-lg bg-white p-5 md:basis-9/12 md:p-10">
-          <MainTreeHead data={data} />
+          <MainTreeHead session={session} data={data} />
         </div>
       </div>
 

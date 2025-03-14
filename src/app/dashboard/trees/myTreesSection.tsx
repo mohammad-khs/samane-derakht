@@ -10,6 +10,7 @@ import dynamic from "next/dynamic";
 import { Loader2Icon } from "lucide-react";
 import axios, { AxiosError } from "axios";
 import { Session } from "next-auth";
+import { useRouter } from "next/navigation";
 
 const DynamicModalMap = dynamic(() => import("./modalMap"), {
   ssr: false,
@@ -44,10 +45,13 @@ function extractTimeComponent(timeString: string): string {
 }
 
 const MyTreesSection: FC<MyTreesSectionProps> = ({ item, session }) => {
+  console.log("item : ", item);
+  
   const [openMapModal, setOpenMapModal] = useState(false);
   const [requestStatus, setRequestStatues] = useState({ requestSend: false });
   const modalRef = useRef<HTMLDivElement>(null);
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
   const handleStatusRequest = async (id: string) => {
     setLoading(true);
@@ -102,6 +106,13 @@ const MyTreesSection: FC<MyTreesSectionProps> = ({ item, session }) => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [openMapModal]);
+
+  const showStatusMessage = (showStatusMessage: string | null) => {
+    if (showStatusMessage === null) {
+      return;
+    }
+    router.replace(`/dashboard/tickets/${showStatusMessage}`);
+  };
 
   return (
     <>
@@ -175,7 +186,12 @@ const MyTreesSection: FC<MyTreesSectionProps> = ({ item, session }) => {
                   item.allowed_to_ask_for_status.toString()
                 )} تا ارسال مجدد درخواست`}
           </Button>
-          <Button className="border-[2px]" variant={"outline"}>
+          <Button
+            disabled={item.show_status_message ? false : true}
+            onClick={() => showStatusMessage(item.show_status_message)}
+            className="border-[2px]"
+            variant={"outline"}
+          >
             نمایش پیام
           </Button>
         </div>

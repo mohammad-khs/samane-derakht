@@ -49,6 +49,17 @@ const Navbar: FC<NavbarProps> = ({ isDashboard = false, count }) => {
           >
             تماس با ما
           </Button> */}
+          <Link href="/watering-trees">
+            <Button
+              className={`font-semibold ${
+                isActive("/watering-trees") ? "bg-white" : ""
+              }`}
+              size={"resizble"}
+              variant={"ghost"}
+            >
+              آبیاری درختان
+            </Button>
+          </Link>
           <Link href={"/company/faq"}>
             <Button
               className={`font-semibold ${

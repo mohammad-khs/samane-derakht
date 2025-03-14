@@ -52,7 +52,7 @@ const MyFavorites: FC<MyFavoritesProps> = ({ session }) => {
     }
   };
 
-  const fetchFinishedOrders = async () => {
+  const savedTrees = async () => {
     setLoading(true);
     try {
       const response = await axios.get(
@@ -75,7 +75,7 @@ const MyFavorites: FC<MyFavoritesProps> = ({ session }) => {
     }
   };
   useEffect(() => {
-    fetchFinishedOrders();
+    savedTrees();
   }, []);
   if (loading) {
     return (

@@ -18,6 +18,10 @@ import { FallbackImage } from "@/components/products/product/headerImages";
 import ImageCarousel from "./imageCarousel";
 import Video from "@/components/ui/video";
 import dynamic from "next/dynamic";
+import { Session } from "next-auth";
+import SaveAndDelete from "./saveAndDelete";
+import EditButton from "./editButton";
+
 const DynamicModalMap = dynamic(
   () => import("@/app/dashboard/trees/modalMap"),
   {
@@ -32,11 +36,13 @@ const DynamicModalMap = dynamic(
 
 interface MainTreeHeadProps {
   data: MyMainTreeData;
+  session: Session | null;
 }
 
-const MainTreeHead: FC<MainTreeHeadProps> = ({ data }) => {
+const MainTreeHead: FC<MainTreeHeadProps> = ({ data, session }) => {
   const timeJoined = DateFormatDMY(data.data.time_joined);
   const timeCreated = DateFormatDMY(data.data.irani_time);
+
   return (
     <>
       <div className="flex justify-between items-center">
@@ -59,14 +65,9 @@ const MainTreeHead: FC<MainTreeHeadProps> = ({ data }) => {
           </div>
         </div>
         <div>
-          <Button
-            size={"resizble"}
-            disabled={!data.can_edit}
-            className="disabled:hidden"
-            variant={"lightGray"}
-          >
-            <PencilIcon className="h-4 w-4 ml-3" /> ویرایش تاپیک
-          </Button>
+          <EditButton data={data} />
+
+          <SaveAndDelete data={data} session={session} />
         </div>
       </div>
 
@@ -179,17 +180,21 @@ const MainTreeHead: FC<MainTreeHeadProps> = ({ data }) => {
         </div>
         <div className="border-b-2 border-b-[#E1E1E1] w-full"></div>
       </div>
-      {data.data.voice ?<div className="flex items-center w-full lg:w-8/12 justify-between p-2 my-8">
-        <div className="w-full">
-          <audio className="w-full" controls>
-            <source
-              src={`${process.env.NEXT_PUBLIC_API_BASE_URL}${data.data.voice}`}
-              type="audio/mpeg"
-            />
-            مرورگر شما این فایل صوتی را پشتیبانی نمیکند
-          </audio>
+      {data.data.voice ? (
+        <div className="flex items-center w-full lg:w-8/12 justify-between p-2 my-8">
+          <div className="w-full">
+            <audio className="w-full" controls>
+              <source
+                src={`${process.env.NEXT_PUBLIC_API_BASE_URL}${data.data.voice}`}
+                type="audio/mpeg"
+              />
+              مرورگر شما این فایل صوتی را پشتیبانی نمیکند
+            </audio>
+          </div>
         </div>
-      </div> :<div className="text-red-600 font-semibold m-3 ">بدون ویس</div> }
+      ) : (
+        <div className="text-red-600 font-semibold m-3 ">بدون ویس</div>
+      )}
 
       <div className="flex justify-center items-center w-full mt-6">
         <div className="flex justify-center items-center">
