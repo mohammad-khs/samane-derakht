@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import { Toaster } from "react-hot-toast";
 import AuthProvider from "./authProvider";
-import { Check, X } from "lucide-react";
+import MyToaster from "@/components/MyToaster";
 
 const YekanBakh = localFont({
   src: "./fonts/YekanBakh-VF.woff",
@@ -30,25 +29,7 @@ export default function RootLayout({
         }}
       >
         <AuthProvider>
-          <Toaster
-            toastOptions={{
-              success: {
-                icon: <Check />,
-                style: {
-                  background: "#28D16C",
-                  color: "white",
-                },
-              },
-              error: {
-                icon: <X />,
-                style: {
-                  background: "#dc2626",
-                  color: "white",
-                },
-              },
-            }}
-            position="top-center"
-          />
+          <MyToaster />
           {children}
         </AuthProvider>
       </body>

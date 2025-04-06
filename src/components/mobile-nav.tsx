@@ -8,10 +8,17 @@ import {
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
-import { InfoIcon, Menu, Package2, ShoppingCart, Users } from "lucide-react";
+import {
+  Droplets,
+  InfoIcon,
+  Menu,
+  Package2,
+  ShoppingCart,
+} from "lucide-react";
 import Link from "next/link";
 
-import { FaHeadphones, FaQuestion } from "react-icons/fa";
+import { FaQuestion } from "react-icons/fa";
+import SignInModalParent from "./authentication/signInModalParent";
 
 interface MobileNavProps {
   disappearLg?: boolean;
@@ -23,19 +30,27 @@ export default function MobileNav({ disappearLg = false }: MobileNavProps) {
       <SheetDescription>
         <VisuallyHidden.Root>sidebar for moblie</VisuallyHidden.Root>
       </SheetDescription>
-
-      <SheetTrigger asChild>
-        <Button
-          variant="outline"
-          size="icon"
-          className={`shrink-0 h-full w-auto  m-5 p-1 ${
+      <div className="flex justify-between">
+        <div
+          className={`inline-flex items-start justify-center shrink-0 h-full w-auto m-5 ${
             disappearLg ? "lg:hidden" : "md:hidden"
           }`}
         >
-          <Menu className="h-8 w-8 text-[#383838]" />
-          <span className="sr-only">Toggle navigation menu</span>
-        </Button>
-      </SheetTrigger>
+          <SignInModalParent>ثبت نام/ورود</SignInModalParent>
+        </div>
+        <SheetTrigger asChild>
+          <Button
+            variant="outline"
+            size="icon"
+            className={`shrink-0 h-full w-auto  m-5 p-1 ${
+              disappearLg ? "lg:hidden" : "md:hidden"
+            }`}
+          >
+            <Menu className="h-8 w-8 text-[#383838]" />
+            <span className="sr-only">Toggle navigation menu</span>
+          </Button>
+        </SheetTrigger>
+      </div>
       <SheetContent side="right" className="flex flex-col">
         <SheetTitle>
           <VisuallyHidden.Root>menu</VisuallyHidden.Root>
@@ -60,18 +75,19 @@ export default function MobileNav({ disappearLg = false }: MobileNavProps) {
             محصولات
           </Link>
           <Link
-            href="/company/about-us"
-            className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
-          >
-            <InfoIcon className="h-5 w-5" />
-            درباره ما
-          </Link>
-          <Link
             href="/shopping-cart"
             className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
           >
             <ShoppingCart className="h-5 w-5" />
             سبد خرید
+          </Link>
+
+          <Link
+            href="/watering-trees"
+            className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
+          >
+            <Droplets className="h-5 w-5" />
+            آبیاری درختان
           </Link>
           <Link
             href="/company/faq"
@@ -81,18 +97,11 @@ export default function MobileNav({ disappearLg = false }: MobileNavProps) {
             سوالات متداول
           </Link>
           <Link
-            href="#"
+            href="/company/about-us"
             className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
           >
-            <Users className="h-5 w-5" />
-            تماس با ما
-          </Link>
-          <Link
-            href="#"
-            className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
-          >
-            <FaHeadphones className="h-5 w-5" />
-            پشتیبانی
+            <InfoIcon className="h-5 w-5" />
+            درباره ما
           </Link>
         </nav>
       </SheetContent>

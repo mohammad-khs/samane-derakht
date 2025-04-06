@@ -14,7 +14,7 @@ interface NotificationType {
   url_for_order: string | null;
   url_for_reply_comment: string | null;
   url_for_ticket: string | null;
-  url_for_transactiont: string | null;
+  url_for_transaction: string | null;
 }
 
 const Notifications: FC = () => {
@@ -31,7 +31,7 @@ const Notifications: FC = () => {
     if (notification.url_for_order) {
       router.replace("/dashboard/orders");
     }
-    if (notification.url_for_transactiont) {
+    if (notification.url_for_transaction) {
       router.replace("/dashboard/transactions");
     }
     if (notification.url_for_reply_comment) {
@@ -176,7 +176,7 @@ const Notifications: FC = () => {
                         {(notification.url_for_order ||
                           notification.url_for_reply_comment ||
                           notification.url_for_ticket ||
-                          notification.url_for_transactiont) && (
+                          notification.url_for_transaction) && (
                           <button
                             onClick={() => handleNotifClick(notification)}
                             className="text-xs text-[#28D16C] hover:underline"

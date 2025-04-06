@@ -1,5 +1,5 @@
+import Image from "next/image";
 import FAQItem from "../components/FAQItem";
-
 
 const FAQList = () => {
   const faqs = [
@@ -49,11 +49,33 @@ const FAQList = () => {
   ];
 
   return (
-    <div className="h-full w-full bg-white rounded-3xl p-14">
-      {faqs.map((faq, index) => (
-        <FAQItem  key={index} question={faq.question} answer={faq.answer} />
-      ))}
-    </div>
+    <>
+      <div>
+        <div className="lg:relative lg:mt-14 w-full h-72 object-cover">
+          <Image
+            priority
+            src="/svgs/company_headers/faqHeader.svg"
+            width={0}
+            height={0}
+            alt="contact us header"
+            className="w-full h-72 object-cover absolute -top-4 "
+          />
+        </div>
+      </div>
+      <div className="md:container md:mx-auto md:pt-5 min-h-[65vh]">
+        <main className="m-4 md:my-8 rounded-xl" dir="rtl">
+          <div className="h-full w-full bg-white rounded-3xl p-14">
+            {faqs.map((faq, index) => (
+              <FAQItem
+                key={index}
+                question={faq.question}
+                answer={faq.answer}
+              />
+            ))}
+          </div>
+        </main>
+      </div>
+    </>
   );
 };
 

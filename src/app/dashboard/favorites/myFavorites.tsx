@@ -4,6 +4,7 @@ import { DateFormatDMY, monthNumToMonthName } from "@/helper/dateHandler";
 import axios from "axios";
 import { Loader2, ScanQrCode, Trash2 } from "lucide-react";
 import { Session } from "next-auth";
+import Link from "next/link";
 import { FC, useEffect, useState } from "react";
 import { FaRegCommentAlt, FaStar } from "react-icons/fa";
 
@@ -100,6 +101,9 @@ const MyFavorites: FC<MyFavoritesProps> = ({ session }) => {
 
             <div className="text-sm">
               <div className="flex gap-3 md:gap-8 mt-2">
+                <div className="text-[#247C48] underline text-xs">
+                  <Link href={`/myTree/${item?.id}`}>مشاهده درخت</Link>
+                </div>
                 <div className="text-xs sm:text-sm flex gap-2 items-center ">
                   <FaStar className=" text-[#5F6368]" />{" "}
                   {item.avg?.toFixed(1) || 0}
@@ -133,9 +137,6 @@ const MyFavorites: FC<MyFavoritesProps> = ({ session }) => {
                   ) : (
                     <span className="text-xs sm:text-sm">نامشخص</span>
                   )}
-                  {/* <span className="text-[#247C48] underline text-xs">
-                <Link href={`/products/${item?.id}`}>مشاهده درخت</Link>
-              </span> */}
                 </div>
                 <div className="text-xs text-center mt-2 sm:text-start text-[#8B8B8B]">
                   {item.breif_description}

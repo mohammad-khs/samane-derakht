@@ -68,7 +68,7 @@ const RightsidePayment: FC<RightsidePaymentProps> = ({ session }) => {
         ) {
           console.log(error.response?.data.detail);
 
-          toast.error("کد تخفیف صحیح نمیباشد");
+          toast.error("کد تخفیف صحیح نمی باشد");
         } else if (
           error.response?.data.detail === "No Order matches the given query."
         ) {

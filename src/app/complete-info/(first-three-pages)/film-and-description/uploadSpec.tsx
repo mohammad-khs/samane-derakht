@@ -43,6 +43,7 @@ const UploadSpec: FC<UploadSpecProps> = ({ session }) => {
 
     if (!selectedMarkers.length) {
       toast.error("لطفا به تعداد آیتم های سبد خرید مکان انتخاب کنید");
+      router.back();
       return;
     }
     if (!description) {
@@ -105,7 +106,18 @@ const UploadSpec: FC<UploadSpecProps> = ({ session }) => {
       );
 
       if (response.status !== 200) {
-        throw new Error(`Upload failed: ${response.statusText}`);
+        const data = await response.json();
+        if (data[0] === "cooardinates not equall ot quantity orders") {
+          toast.error("لطفا به تعداد آیتم های سبد خرید مکان انتخاب کنید");
+          router.back();
+          return;
+        }
+        if (data[0] === "email is not valid") {
+          toast.error("ایمیلتان اشتباه است");
+          return;
+        }
+
+        throw new Error(`Upload failed: ${data}`);
       }
 
       const data = (await response.json()) as Authority;
@@ -117,7 +129,6 @@ const UploadSpec: FC<UploadSpecProps> = ({ session }) => {
       router.push("payment");
     } catch (err: unknown) {
       setAuthority(null);
-      console.error("Error:", err);
       if (err === "email is not valid") {
         toast.error("ایمیلتان اشتباه است");
       }
@@ -140,6 +151,9 @@ const UploadSpec: FC<UploadSpecProps> = ({ session }) => {
           setVideoFiles={setVideoFiles}
           notInPaymentSection={false}
         />
+        <div className="text-sm font-semibold">
+          فرایند آپلود ممکن است کمی زمان بر باشد لطفاً شکیبا باشید
+        </div>
         <div className="flex justify-end gap-4">
           <div className="flex justify-end mt-8">
             <Link href={"city-and-district"}>

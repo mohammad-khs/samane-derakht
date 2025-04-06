@@ -5,6 +5,7 @@ import { FaCaretLeft, FaCaretRight } from "react-icons/fa";
 import { useSession } from "next-auth/react";
 import { MobileNavDashboard } from "./mobileNavDashboard";
 import { DashboardSidebar } from "./dashboardSidebar";
+import SignInModalParent from "@/components/authentication/signInModalParent";
 
 export default function ClientDashboardLayout({
   children,
@@ -15,6 +16,9 @@ export default function ClientDashboardLayout({
   const { data: session } = useSession();
   return (
     <>
+      <div className="absolute lg:hidden m-6 top-0 left-0">
+        <SignInModalParent>ثبت نام/ورود</SignInModalParent>
+      </div>
       <div className="absolute top-0 right-0">
         <MobileNavDashboard session={session} />
       </div>

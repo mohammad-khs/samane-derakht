@@ -47,7 +47,7 @@ const LeftsidePayment: FC<LeftsidePaymentProps> = ({ session }) => {
     } catch (error) {
       if (axios.isAxiosError(error)) {
         if ((error.message = "not enough balance")) {
-          toast.error("موجودی شما کافی نمیباشد");
+          toast.error("موجودی شما کافی نمی باشد");
         } else {
           console.error("Axios error:", error.response?.data || error.message);
         }

@@ -120,7 +120,7 @@ const ShoppingCart: FC = () => {
                       ))}
                     </div>
                   ) : (
-                    <div className="justify-center h-full items-center flex text-[#28D16C]">
+                    <div className="justify-center text-lg sm:text-xl font-semibold md:mt-5 h-full items-center flex text-[#28D16C]">
                       در سبد خرید شما آیتمی وجود ندارد
                     </div>
                   )}

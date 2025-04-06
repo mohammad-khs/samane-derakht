@@ -28,7 +28,7 @@ const DepositModal: FC<DepositModalProps> = ({ onClose, session }) => {
       return;
     }
     if (stringIsNotNumber(depositValue)) {
-      toast.error("مقدار وارد شده صحیح نمیباشد", {
+      toast.error("مقدار وارد شده صحیح نمی باشد", {
         duration: 7000,
       });
       setLoading(false);

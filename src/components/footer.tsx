@@ -10,6 +10,7 @@ import {
   FaYoutube,
 } from "react-icons/fa";
 import Sponsors from "./sponsors";
+import Link from "next/link";
 interface FooterProps {
   sponsors?: boolean;
 }
@@ -45,13 +46,21 @@ const Footer: FC<FooterProps> = ({ sponsors = true }) => {
                 <h2 className="text-lg md:text-2xl font-semibold px-3 border-r-8 border-r-white">
                   نقشه سایت
                 </h2>
+
                 <div className="flex flex-col mt-8 h-full border-r-[3px] border-r-white border-opacity-20  p-4 font-semibold ">
                   <ul className="flex flex-col text-sm md:text-base gap-3">
-                    <li>صفحه خانه</li>
-                    <li>درباره ما</li>
-                    <li>محصولات</li>
-                    <li>بلاگ</li>
-                    <li>تماس با ما</li>
+                    <li>
+                      <Link href={"/"}>صفحه خانه</Link>
+                    </li>
+                    <li>
+                      <Link href={"/company/about-us"}>درباره ما</Link>
+                    </li>
+                    <li>
+                      <Link href={"/products"}>محصولات</Link>
+                    </li>
+                    <li>
+                      <Link href={"/watering-trees"}>آبیاری درختان</Link>
+                    </li>
                   </ul>
                 </div>
               </div>
@@ -61,10 +70,10 @@ const Footer: FC<FooterProps> = ({ sponsors = true }) => {
                 </h2>
                 <div className="flex flex-col h-full mt-8 border-r-[3px] border-r-white border-opacity-20  p-4 font-semibold ">
                   <ul className="flex flex-col text-sm md:text-base gap-3">
-                    <li>خرید محصول</li>
-                    <li>بازگشت محصول</li>
-                    <li>سوالات متدوال</li>
-                    <li>نحوه ارسال</li>
+                    <li><Link href={"/company/faq"}>خرید محصول</Link></li>
+                    <li><Link href={"/company/faq"}>بازگشت محصول</Link></li>
+                    <li><Link href={"/company/faq"}>سوالات متدوال</Link></li>
+                    <li><Link href={"/company/faq"}>نحوه ارسال</Link></li>
                   </ul>
                 </div>
               </div>

@@ -1,5 +1,19 @@
-import { FaShoppingCart, FaHeart, FaEnvelope, FaChartLine, FaTree, FaComments, FaWallet, FaUserCircle, FaQuestion, FaHeadphones } from "react-icons/fa";
-import { Package2, Info, ShoppingCart, Users } from "lucide-react";
+import {
+  FaShoppingCart,
+  FaHeart,
+  FaChartLine,
+  FaTree,
+  FaWallet,
+  FaUserCircle,
+  FaQuestion,
+
+} from "react-icons/fa";
+import {
+  Info,
+  ShoppingCart,
+  Droplets,
+  HomeIcon,
+} from "lucide-react";
 
 export const navLinks = [
   {
@@ -12,11 +26,11 @@ export const navLinks = [
     label: "لیست علاقه‌مندی‌ها",
     href: "/dashboard/favorites",
   },
-  { 
-    icon: <FaEnvelope />,
-    label: "پیام‌ها",
-    href: "" 
-  },
+  // {
+  //   icon: <FaEnvelope />,
+  //   label: "پیام‌ها",
+  //   href: "",
+  // },
   {
     icon: <FaChartLine />,
     label: "گزارش مالی",
@@ -27,11 +41,11 @@ export const navLinks = [
     label: "درخت‌های من",
     href: "/dashboard/trees",
   },
-  { 
-    icon: <FaComments />,
-    label: "دیدگاه‌های من",
-    href: "" 
-  },
+  // {
+  //   icon: <FaComments />,
+  //   label: "دیدگاه‌های من",
+  //   href: "",
+  // },
   {
     icon: <FaWallet />,
     label: "برداشت مالی",
@@ -46,7 +60,7 @@ export const navLinks = [
 
 export const mobileNavLinks = [
   {
-    icon: <Package2 className="h-5 w-5" />,
+    icon: <HomeIcon className="h-5 w-5" />,
     href: "/",
   },
   {
@@ -62,11 +76,7 @@ export const mobileNavLinks = [
     href: "/company/faq",
   },
   {
-    icon: <Users className="h-5 w-5" />,
-    href: "#",
-  },
-  {
-    icon: <FaHeadphones className="h-5 w-5" />,
-    href: "#",
+    icon: <Droplets className="h-5 w-5" />,
+    href: "/watering-trees",
   },
 ];

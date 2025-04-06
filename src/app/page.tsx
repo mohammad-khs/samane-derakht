@@ -41,8 +41,8 @@ export default function Home() {
         >
           <StorySection />
         </Suspense>
-        <div className="flex flex-col-reverse items-center mx-10 md:flex-row justify-between mt-14">
-          <div className="my-3">
+        <div className="flex  items-center mx-10 md:flex-row justify-center md:justify-end mt-14">
+          {/* <div className="my-3">
             <Button
               className="justify-self-end md:justify-self-start"
               variant={"green"}
@@ -51,7 +51,7 @@ export default function Home() {
               <CaretLeftIcon className="h-8 w-8" />
               مشاهده همه
             </Button>
-          </div>
+          </div> */}
           <h1 className="text-[#383838] text-xl md:text-2xl font-semibold">
             درخت های کاشته شده توسط تیم ما
           </h1>
