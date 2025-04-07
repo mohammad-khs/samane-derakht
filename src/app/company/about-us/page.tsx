@@ -33,12 +33,12 @@ const SocialMediaLink = ({ href, label, Icon }: SocialMediaLinkProps) => (
 
 const ContactUs = () => {
   const socialLinks = [
-    { href: "http://youtube.com", label: "YouTube", Icon: YoutubeIcon },
-    { href: "http://twitter.com", label: "Twitter", Icon: TwitterIcon },
-    { href: "http://whatsapp.com", label: "WhatsApp", Icon: WhatsappIcon },
-    { href: "http://facebook.com", label: "Facebook", Icon: FacebookIcon },
-    { href: "http://instagram.com", label: "Instagram", Icon: InstagramIcon },
-    { href: "http://telegram.org", label: "Telegram", Icon: TelegramIcon },
+    { href: "https://youtube.com", label: "YouTube", Icon: YoutubeIcon },
+    { href: "https://twitter.com", label: "Twitter", Icon: TwitterIcon },
+    { href: "https://whatsapp.com", label: "WhatsApp", Icon: WhatsappIcon },
+    { href: "https://facebook.com", label: "Facebook", Icon: FacebookIcon },
+    { href: "https://instagram.com", label: "Instagram", Icon: InstagramIcon },
+    { href: "https://telegram.org", label: "Telegram", Icon: TelegramIcon },
   ];
 
   return (
