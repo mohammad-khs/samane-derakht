@@ -12,6 +12,9 @@ const YekanBakh = localFont({
 export const metadata: Metadata = {
   title: "سامانه درخت",
   description: "سامانه ای برای خرید گیاه ",
+  verification: {
+    google: "nVw14BYRsFkZfAD1vL0JOx1wAHBrcFB64QsK9-U_YhU",
+  },
 };
 
 export default function RootLayout({

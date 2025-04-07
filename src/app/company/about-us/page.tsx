@@ -55,7 +55,7 @@ const ContactUs = () => {
       </div>
       <div className="md:container md:mx-auto md:pt-5 min-h-[65vh]">
         <main className="m-4 md:my-8 rounded-xl" dir="rtl">
-          <div className="w-full text-black bg-white rounded-3xl p-7 md:p-14 font-sans">
+          <div className="w-full text-black bg-white rounded-3xl p-7 md:p-14">
             <div dir="ltr">
               <section className="flex flex-col md:flex-row justify-center items-center my-12">
                 <div className="w-full flex justify-center">
