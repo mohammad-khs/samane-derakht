@@ -23,9 +23,9 @@ const Navbar: FC<NavbarProps> = ({ isDashboard = false, count }) => {
       <nav
         className={`${
           isDashboard
-            ? "bg-[#FFFFFF] shadow-md lg:flex"
-            : "bg-[#E4E7E5] mx-2 rounded-xl md:flex"
-        }  flex-row py-2 hidden`}
+            ? "shadow-md lg:flex"
+            : " mx-2 rounded-xl md:flex"
+        }  flex-row py-2 hidden bg-[#E4E7E5]`}
       >
         <div className="flex justify-start items-center gap-4 ms-5 basis-1/3">
           <SignInModalParent>ثبت نام/ورود</SignInModalParent>

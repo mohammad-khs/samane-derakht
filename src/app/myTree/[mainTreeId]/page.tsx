@@ -93,9 +93,13 @@ const MainTree: FunctionComponent<MainTreeProps> = async ({
           <div className="w-full rounded-lg bg-white  p-4 text-[#1F1F1F]">
             <h2 className="text-xl font-semibold mb-2">شبکه های اجتماعی</h2>
             <div className="flex justify-evenly text-black mt-8">
-              <InstagramIcon color="#5C5C5C" />
+              <a href="https://www.instagram.com/p/DIJyd4aPErn/?igsh=YWZtaWkycDhmcjFn">
+                <InstagramIcon color="#5C5C5C" />
+              </a>
               <TelegramIcon color="#5C5C5C" />
-              <WhatsappIcon color="#5C5C5C" />
+              <a href="https://wa.me/+989308880854">
+                <WhatsappIcon color="#5C5C5C" />
+              </a>
               <TwitterIcon color="#5C5C5C" />
               <FacebookIcon color="#5C5C5C" />
             </div>

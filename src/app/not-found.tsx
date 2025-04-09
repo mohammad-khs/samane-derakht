@@ -69,7 +69,7 @@ export default function NotFound() {
               <p>
                 اگر فکر می کنید این خطا اشتباه است لطفا به پشتیبانی ایمیل دهید
               </p>
-              <p >ایمیل : example@gmail.com</p>
+              <p >ایمیل : derakhtemanofficial@gmail.com</p>
             </div>
           </div>
         </div>

@@ -70,10 +70,18 @@ const Footer: FC<FooterProps> = ({ sponsors = true }) => {
                 </h2>
                 <div className="flex flex-col h-full mt-8 border-r-[3px] border-r-white border-opacity-20  p-4 font-semibold ">
                   <ul className="flex flex-col text-sm md:text-base gap-3">
-                    <li><Link href={"/company/faq"}>خرید محصول</Link></li>
-                    <li><Link href={"/company/faq"}>بازگشت محصول</Link></li>
-                    <li><Link href={"/company/faq"}>سوالات متدوال</Link></li>
-                    <li><Link href={"/company/faq"}>نحوه ارسال</Link></li>
+                    <li>
+                      <Link href={"/company/faq"}>خرید محصول</Link>
+                    </li>
+                    <li>
+                      <Link href={"/company/faq"}>بازگشت محصول</Link>
+                    </li>
+                    <li>
+                      <Link href={"/company/faq"}>سوالات متدوال</Link>
+                    </li>
+                    <li>
+                      <Link href={"/company/faq"}>نحوه ارسال</Link>
+                    </li>
                   </ul>
                 </div>
               </div>
@@ -104,13 +112,17 @@ const Footer: FC<FooterProps> = ({ sponsors = true }) => {
                   <FaTelegramPlane className="w-8 h-8" />
                 </li>
                 <li>
-                  <FaInstagram className="w-8 h-8 " />
+                  <a href="https://www.instagram.com/p/DIJyd4aPErn/?igsh=YWZtaWkycDhmcjFn">
+                    <FaInstagram className="w-8 h-8 " />
+                  </a>
                 </li>
                 <li>
                   <FaFacebookF className="w-8 h-8 " />
                 </li>
                 <li>
-                  <FaWhatsapp className="w-8 h-8 " />
+                  <a href="https://wa.me/+989308880854">
+                    <FaWhatsapp className="w-8 h-8 " />
+                  </a>
                 </li>
                 <li>
                   <FaYoutube className="w-8 h-8 " />
