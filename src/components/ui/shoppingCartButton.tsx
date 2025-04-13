@@ -7,12 +7,17 @@ import Image from "next/image";
 import axios from "axios";
 import { useSession } from "next-auth/react";
 import SignInModal from "../authentication/signInModal";
+import { ShoppingCart } from "lucide-react";
 
 interface ShoppingCartButtonProps {
   propCount?: number | undefined;
+  isMobileNav?: boolean;
 }
 
-const ShoppingCartButton: FC<ShoppingCartButtonProps> = ({ propCount }) => {
+const ShoppingCartButton: FC<ShoppingCartButtonProps> = ({
+  propCount,
+  isMobileNav,
+}) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { data: session, status } = useSession();
 
@@ -56,26 +61,38 @@ const ShoppingCartButton: FC<ShoppingCartButtonProps> = ({ propCount }) => {
     <>
       {status === "authenticated" ? (
         <Link href="/shopping-cart">
-          <Button className="relative p-2" variant="icon">
-            <div className="flex justify-center gap-3 items-center">
-              <div className="relative w-6 h-6">
-                <Image
-                  className="p-1"
-                  alt="سبد فروشگاهی"
-                  fill
-                  src="/svgs/shoppingCart.svg"
-                />
-              </div>
-              {count && count > 0 && (
-                <div className="rounded-full h-4 w-4 flex justify-center items-center text-white font-semibold bg-red-600">
-                  <div className="text-[10px] leading-none">
-                    {count > 9 ? `+9` : count}
-                  </div>
-                </div>
-              )}
+          {isMobileNav ? (
+            <div className="flex items-center gap-4 mx-[-0.65rem] px-3">
+              <ShoppingCart className="h-5 w-5" />
+              <span className="text-muted-foreground hover:text-foreground">سبد خرید</span>
             </div>
-          </Button>
+          ) : (
+            <Button className="relative p-2" variant="icon">
+              <div className="flex justify-center gap-3 items-center">
+                <div className="relative w-6 h-6">
+                  <Image
+                    className="p-1"
+                    alt="سبد فروشگاهی"
+                    fill
+                    src="/svgs/shoppingCart.svg"
+                  />
+                </div>
+                {count && count > 0 && (
+                  <div className="rounded-full h-4 w-4 flex justify-center items-center text-white font-semibold bg-red-600">
+                    <div className="text-[10px] leading-none">
+                      {count > 9 ? `+9` : count}
+                    </div>
+                  </div>
+                )}
+              </div>
+            </Button>
+          )}
         </Link>
+      ) : isMobileNav ? (
+        <div onClick={() => setIsModalOpen(true)} className="flex items-center gap-4 mx-[-0.65rem] px-3">
+          <ShoppingCart className="h-5 w-5" />
+          <span className="text-muted-foreground hover:text-foreground">سبد خرید</span>
+        </div>
       ) : (
         <Button
           onClick={() => setIsModalOpen(true)}
