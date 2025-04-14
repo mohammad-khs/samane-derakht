@@ -95,7 +95,7 @@ const SelectAddress: FC<SelectAddressProps> = ({ session }) => {
       toast.error("لطفا استان خود را وارد کنید");
       return;
     }
-    if (selectedMarkers.length < 1) {
+    if (selectedMarkers.length < data.empty_tree_allowed) {
       toast.error("لطفا به تعداد درختان مکان انتخاب کنید");
       return;
     }
