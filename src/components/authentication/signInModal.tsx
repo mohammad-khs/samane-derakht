@@ -119,7 +119,7 @@ const SignInModal: FC<SignInModalProps> = ({ isOpen, onClose }) => {
       onClick={handleOutsideClick}
       className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
     >
-      <div className="bg-white p-6 rounded-lg shadow-lg w-96">
+      <div className="bg-white p-6 rounded-lg shadow-lg w-96 mx-5">
         <div className="justify-center flex items-center flex-col gap-5 mb-5">
           <Button variant={"green"} size={"icon"}></Button>
           ثبت نام/ورود

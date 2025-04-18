@@ -26,8 +26,8 @@ const VoiceUploader: FC<VoiceUploaderProps> = ({
 
     const validFiles = Array.from(filesList)
       .filter((file) => {
-        if (file.size > 50000000) {
-          toast.error(`ویس نباید بیشتر از ۵۰ مگابایت باشد`);
+        if (file.size > 10000000) {
+          toast.error(`ویس نباید بیشتر از ۱۰ مگابایت باشد`);
           return false;
         }
         if (!file.type.startsWith("audio/")) {

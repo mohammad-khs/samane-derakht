@@ -6,16 +6,15 @@ import {
   FaWallet,
   FaUserCircle,
   FaQuestion,
-
 } from "react-icons/fa";
-import {
-  Info,
-  ShoppingCart,
-  Droplets,
-  HomeIcon,
-} from "lucide-react";
+import { Info, ShoppingCart, Droplets, HomeIcon } from "lucide-react";
 
 export const navLinks = [
+  {
+    icon: <FaUserCircle />,
+    label: "پنل کاربری",
+    href: "/dashboard/profile-settings",
+  },
   {
     icon: <FaShoppingCart />,
     label: "سفارش‌ها",
@@ -50,11 +49,6 @@ export const navLinks = [
     icon: <FaWallet />,
     label: "برداشت مالی",
     href: "/dashboard/wallet",
-  },
-  {
-    icon: <FaUserCircle />,
-    label: "پنل کاربری",
-    href: "/dashboard/profile-settings",
   },
 ];
 

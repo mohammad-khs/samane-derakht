@@ -121,10 +121,7 @@ const UploadSpec: FC<UploadSpecProps> = ({ session }) => {
       }
 
       const data = (await response.json()) as Authority;
-      console.log("this is the first data : ", data);
-
       setAuthority(data);
-      console.log("Success");
       toast.success("اطلاعات شما با موفقیت آپلود شد");
       router.push("payment");
     } catch (err: unknown) {
@@ -151,8 +148,12 @@ const UploadSpec: FC<UploadSpecProps> = ({ session }) => {
           setVideoFiles={setVideoFiles}
           notInPaymentSection={false}
         />
-        <div className="text-sm font-semibold">
+        <div className="text-xs font-semibold sm:text-sm">
           فرایند آپلود ممکن است کمی زمان بر باشد لطفاً شکیبا باشید
+        </div>
+        <div className="text-xs font-semibold mt-2 sm:text-sm text-red-600">
+          لطفا توجه فرمایید که اگر حجم فایل ارسالی شما بیشتر از مجاز باشد
+          میتوانید در بخش بعد آن را از طریق فضای مجازی برای ما ارسال کنید
         </div>
         <div className="flex justify-end gap-4">
           <div className="flex justify-end mt-8">

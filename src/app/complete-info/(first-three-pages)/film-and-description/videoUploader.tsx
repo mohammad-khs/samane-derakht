@@ -27,8 +27,8 @@ const VideoUploader: FC<VideoUploaderProps> = ({
 
     const validFiles = Array.from(filesList)
       .filter((file) => {
-        if (file.size > 200000000) {
-          toast.error(`ویدئو نباید بیشتر از ۲۰۰ مگابایت باشد`);
+        if (file.size > 50000000) {
+          toast.error(`ویدئو نباید بیشتر از ۵۰ مگابایت باشد`);
           return false;
         }
         if (!file.type.startsWith("video/")) {

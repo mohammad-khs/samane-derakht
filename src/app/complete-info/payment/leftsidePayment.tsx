@@ -8,7 +8,7 @@ import { Session } from "next-auth";
 import { useRouter } from "next/navigation";
 import { FC, useState } from "react";
 import toast from "react-hot-toast";
-import { FaTruck } from "react-icons/fa";
+import { FaCheck, FaTelegram, FaTruck } from "react-icons/fa";
 
 interface LeftsidePaymentProps {
   session: Session;
@@ -17,8 +17,9 @@ interface LeftsidePaymentProps {
 const LeftsidePayment: FC<LeftsidePaymentProps> = ({ session }) => {
   const { authority, method } = useCompleteInfoContext();
   const [loading, setLoading] = useState(false);
-  const router = useRouter()
-  console.log(authority);
+  const router = useRouter();
+  console.log("this is authority : ", authority);
+
   console.log(authority?.all_price);
   console.log(authority?.all_price_with_off);
 
@@ -209,6 +210,51 @@ const LeftsidePayment: FC<LeftsidePaymentProps> = ({ session }) => {
           <span className="text-xs">
             زمان کاشت درخت 7 تا 10 روز کاری میباشد
           </span>
+        </div>
+      </section>
+      <section className="rounded-lg bg-white p-4 mt-3">
+        <h3 className="text-sm font-semibold mb-3">
+          برای آپلود فایل‌های بیش از حد مجاز سایت، متن زیر را کپی کرده و با
+          لینک‌های زیر به پیام‌رسان دلخواه ارسال کنید
+        </h3>
+        <div
+          className="flex items-center gap-2 bg-gray-100 p-2 rounded-md group hover:bg-gray-200 transition-colors cursor-pointer"
+          onClick={() => {
+            if (authority?.order_id) {
+              navigator.clipboard.writeText(authority.order_id);
+              toast.success("کد سفارش کپی شد");
+            }
+          }}
+          title="برای کپی کلیک کنید"
+        >
+          <div className="font-mono text-xs text-gray-800 select-all flex-1">
+            {authority?.order_id ?? "null"}
+          </div>
+          <div className="text-gray-500 opacity-0 group-hover:opacity-100 transition-opacity">
+            کپی
+          </div>
+        </div>
+        <div className="flex gap-4 mt-4">
+          <a
+            href="https://web.bale.ai/chat?uid=70367646"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-green-600 hover:text-green-700"
+          >
+            <div className="w-8 h-8 rounded-full bg-[#00b894]">
+              <FaCheck className="rounded-full font-semibold text-white p-1 w-8 h-8" />
+            </div>
+          </a>
+          <a
+            href="https://t.me/mohammad_khsv"
+            target="_blank"
+            rel="noopener noreferrer"
+            className=""
+          >
+            <div className="text-[#0088cc]  cursor-pointer w-8 h-8">
+              <FaTelegram className=" w-8 h-8" />
+            </div>
+          </a>
         </div>
       </section>
     </>
