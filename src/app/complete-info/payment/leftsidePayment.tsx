@@ -123,7 +123,7 @@ const LeftsidePayment: FC<LeftsidePaymentProps> = ({ session }) => {
         ) : (
           ""
         )}
-        <div className="text-xs text-[#737373] my-3">
+        {/* <div className="text-xs text-[#737373] my-3">
           {authority?.has_video && (
             <div
               className="flex justify-between items-center"
@@ -168,7 +168,7 @@ const LeftsidePayment: FC<LeftsidePaymentProps> = ({ session }) => {
               </div>
             </div>
           )}
-        </div>
+        </div> */}
 
         <div className="my-3 border-b-2 border-b-[#E4E4E4]"></div>
         <div

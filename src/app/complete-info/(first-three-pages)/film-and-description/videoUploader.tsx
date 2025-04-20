@@ -79,7 +79,7 @@ const VideoUploader: FC<VideoUploaderProps> = ({
           ""
         ) : (
           <p className="text-xs text-[#565656] mb-2">
-            افزودن این قابلیت باعث اضاف شدن هزینه پرداخت میشود
+            {/* افزودن این قابلیت باعث اضاف شدن هزینه پرداخت میشود */}
           </p>
         )}
 
