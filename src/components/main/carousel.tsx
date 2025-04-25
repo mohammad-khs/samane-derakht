@@ -23,6 +23,21 @@ const Carousel: FC<CarouselProps> = ({
   cardsData,
   background = "bg-[#E7ECEE]",
 }) => {
+  const [emblaRef, emblaApi] = useEmblaCarousel(
+    { loop: true, slidesToScroll: "auto" },
+    [Autoplay({ active: true, delay: 3000 })]
+  );
+  const scrollPrev = useCallback(() => {
+    if (emblaApi) emblaApi.scrollPrev();
+  }, [emblaApi]);
+
+  const scrollNext = useCallback(() => {
+    if (emblaApi) emblaApi.scrollNext();
+  }, [emblaApi]);
+  
+  const { selectedIndex, scrollSnaps, onDotButtonClick } =
+    useDotButton(emblaApi);
+
   // If less than 3 items, render statically
   if (!cardsData || cardsData.length < 3) {
     return (
@@ -131,21 +146,6 @@ const Carousel: FC<CarouselProps> = ({
     );
   }
 
-  const [emblaRef, emblaApi] = useEmblaCarousel(
-    { loop: true, slidesToScroll: "auto" },
-    [Autoplay({ active: true, delay: 3000 })]
-  );
-
-  const scrollPrev = useCallback(() => {
-    if (emblaApi) emblaApi.scrollPrev();
-  }, [emblaApi]);
-
-  const scrollNext = useCallback(() => {
-    if (emblaApi) emblaApi.scrollNext();
-  }, [emblaApi]);
-
-  const { selectedIndex, scrollSnaps, onDotButtonClick } =
-    useDotButton(emblaApi);
   return (
     <>
       <div className="relative md:mx-5  lg:mx-8 xl:mx-10">
