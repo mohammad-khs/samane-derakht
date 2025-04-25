@@ -30,7 +30,11 @@ export default function MobileNav({ disappearLg = false }: MobileNavProps) {
       <SheetDescription>
         <VisuallyHidden.Root>sidebar for moblie</VisuallyHidden.Root>
       </SheetDescription>
-      <div className="flex items-center justify-between p-5">
+      <div
+        className={`flex items-center justify-between p-5 ${
+          disappearLg ? "lg:hidden" : "md:hidden"
+        }`}
+      >
         <div className={`${disappearLg ? "lg:hidden" : "md:hidden"}`}>
           <SignInModalParent>ثبت نام/ورود</SignInModalParent>
         </div>

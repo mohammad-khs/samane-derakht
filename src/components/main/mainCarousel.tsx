@@ -1,4 +1,6 @@
-import { FC } from "react";
+"use client";
+
+import { FC, useEffect, useState } from "react";
 import Carousel from "./carousel";
 import { mainCarouselCardData } from "@/types/mainCarousels";
 
@@ -15,19 +17,32 @@ const fetchCarouselData = async (): Promise<mainCarouselCardData[]> => {
     if (!res.ok) {
       throw new Error("Failed to fetch data");
     }
-    return await res.json();
+    const data = await res.json();
+    return data;
   } catch (error) {
     console.error("Error fetching carousel data:", error);
     return [];
   }
 };
 
-const MainCarousel: FC<MainCarouselProps> = async ({
+const MainCarousel: FC<MainCarouselProps> = ({
   data,
   hasPrevNextBtn = false,
   background,
 }) => {
-  const carouselData = data || (await fetchCarouselData());
+  const [carouselData, setCarouselData] = useState<mainCarouselCardData[]>(
+    data || []
+  );
+
+  useEffect(() => {
+    if (!data) {
+      const fetchData = async () => {
+        const fetchedData = await fetchCarouselData();
+        setCarouselData(fetchedData);
+      };
+      fetchData();
+    }
+  }, [data]);
 
   return (
     <section>
