@@ -8,6 +8,7 @@ import {
   FaQuestion,
 } from "react-icons/fa";
 import { Info, ShoppingCart, Droplets, HomeIcon } from "lucide-react";
+import ShoppingCartButton from "@/components/ui/shoppingCartButton";
 
 export const navLinks = [
   {
@@ -62,8 +63,8 @@ export const mobileNavLinks = [
     href: "/company/about-us",
   },
   {
-    icon: <ShoppingCart className="h-5 w-5" />,
-    href: "/shopping-cart",
+    icon: <ShoppingCartButton isSideBar={true} />,
+    href: "/shopping-cart", 
   },
   {
     icon: <FaQuestion className="h-5 w-5" />,

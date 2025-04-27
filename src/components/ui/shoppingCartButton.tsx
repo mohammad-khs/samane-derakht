@@ -12,11 +12,13 @@ import { ShoppingCart } from "lucide-react";
 interface ShoppingCartButtonProps {
   propCount?: number | undefined;
   isMobileNav?: boolean;
+  isSideBar?: boolean;
 }
 
 const ShoppingCartButton: FC<ShoppingCartButtonProps> = ({
   propCount,
   isMobileNav,
+  isSideBar,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { data: session, status } = useSession();
@@ -59,40 +61,74 @@ const ShoppingCartButton: FC<ShoppingCartButtonProps> = ({
 
   return (
     <>
-      {status === "authenticated" ? (
-        <Link href="/shopping-cart">
-          {isMobileNav ? (
-            <div className="flex items-center gap-4 mx-[-0.65rem] px-3">
-              <ShoppingCart className="h-5 w-5" />
-              <span className="text-muted-foreground hover:text-foreground">سبد خرید</span>
-            </div>
-          ) : (
-            <Button className="relative p-2" variant="icon">
-              <div className="flex justify-center gap-3 items-center">
-                <div className="relative w-6 h-6">
-                  <Image
-                    className="p-1"
-                    alt="سبد فروشگاهی"
-                    fill
-                    src="/svgs/shoppingCart.svg"
-                  />
-                </div>
-                {count && count > 0 && (
-                  <div className="rounded-full h-4 w-4 flex justify-center items-center text-white font-semibold bg-red-600">
-                    <div className="text-[10px] leading-none">
-                      {count > 9 ? `+9` : count}
-                    </div>
+      {isMobileNav ? (
+        status === "authenticated" ? (
+          <Link href="/shopping-cart">
+            <div className="flex items-center relative gap-4 mx-[-0.65rem] px-3">
+              {count && count > 0 && (
+                <div className="rounded-full absolute right-0 top-0 h-4 w-4 flex justify-center items-center text-white font-semibold bg-red-600">
+                  <div className="text-[10px] leading-none">
+                    {count > 9 ? `+9` : count}
                   </div>
-                )}
+                </div>
+              )}
+              <ShoppingCart className="h-5 w-5" />
+              سبد خرید
+            </div>
+          </Link>
+        ) : (
+          <div
+            onClick={() => setIsModalOpen(true)}
+            className="flex items-center relative gap-4 mx-[-0.65rem] px-3"
+          >
+            <ShoppingCart className="h-5 w-5" />
+            سبد خرید
+          </div>
+        )
+      ) : isSideBar ? (
+        status === "authenticated" ? (
+          <Link href="/shopping-cart">
+            <div className="flex relative items-center gap-2 p-2">
+              <ShoppingCart className="h-6 w-6" />
+              {count && count > 0 && (
+                <div className="rounded-full absolute top-1 right-0 h-4 w-4 flex justify-center items-center text-white font-semibold bg-red-600">
+                  <div className="text-[10px] leading-none">
+                    {count > 9 ? `+9` : count}
+                  </div>
+                </div>
+              )}
+            </div>
+          </Link>
+        ) : (
+          <div
+            onClick={() => setIsModalOpen(true)}
+            className="flex items-center gap-2 p-2 cursor-pointer"
+          >
+            <ShoppingCart className="h-6 w-6" />
+          </div>
+        )
+      ) : status === "authenticated" ? (
+        <Link href="/shopping-cart">
+          <Button className="relative p-2" variant="icon">
+            <div className="flex justify-center gap-3 items-center">
+              <div className="relative w-6 h-6">
+                <Image
+                  className="p-1"
+                  alt="سبد فروشگاهی"
+                  fill
+                  src="/svgs/shoppingCart.svg"
+                />
               </div>
-            </Button>
-          )}
+              {count && count > 0 && (
+                <div className="rounded-full h-4 w-4 flex justify-center items-center text-white font-semibold bg-red-600">
+                  <div className="text-[10px] leading-none">
+                    {count > 9 ? `+9` : count}
+                  </div>
+                </div>
+              )}
+            </div>
+          </Button>
         </Link>
-      ) : isMobileNav ? (
-        <div onClick={() => setIsModalOpen(true)} className="flex items-center gap-4 mx-[-0.65rem] px-3">
-          <ShoppingCart className="h-5 w-5" />
-          <span className="text-muted-foreground hover:text-foreground">سبد خرید</span>
-        </div>
       ) : (
         <Button
           onClick={() => setIsModalOpen(true)}

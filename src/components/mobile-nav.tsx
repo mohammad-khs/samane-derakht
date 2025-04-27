@@ -17,6 +17,7 @@ import { FaQuestion } from "react-icons/fa";
 import SignInModalParent from "./authentication/signInModalParent";
 import { usePathname } from "next/navigation";
 import ShoppingCartButton from "./ui/shoppingCartButton";
+import Notifications from "./ui/notifications";
 
 interface MobileNavProps {
   disappearLg?: boolean;
@@ -35,15 +36,12 @@ export default function MobileNav({ disappearLg = false }: MobileNavProps) {
           disappearLg ? "lg:hidden" : "md:hidden"
         }`}
       >
-        <div className={`${disappearLg ? "lg:hidden" : "md:hidden"}`}>
+        <div className="flex gap-3">
           <SignInModalParent>ثبت نام/ورود</SignInModalParent>
+          <Notifications />
         </div>
         <SheetTrigger asChild>
-          <Button
-            variant="outline"
-            size="icon"
-            className={`${disappearLg ? "lg:hidden" : "md:hidden"}`}
-          >
+          <Button variant="outline" size="icon">
             <Menu className="h-8 w-8 text-[#383838]" />
             <span className="sr-only">Toggle navigation menu</span>
           </Button>
@@ -77,7 +75,7 @@ export default function MobileNav({ disappearLg = false }: MobileNavProps) {
             محصولات
           </Link>
           <div
-            className={`mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 ${
+            className={`mx-[-0.65rem] items-center gap-4 rounded-xl px-3 py-2 ${
               pathname === "/shopping-cart"
                 ? "text-[#28D16C] hover:text-[#28D16C]"
                 : "text-muted-foreground hover:text-foreground"

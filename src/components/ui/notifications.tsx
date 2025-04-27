@@ -25,8 +25,6 @@ const Notifications: FC = () => {
   const dropdownRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
 
-  console.log("notification : ", notifications);
-  
   const handleNotifClick = (notification: NotificationType) => {
     if (notification.url_for_order) {
       router.replace("/dashboard/orders");
@@ -55,7 +53,6 @@ const Notifications: FC = () => {
               },
             }
           );
-          console.log(response);
         } catch (error) {
           console.error("Failed to fetch notifications:", error);
         }
@@ -162,36 +159,39 @@ const Notifications: FC = () => {
           </Button>
 
           {isDropdownOpen && (
-            <div className="flex justify-center ">
-                <div className="absolute mt-3 w-64 max-h-96 overflow-y-auto bg-white border border-gray-200 rounded-lg shadow-lg z-50 ">
-              <div className="p-4">
-                {notifications.length > 0 ? (
-                  <ul className="space-y-2">
-                    {notifications.map((notification) => (
-                      <li
-                        key={notification.id}
-                        className="text-sm p-2 rounded bg-gray-50 hover:bg-gray-100 cursor-pointer"
-                      >
-                        <p>{getNotificationMessage(notification.notif_type)}</p>
-                        {(notification.url_for_order ||
-                          notification.url_for_reply_comment ||
-                          notification.url_for_ticket ||
-                          notification.url_for_transaction) && (
-                          <button
-                            onClick={() => handleNotifClick(notification)}
-                            className="text-xs text-[#28D16C] hover:underline"
-                          >
-                            مشاهده
-                          </button>
-                        )}
-                      </li>
-                    ))}
-                  </ul>
-                ) : (
-                  <p className="text-sm text-gray-500">هیچ پیام جدیدی نیست</p>
-                )}
+            <div className="flex justify-center ml-16 md:ml-auto">
+              <div className="absolute mt-3 w-64 max-h-96 overflow-y-auto bg-white border border-gray-200 rounded-lg shadow-lg z-50 ">
+                <div className="p-4">
+                  {notifications.length > 0 ? (
+                    <ul className="space-y-2">
+                      {notifications.map((notification) => (
+                        <li
+                          key={notification.id}
+                          className="text-sm p-2 rounded bg-gray-50 hover:bg-gray-100 cursor-pointer"
+                        >
+                          <p>
+                            {getNotificationMessage(notification.notif_type)}
+                          </p>
+                          {(notification.url_for_order ||
+                            notification.url_for_reply_comment ||
+                            notification.url_for_ticket ||
+                            notification.url_for_transaction) && (
+                            <button
+                              onClick={() => handleNotifClick(notification)}
+                              className="text-xs text-[#28D16C] hover:underline"
+                            >
+                              مشاهده
+                            </button>
+                          )}
+                        </li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <p className="text-sm text-gray-500">هیچ پیام جدیدی نیست</p>
+                  )}
+                </div>
               </div>
-            </div></div>
+            </div>
           )}
         </div>
       )}
