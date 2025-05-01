@@ -7,7 +7,7 @@ import {
   FaUserCircle,
   FaQuestion,
 } from "react-icons/fa";
-import { Info, ShoppingCart, Droplets, HomeIcon } from "lucide-react";
+import { Info, Droplets, HomeIcon } from "lucide-react";
 import ShoppingCartButton from "@/components/ui/shoppingCartButton";
 
 export const navLinks = [

@@ -53,6 +53,7 @@ const Notifications: FC = () => {
               },
             }
           );
+          console.log(response);
         } catch (error) {
           console.error("Failed to fetch notifications:", error);
         }

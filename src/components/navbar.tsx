@@ -7,6 +7,7 @@ import SignInModalParent from "./authentication/signInModalParent";
 import ShoppingCartButton from "./ui/shoppingCartButton";
 import { usePathname } from "next/navigation";
 import Notifications from "./ui/notifications";
+import Image from "next/image";
 
 interface NavbarProps {
   isDashboard?: boolean;
@@ -22,9 +23,7 @@ const Navbar: FC<NavbarProps> = ({ isDashboard = false, count }) => {
     <>
       <nav
         className={`${
-          isDashboard
-            ? "shadow-md lg:flex"
-            : " mx-2 rounded-xl md:flex"
+          isDashboard ? "shadow-md lg:flex" : " mx-2 rounded-xl md:flex"
         }  flex-row py-2 hidden bg-[#E4E7E5]`}
       >
         <div className="flex justify-start items-center gap-4 ms-5 basis-1/3">
@@ -96,8 +95,12 @@ const Navbar: FC<NavbarProps> = ({ isDashboard = false, count }) => {
         </div>
         <div className="me-5 basis-1/3">
           <Link href="/" className="flex justify-end gap-3 items-center">
-            <span className="text-sm font-semibold">سامانه درخت</span>
-            <Button size={"icon"} variant={"green"}></Button>
+            {/* <span className="text-sm font-semibold">سامانه درخت</span> */}
+            <div className={`${!isDashboard && "absolute top-[25px]"}`}>
+              <div className="relative w-32 h-10">
+                <Image alt="logo" className="" fill src={`/logo.png`} />
+              </div>
+            </div>
           </Link>
         </div>
       </nav>

@@ -89,12 +89,13 @@ const Footer: FC<FooterProps> = ({ sponsors = true }) => {
             <div className="basis-2/5 flex flex-col mb-8 md:mb-0 items-center z-0">
               <div className="md:w-3/5">
                 <h1 className="text-xl md:text-2xl font-semibold flex justify-end gap-3 mb-10 items-center">
-                  <span>سامانه درخت</span>
-                  <Button
-                    variant={"outline"}
-                    size={"resizbleIcon"}
-                    className="cursor-default"
-                  ></Button>
+                  <Link href="/" className=" text-lg font-semibold">
+                    <div className="relative w-44 h-14">
+                      <Image alt="logo" className="" fill src={`/logo.png`} />
+                    </div>
+
+                    <span className="sr-only">سامانه درخت</span>
+                  </Link>
                 </h1>
                 <div className="w-full">
                   درخت من یک استارتاپ نوآورانه است که با هدف ترویج فرهنگ کاشت
