@@ -2,7 +2,7 @@
 
 import Autoplay from "embla-carousel-autoplay";
 import useEmblaCarousel from "embla-carousel-react";
-import { FC, useCallback } from "react";
+import { FC, useCallback, useEffect, useState } from "react";
 import { DotButton, useDotButton } from "../ui/emblaCarouselDotButton";
 import Image from "next/image";
 import { CaretLeftIcon, CaretRightIcon } from "@radix-ui/react-icons";
@@ -27,6 +27,17 @@ const Carousel: FC<CarouselProps> = ({
     { loop: true, slidesToScroll: "auto" },
     [Autoplay({ active: true, delay: 3000 })]
   );
+  const [isLg, setIsLg] = useState(true);
+
+  useEffect(() => {
+    const checkSize = () => {
+      setIsLg(window.innerWidth >= 1024);
+    };
+    checkSize();
+    window.addEventListener("resize", checkSize);
+    return () => window.removeEventListener("resize", checkSize);
+  }, []);
+
   const scrollPrev = useCallback(() => {
     if (emblaApi) emblaApi.scrollPrev();
   }, [emblaApi]);
@@ -34,15 +45,18 @@ const Carousel: FC<CarouselProps> = ({
   const scrollNext = useCallback(() => {
     if (emblaApi) emblaApi.scrollNext();
   }, [emblaApi]);
-  
+
   const { selectedIndex, scrollSnaps, onDotButtonClick } =
     useDotButton(emblaApi);
 
   // If less than 3 items, render statically
-  if (!cardsData || cardsData.length < 3) {
+  if (!cardsData || cardsData.length <= 3) {
     return (
-      <div className="relative md:mx-5  lg:mx-8 xl:mx-10">
-        <div className="my-12 w-full flex items-center justify-center">
+      <div className="relative md:mx-5 overflow-hidden lg:mx-8 xl:mx-10">
+        <div
+          className="my-12 w-full flex items-center justify-center"
+          {...(!isLg ? { ref: emblaRef } : {})}
+        >
           <div className="flex h-full w-full ">
             {cardsData?.map((item) => (
               <div className=" relative mx-2" key={item.id}>
