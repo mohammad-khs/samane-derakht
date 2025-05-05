@@ -1,7 +1,6 @@
 import { DateFormatDMY, monthNumToMonthName } from "@/helper/dateHandler";
 import {
   Clock,
-  EyeIcon,
   ImageIcon,
   Loader2Icon,
   PlayCircle,
@@ -12,7 +11,6 @@ import { FaMapMarkerAlt, FaMicrophone, FaRegCommentAlt } from "react-icons/fa";
 import UserImage from "./userImage";
 import { MyMainTreeData } from "./page";
 import Image from "next/image";
-import { FallbackImage } from "@/components/products/product/headerImages";
 import ImageCarousel from "./imageCarousel";
 import Video from "@/components/ui/video";
 import dynamic from "next/dynamic";
