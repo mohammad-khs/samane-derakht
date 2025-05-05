@@ -5,7 +5,6 @@ import { TreeData } from "@/types/products";
 import { FC, useState } from "react";
 import {
   FaCommentAlt,
-  FaFacebook,
   FaShareAlt,
   FaStar,
   FaTelegram,
@@ -14,7 +13,6 @@ import {
   FaWhatsapp,
 } from "react-icons/fa";
 import {
-  FacebookShareButton,
   TwitterShareButton,
   TelegramShareButton,
   WhatsappShareButton,
@@ -55,7 +53,7 @@ const TreeHeadInfo: FC<TreeHeadInfoProps> = ({ treeData, session }) => {
 
       <section className="bg-white rounded-xl flex flex-col-reverse lg:flex-row justify-between p-5 mx-5 my-10">
         <div className="flex flex-col h-full m-5 justify-between">
-          <div className="flex mt-5 lg:mt-0 mb-10 lg:mb-24">
+          <div className="flex mt-5 lg:mt-0 mb-10 md:gap-32 lg:mb-24">
             <div className="basis-1/4 m-2 relative">
               <div className="relative">
                 <FaShareAlt
@@ -64,11 +62,6 @@ const TreeHeadInfo: FC<TreeHeadInfoProps> = ({ treeData, session }) => {
                 />
                 {showOptions && (
                   <div className="absolute top-8 left-0 flex flex-col gap-2 bg-white shadow-lg rounded p-3 transition-all duration-300">
-                    <FacebookShareButton url={shareUrl}>
-                      <div className="flex items-center gap-2 cursor-pointer">
-                        <FaFacebook className="text-[#1877F2] w-5 h-5" />
-                      </div>
-                    </FacebookShareButton>
                     <TwitterShareButton url={shareUrl}>
                       <div className="flex items-center gap-2 cursor-pointer">
                         <FaTwitter className="text-[#1DA1F2] w-5 h-5" />
@@ -97,10 +90,10 @@ const TreeHeadInfo: FC<TreeHeadInfoProps> = ({ treeData, session }) => {
                   خرید نهال {treeData.tree?.name}
                 </h1>
               </div>
-              <p className="text-[#373737] text-sm mb-5">
+              {/* <p className="text-[#373737] text-sm mb-5">
                 لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با
                 استفاده از طراحان گرافیک است.
-              </p>
+              </p> */}
               <div className="text-sm my-2" style={{ direction: "rtl" }}>
                 {treeData.tree?.in_stock ? (
                   <div className="flex items-center gap-2">

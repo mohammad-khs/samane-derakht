@@ -45,13 +45,15 @@ const MainCarousel: FC<MainCarouselProps> = ({
   }, [data]);
 
   return (
-    <section>
-      <Carousel
-        background={background}
-        cardsData={carouselData}
-        hasPrevNextBtn={hasPrevNextBtn}
-      />
-    </section>
+    carouselData.length > 0 && (
+      <section>
+        <Carousel
+          background={background}
+          cardsData={carouselData}
+          hasPrevNextBtn={hasPrevNextBtn}
+        />
+      </section>
+    )
   );
 };
 

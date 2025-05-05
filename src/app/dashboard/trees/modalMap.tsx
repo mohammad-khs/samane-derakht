@@ -22,26 +22,28 @@ const ModalMap: FC<ModalMapProps> = ({ mapCenter }) => {
   });
   return (
     <>
-      <MapContainer
-        ref={mapRef}
-        className="w-full rounded-3xl z-50 h-80"
-        center={mapCenter}
-        zoom={12}
-        minZoom={6}
-        scrollWheelZoom={true}
-        zoomControl={false}
-      >
-        <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
-        {
-          <Marker
-            icon={customIcon}
-            position={latLng(Number(mapCenter[0]), Number(mapCenter[1]))}
+      <div className="w-full border-2 p-3 rounded-[40px]">
+        <MapContainer
+          ref={mapRef}
+          className="w-full rounded-3xl z-50 h-80"
+          center={mapCenter}
+          zoom={12}
+          minZoom={6}
+          scrollWheelZoom={true}
+          zoomControl={false}
+        >
+          <TileLayer
+            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
-        }
-      </MapContainer>
+          {
+            <Marker
+              icon={customIcon}
+              position={latLng(Number(mapCenter[0]), Number(mapCenter[1]))}
+            />
+          }
+        </MapContainer>
+      </div>
     </>
   );
 };

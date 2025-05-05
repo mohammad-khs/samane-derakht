@@ -2,7 +2,6 @@ import { FC } from "react";
 import Image from "next/image";
 
 import {
-  FaFacebookF,
   FaInstagram,
   FaTelegramPlane,
   FaWhatsapp,
@@ -90,7 +89,7 @@ const Footer: FC<FooterProps> = ({ sponsors = true }) => {
                 <h1 className="text-xl md:text-2xl font-semibold flex justify-end gap-3 mb-10 items-center">
                   <Link href="/" className=" text-lg font-semibold">
                     <div className="relative w-44 h-14">
-                      <Image alt="logo" className="" fill src={`/logo.png`} />
+                      <Image alt="logo" className="" fill src={`/icon.png`} />
                     </div>
 
                     <span className="sr-only">سامانه درخت</span>
@@ -116,9 +115,6 @@ const Footer: FC<FooterProps> = ({ sponsors = true }) => {
                   <a href="https://www.instagram.com/p/DIJyd4aPErn/?igsh=YWZtaWkycDhmcjFn">
                     <FaInstagram className="w-8 h-8 " />
                   </a>
-                </li>
-                <li>
-                  <FaFacebookF className="w-8 h-8 " />
                 </li>
                 <li>
                   <a href="https://wa.me/+989308880854">

@@ -116,6 +116,10 @@ const UploadSpec: FC<UploadSpecProps> = ({ session }) => {
           toast.error("ایمیلتان اشتباه است");
           return;
         }
+        if (data[0] === "name is required") {
+          toast.error("لطفا نام خود را وارد کنید");
+          return;
+        }
 
         throw new Error(`Upload failed: ${data}`);
       }

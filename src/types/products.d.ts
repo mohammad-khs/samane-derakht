@@ -11,6 +11,7 @@ export interface TreeCard {
   avg: number | null;
   count: number | null;
   slug: string | null;
+  description: string | null
 }
 
 export interface TreeData {

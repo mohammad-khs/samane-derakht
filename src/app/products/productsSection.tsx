@@ -40,8 +40,6 @@ export function useProducts(searchQuery?: string) {
 
 const ProductsSection: FC<ProductsSectionProps> = ({ searchQuery }) => {
   const { data, setSize, size, isLoading, error } = useProducts(searchQuery);
-  console.log("this is size : ", size);
-  console.log("this is data : ", data);
 
   if (isLoading && !data) {
     return <Loading />;
@@ -69,6 +67,7 @@ const ProductsSection: FC<ProductsSectionProps> = ({ searchQuery }) => {
                   key={product.id}
                 >
                   <ProductCard
+                    description={product?.description}
                     slug={product?.slug}
                     id={product?.id}
                     image={product?.image}
@@ -89,6 +88,7 @@ const ProductsSection: FC<ProductsSectionProps> = ({ searchQuery }) => {
                   key={product.id}
                 >
                   <ProductCard
+                    description={product?.description}
                     slug={product?.slug}
                     id={product?.id}
                     image={product?.image}

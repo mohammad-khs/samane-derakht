@@ -10,6 +10,7 @@ interface TreeMainInfoProps {
   avg?: number | null;
   productId?: string;
   productSlug?: string;
+  description: string | null | undefined;
 }
 
 const TreeMainInfo: FC<TreeMainInfoProps> = async ({
@@ -17,6 +18,7 @@ const TreeMainInfo: FC<TreeMainInfoProps> = async ({
   comments,
   avg,
   productId,
+  description,
 }) => {
   const session = await getServerSession(authOptions);
   return (
@@ -25,17 +27,13 @@ const TreeMainInfo: FC<TreeMainInfoProps> = async ({
         <div className="m-5" style={{ direction: "rtl" }}>
           <h1 className="text-2xl font-semibold mb-5">اطلاعات محصول</h1>
           <div className="text-[#373737] text-sm">
-            لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با
-            استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله در
-            ستون و سطرآنچنان که لازم است، و برای شرایط فعلی تکنولوژی مورد نیاز،
-            و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد، کتابهای
-            زیادی در شصت و سه درصد گذشته حال و آینده، شناخت فراوان جامعه و
-            متخصصان را می طلبد، تا با نرم افزارها شناخت بیشتری را برای طراحان
-            رایانه ای علی الخصوص طراحان خلاقی، و فرهنگ پیشرو در زبان فارسی ایجاد
-            کرد، در این صورت می توان امید داشت که تمام و دشواری موجود در ارائه
-            راهکارها، و شرایط سخت تایپ به پایان رسد و زمان مورد نیاز شامل
-            حروفچینی دستاوردهای اصلی، و جوابگوی سوالات پیوسته اهل دنیای موجود
-            طراحی اساسا مورد استفاده قرار گیرد.
+            {description ? (
+              description
+            ) : (
+              <span className="text-red-500">
+                توضیحی برای این محصول ثبت نشده است.
+              </span>
+            )}
           </div>
         </div>
         <div className="flex justify-center items-center w-full">

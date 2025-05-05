@@ -7,7 +7,6 @@ import MainTreeHead from "./mainTreeHead";
 import { Button } from "@/components/ui/button";
 import { CreditCard } from "lucide-react";
 import {
-  FacebookIcon,
   InstagramIcon,
   TelegramIcon,
   TwitterIcon,
@@ -36,6 +35,7 @@ export interface MyMainTreeData {
     longtitud: string;
     latitud: string;
     comments: TreeComment[];
+    title: string | null;
   };
   saved: boolean;
 }
@@ -82,9 +82,9 @@ const MainTree: FunctionComponent<MainTreeProps> = async ({
           <div className="w-full rounded-lg bg-white p-4 text-[#1F1F1F]">
             <h2 className="text-xl font-semibold mb-2">حمایت از کاربر</h2>
             <p className="text-sm">
-              لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با
-              استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله
-              در ستون و سطرآنچنان که لازم است،
+              اگر این داستان رو دوست داشتی میتونی با هر مبلغی که خواستی ازش
+              حمایت کنی تمام مبلغ وارد کیف پولش میشه و در وقت دلش خواست میتونه
+              برداشت کنه
             </p>
             <Button className="flex gap-1 w-full mt-4" variant={"green"}>
               <CreditCard /> ارسال هدیه{" "}
@@ -101,7 +101,6 @@ const MainTree: FunctionComponent<MainTreeProps> = async ({
                 <WhatsappIcon color="#5C5C5C" />
               </a>
               <TwitterIcon color="#5C5C5C" />
-              <FacebookIcon color="#5C5C5C" />
             </div>
           </div>
         </div>

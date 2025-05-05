@@ -83,9 +83,19 @@ const MyTrees: FC<MyTreesProps> = ({ session }) => {
   return (
     <>
       <div>
-        {data?.[data.length - 1].data?.map((treeItem: MyTreeItem) => (
-          <MyTreesSection key={treeItem.id} item={treeItem} session={session} />
-        ))}
+        {data && data.some((page) => page.data && page.data.length > 0) ? (
+          data?.[data.length - 1].data?.map((treeItem: MyTreeItem) => (
+            <MyTreesSection
+              key={treeItem.id}
+              item={treeItem}
+              session={session}
+            />
+          ))
+        ) : (
+          <p className="font-semibold mt-8 text-[#373737]">
+            درخت های شما بعد از کاشته شدن به این جا اضافه خواهند شد
+          </p>
+        )}
       </div>
       {error && error?.status === 429 ? (
         <div className="text-red-600 text-center my-3">

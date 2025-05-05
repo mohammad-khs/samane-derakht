@@ -70,12 +70,15 @@ const MainTreeHead: FC<MainTreeHeadProps> = ({ data, session }) => {
       </div>
 
       <h3 className="text-xl font-semibold mt-10">
-        لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ
+        {data.data.title ? (
+          <span className="block max-w-full md:w-3/4 truncate">
+            {data.data.title}
+          </span>
+        ) : (
+          <span>بدون عنوان</span>
+        )}
       </h3>
       <div className="flex gap-3 md:gap-8 mt-2">
-        <div className="text-xs sm:text-sm flex gap-2 items-center ">
-          <EyeIcon className=" text-[#F2B93B]" /> {data.data.scan_numbers}
-        </div>
         <div className="text-xs sm:text-sm flex gap-2  items-center">
           <Clock className="h-5 w-5 text-[#F2B93B]" />{" "}
           {timeCreated ? (
@@ -94,13 +97,13 @@ const MainTreeHead: FC<MainTreeHeadProps> = ({ data, session }) => {
         <div className="flex text-xs sm:text-sm gap-2 items-center">
           <ScanQrCode className="h-5 w-5 text-[#F2B93B]" />{" "}
           <div>
-            <span>{data.data.comment_numbers}</span> اسکن
+            <span>{data.data.scan_numbers}</span> اسکن
           </div>
         </div>
       </div>
 
-      <div className="border-2 border-[#D2D2D2] p-1 rounded-3xl w-full sm:w-[480px] h-[320px] my-4">
-        {data.data.image ? (
+      {data.data.image ? (
+        <div className="border-2 border-[#D2D2D2] p-1 rounded-3xl w-full sm:w-[480px] h-[320px] my-4">
           <div className="relative w-full h-full">
             <Image
               alt={`تصویر درخت ${data.data.user_username}`}
@@ -108,13 +111,14 @@ const MainTreeHead: FC<MainTreeHeadProps> = ({ data, session }) => {
               className="rounded-3xl object-cover"
               src={`${process.env.NEXT_PUBLIC_API_BASE_URL}${data.data.image}`}
             />
-          </div>
-        ) : (
-          <FallbackImage />
-        )}
-      </div>
+          </div>{" "}
+        </div>
+      ) : (
+        ""
+      )}
+
       <div>
-        <p className="text-sm md:text-base">{data.data.description}</p>
+        <p className="text-sm md:text-base mt-5">{data.data.description}</p>
       </div>
 
       <div className="flex justify-center items-center w-full mt-6">

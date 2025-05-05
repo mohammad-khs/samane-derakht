@@ -112,7 +112,7 @@ const RightsidePayment: FC<RightsidePaymentProps> = ({ session }) => {
                       پرداخت اینترنتی
                     </h3>
                     <div className="text-[#898989] text-xs text-start">
-                      لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ
+                      پرداخت مستیقم از درگاه پرداخت
                     </div>
                   </div>
                 </div>

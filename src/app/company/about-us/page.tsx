@@ -2,7 +2,6 @@ import React from "react";
 import {
   TelegramIcon,
   InstagramIcon,
-  FacebookIcon,
   WhatsappIcon,
   TwitterIcon,
   YoutubeIcon,
@@ -40,7 +39,6 @@ const ContactUs = () => {
       label: "WhatsApp",
       Icon: WhatsappIcon,
     },
-    { href: "https://facebook.com", label: "Facebook", Icon: FacebookIcon },
     {
       href: "https://www.instagram.com/p/DIJyd4aPErn/?igsh=YWZtaWkycDhmcjFn",
       label: "Instagram",

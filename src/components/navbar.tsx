@@ -98,7 +98,7 @@ const Navbar: FC<NavbarProps> = ({ isDashboard = false, count }) => {
             {/* <span className="text-sm font-semibold">سامانه درخت</span> */}
             <div className={`${!isDashboard && "absolute top-[25px]"}`}>
               <div className="relative w-32 h-10">
-                <Image alt="logo" className="" fill src={`/logo.png`} />
+                <Image alt="logo" className="" fill src={`/icon.png`} />
               </div>
             </div>
           </Link>

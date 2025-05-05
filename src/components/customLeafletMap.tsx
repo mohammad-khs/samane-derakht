@@ -142,11 +142,13 @@ const CustomMapbox: FC<CustomMapboxProps> = ({
         <h1 className="font-semibold text-2xl md:text-xl lg:text-2xl xl:text-3xl">
           درخت های کاشته شده توسط تیم ما
         </h1>
-        <div className="text-base font-semibold">
-          لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با
-          استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله در
-          ستون و سطرآنچنان که لازم است، و برای شرایط فعلی تکنولوژی مورد نیاز، و
-          کاربردهای
+        <div className="text-base font-semibold" dir="rtl">
+          در سایت “درخت من”، ما به شما این امکان را می‌دهیم که با کاشت درختان،
+          داستان‌های خاص و یادگاری‌های ماندگار بسازید. یکی از ویژگی‌های منحصر به
+          فرد ما، نمایش محل دقیق کاشت درختان شما همراه با تم‌های متنوع است.{" "}
+          <span className="text-[#28D16C] font-extrabold">با کلیک بر</span> روی
+          هر کدام از تم ها شما به داستان شخص هدایت شده و میتوانید آن را مشاهده
+          کنید.
         </div>
         <div className="flex">
           <div className="basis-1/2 hidden md:block"></div>

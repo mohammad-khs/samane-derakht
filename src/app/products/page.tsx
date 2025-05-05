@@ -37,10 +37,12 @@ const Products: FC<ProductsProps> = ({ searchParams }) => {
               </div>
             </h1>
             <div>
-              <p className="text-xs md:text-sm text-center px-5 text-[#373737]">
-                لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با
-                استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله
-                در ستون و سطرآنچنان که لازم
+              <p
+                className="text-xs md:text-sm text-center px-5 text-red-600 font-semibold"
+                dir="rtl"
+              >
+                هزینه شامل درخت، کاشت درخت، نصب QR CODE و آبیاری و مراقبت 3 ماهه
+                می باشد
               </p>
             </div>
           </div>

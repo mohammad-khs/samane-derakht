@@ -32,8 +32,6 @@ const Product: FC<ProductProps> = async ({ params }) => {
           },
         }
       );
-      console.log(res.status);
-      console.log(res.statusText);
 
       if (res.ok) {
         const data = await res.json();
@@ -93,6 +91,7 @@ const Product: FC<ProductProps> = async ({ params }) => {
               avg={treeData?.avg}
               productId={treeData?.tree?.id}
               productSlug={params.productName}
+              description={treeData?.tree?.description}
             />
             <div className="mb-8">
               <MainCarousel

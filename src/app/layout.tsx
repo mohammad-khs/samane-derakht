@@ -24,6 +24,22 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <link rel="icon" type="image/png" href="/icon.png" />
+        {/* Structured data for Google logo rich result */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              name: "درخت من",
+              url: "https://derakhtman.ir/",
+              logo: "https://derakhtman.ir/icon.png",
+            }),
+          }}
+        />
+      </head>
       <body
         className={`antialiased`}
         style={{

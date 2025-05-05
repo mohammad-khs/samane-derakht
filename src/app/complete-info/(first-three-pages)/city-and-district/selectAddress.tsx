@@ -84,7 +84,7 @@ const SelectAddress: FC<SelectAddressProps> = ({ session }) => {
 
   const handleIndividualCustomer = () => {
     if (!data) {
-      toast.error("لطفا صفحه را رفرش کنید تا استان و شهر");
+      toast.error("لطفا صفحه را رفرش کنید تا استان و شهر پیدا شود");
       return;
     }
     if (!cityName) {
@@ -96,7 +96,7 @@ const SelectAddress: FC<SelectAddressProps> = ({ session }) => {
       return;
     }
     if (selectedMarkers.length < data.empty_tree_allowed) {
-      toast.error("لطفا به تعداد درختان مکان انتخاب کنید");
+      toast.error("لطفا به تعداد درختان جا برای کاشت انتخاب کنید");
       return;
     }
     router.push("film-and-description");

@@ -8,6 +8,7 @@ import dynamic from "next/dynamic";
 import { Loader2Icon } from "lucide-react";
 import { Session } from "next-auth";
 import { ProvinceData } from "@/types/complete-info";
+import { FaExclamationCircle } from "react-icons/fa";
 
 const DynamicPlantTreeMap = dynamic(() => import("./plantTreeMap"), {
   ssr: false,
@@ -75,7 +76,35 @@ const PlantTreeMapSection: FC<PlantTreeMapSectionProps> = ({
             </Button>
           </div>
         </div>
-
+        <div className="my-4">
+          <p className="text-[#373737] text-sm font-semibold mb-3  mt-5">
+            تعداد {data?.em_count} درخت در منطقه انتخاب شده آزاد است.
+          </p>
+          <p className="text-[#373737] mb-1 text-xs flex items-center gap-2">
+            <FaExclamationCircle
+              className="w-[12px] h-[12px] flex-shrink-0"
+              color="#373737"
+            />
+            توجه داشته باشید که به تعداد درخت های سبد خرید شما باید مکان انتخاب
+            کنید <sup>*</sup>
+          </p>
+          <p className="text-[#373737] mb-1 text-xs flex items-center gap-2">
+            <FaExclamationCircle
+              className="w-[12px] h-[12px] flex-shrink-0"
+              color="#373737"
+            />
+            برای تغییر مکان انتخاب شده فقط کافیست دوباره روی آن کلیک کنید{" "}
+            <sup>*</sup>
+          </p>
+          <p className="text-[#373737] mb-1 text-xs flex items-center gap-2">
+            <FaExclamationCircle
+              className="w-[12px] h-[12px] flex-shrink-0"
+              color="#373737"
+            />
+            با کلیک برروی دکمه گوشه بالا سمت راست نقشه میتوانید آن را بزرگ نمایی
+            کنید <sup>*</sup>
+          </p>
+        </div>
         <div className="w-full border-2 p-3 rounded-[40px]">
           <DynamicPlantTreeMap
             emptyTreeAllowed={data?.empty_tree_allowed}
@@ -84,18 +113,6 @@ const PlantTreeMapSection: FC<PlantTreeMapSectionProps> = ({
             mapMarkerData={data?.empty}
           />
         </div>
-        <p className="text-[#373737] text-sm font-semibold mb-3  mt-5">
-          تعداد {data?.em_count} درخت در منطقه انتخاب شده آزاد است.
-        </p>
-        <p className="text-[#373737] mb-1 text-xs">
-          توجه داشته باشید که به تعداد درخت های سبد خرید شما باید مکان انتخاب کنید <sup>*</sup>
-        </p>
-        <p className="text-[#373737] mb-1 text-xs">
-          برای تغییر مکان انتخاب شده فقط کافیست دوباره روی آن کلیک کنید <sup>*</sup>
-        </p>
-        <p className="text-[#373737] mb-1 text-xs">
-          با کلیک برروی دکمه گوشه بالا سمت راست نقشه میتوانید آن را بزرگ نمایی کنید <sup>*</sup>
-        </p>
       </div>
     </>
   );

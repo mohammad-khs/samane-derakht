@@ -53,7 +53,7 @@ export default function MobileNav({ disappearLg = false }: MobileNavProps) {
         </SheetTitle>
         <Link href="/" className="absolute top-2 right-4 text-lg font-semibold">
           <div className="relative w-32 h-10">
-            <Image alt="logo" className="" fill src={`/logo.png`} />
+            <Image alt="logo" className="" fill src={`/icon.png`} />
           </div>
 
           <span className="sr-only">سامانه درخت</span>

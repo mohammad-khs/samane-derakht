@@ -68,16 +68,6 @@ export default function Home() {
           <CustomerReviews />
         </div>
         <div className="mx-5 my-3">
-          <div className="flex m-4">
-            <Button
-              className="justify-self-end md:justify-self-start"
-              variant={"green"}
-              size={"resizble"}
-            >
-              <CaretLeftIcon className="h-8 w-8" />
-              مشاهده همه
-            </Button>
-          </div>
           <VideoCarouselSection />
         </div>
       </main>
