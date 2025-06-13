@@ -129,7 +129,7 @@ const Footer: FC<FooterProps> = ({ sponsors = true }) => {
                 <span className="text-[#2C350D] font-semibold">
                   حقوق مادی و معنوی این سایت متعلق به
                 </span>{" "}
-                <span className="text-white">شرکت کاشت درخت</span>
+                <span className="text-white">شرکت درخت من</span>
               </div>
             </div>
           </div>

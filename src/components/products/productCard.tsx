@@ -2,7 +2,6 @@ import { TreeCard } from "@/types/products";
 import Image from "next/image";
 import { FC } from "react";
 import { Button } from "../ui/button";
-import { Frown } from "lucide-react";
 import Link from "next/link";
 import { formatNumberWithCommas } from "@/helper/formatNumberWithCommas";
 

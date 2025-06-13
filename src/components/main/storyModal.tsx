@@ -3,7 +3,7 @@
 import React, { useEffect, useState, useCallback } from "react";
 import Image from "next/image";
 import { StoryImageId } from "./storyCarousel";
-import { ArrowRight, EyeIcon, FrownIcon, MapPin } from "lucide-react";
+import { ArrowRight, EyeIcon, MapPin } from "lucide-react";
 import { CaretLeftIcon, CaretRightIcon } from "@radix-ui/react-icons";
 import TreeIcon from "../ui/treeIcon";
 

@@ -1,7 +1,6 @@
 "use client";
 
 import { TreeData } from "@/types/products";
-import { Frown } from "lucide-react";
 import Image from "next/image";
 import { FC, useState } from "react";
 

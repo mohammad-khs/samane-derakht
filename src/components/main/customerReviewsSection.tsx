@@ -2,9 +2,16 @@ import { FC } from "react";
 import CustomerReviewsCarousel from "./customerReviewsCarousel";
 import { CommentCarouselCardData } from "@/types/mainCarousels";
 
-const fetchCustomerReviewsData = async (): Promise<CommentCarouselCardData[]> => {
+const fetchCustomerReviewsData = async (): Promise<
+  CommentCarouselCardData[]
+> => {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/comments`);
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/comments`,
+      {
+        cache: "no-store",
+      }
+    );
 
     if (!res.ok) {
       throw new Error("Failed to fetch customer reviews");
