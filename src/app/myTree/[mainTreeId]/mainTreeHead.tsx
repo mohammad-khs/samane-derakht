@@ -67,7 +67,7 @@ const MainTreeHead: FC<MainTreeHeadProps> = ({ data, session }) => {
         </div>
       </div>
 
-      <h3 className="text-xl font-semibold mt-10">
+      <h3 className="text-xl font-semibold mt-10 mb-5">
         {data.data.title ? (
           <span className="block max-w-full md:w-3/4 truncate">
             {data.data.title}

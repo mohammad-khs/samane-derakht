@@ -102,7 +102,7 @@ const StoryModal: React.FC<StoryModalProps> = ({
               <>
                 <div className="relative py-4 w-full h-full">
                   <button
-                    className="absolute z-50 right-4 text-white"
+                    className="absolute z-50 right-4 rounded-full bg-[#ffffff64]"
                     onClick={onClose}
                   >
                     <ArrowRight className="h-8 w-8" />
@@ -115,25 +115,25 @@ const StoryModal: React.FC<StoryModalProps> = ({
                   />
                   <div className="absolute right-14 flex items-center justify-center gap-4">
                     <div
-                      className="truncate w-20 text-white"
+                      className="truncate text-sm py-1 ps-1 w-36 rounded-full bg-[#ffffff64]"
                       style={{ direction: "rtl" }}
                     >
                       {imageData?.title}
                     </div>
-                    <div className="relative bg-white w-8 h-8 rounded-full">
+                    <div className="relative bg-[#ffffffd4] w-8 h-8 rounded-full">
                       <TreeIcon imageName={imageData.story_name} />
                     </div>
                   </div>
                   <div className="absolute mx-2 z-50 h-full flex justify-end items-center flex-col">
-                    <div className="mb-32 flex items-center flex-col">
-                      <EyeIcon className="text-white" />
-                      <p className="text-white">{imageData?.seen_numbers}</p>
+                    <div className="mb-32 flex items-center flex-col p-1 rounded-lg bg-[#ffffffb9]">
+                      <EyeIcon />
+                      <p>{imageData?.seen_numbers}</p>
                     </div>
                   </div>
 
                   <div
                     aria-label={imageData?.address}
-                    className="text-white absolute w-3/4 flex justify-end items-center gap-2 bottom-6 right-4"
+                    className="bg-[#ffffff64] rounded-full p-1 absolute w-3/4 flex justify-end items-center gap-2 bottom-6 right-4"
                   >
                     <span className="truncate" style={{ direction: "rtl" }}>
                       {imageData?.address}
@@ -144,13 +144,12 @@ const StoryModal: React.FC<StoryModalProps> = ({
               </>
             ) : (
               <>
-                <div className="w-full h-full rounded-lg z-40 bg-slate-600 flex justify-center items-center animate-in fade-in duration-300">
-                  <FrownIcon className="h-20 text-white w-20" />
-                  {/* <div className="absolute top-0 left-0 mx-2 z-50 h-full flex items-end">
-                    <EyeIcon className="text-white mb-36" />
-                  </div> */}
+                <div className="w-full h-full rounded-lg z-40 bg-[#d4cec9] flex justify-center items-center animate-in fade-in duration-300">
+                  <div className="relative h-16 w-32">
+                    <Image alt="no pictures found" fill src={"/icon.png"} />
+                  </div>
                   <button
-                    className="absolute z-50 right-4 top-4 text-white"
+                    className="absolute z-50 right-4 top-4 bg-[#ffffffd4] rounded-full"
                     onClick={onClose}
                   >
                     <ArrowRight className="h-8 w-8" />

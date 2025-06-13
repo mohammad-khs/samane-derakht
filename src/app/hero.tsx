@@ -30,7 +30,7 @@ const Hero: FC = () => {
         priority
       />
 
-      <h1 className="md:absolute w-full md:top-20 font-semibold -order-10 text-2xl md:text-3xl text-center lg:text-4xl text-[#363636]">
+      <h1 className="md:absolute w-full md:top-20 font-semibold text-xl -order-10 sm:text-2xl md:text-3xl text-center lg:text-4xl text-[#363636]">
         هر نفر یک درخت، هر درخت یک داستان
       </h1>
       

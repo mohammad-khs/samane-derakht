@@ -24,7 +24,7 @@ const Video: FC<VideoProps> = ({ vidoAddress }) => {
       <div className="relative w-full aspect-video">
         <video
           ref={videoRef}
-          className="rounded-3xl w-full h-full object-cover"
+          className="rounded-3xl w-full h-full"
           controls
           preload="metadata"
         >

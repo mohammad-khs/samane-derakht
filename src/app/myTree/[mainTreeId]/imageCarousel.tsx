@@ -6,7 +6,6 @@ import { FC, useCallback } from "react";
 import Image from "next/image";
 import { CaretLeftIcon, CaretRightIcon } from "@radix-ui/react-icons";
 import { mainCarouselCardData } from "@/types/mainCarousels";
-import { Frown } from "lucide-react";
 import {
   DotButton,
   useDotButton,
@@ -62,8 +61,14 @@ const ImageCarousel: FC<ImageCarouselProps> = ({
                       alt="Carousel image"
                     />
                   ) : (
-                    <div className="bg-slate-700 flex justify-center items-center h-full w-full rounded-xl">
-                      <Frown className="h-10 w-10" />
+                    <div className="bg-[#d4cec9] flex justify-center items-center h-full w-full rounded-xl">
+                      <div className="relative h-16 w-32">
+                          <Image
+                            alt="no pictures found"
+                            fill
+                            src={"/icon.png"}
+                          />
+                        </div>
                     </div>
                   )}
                 </div>

@@ -26,7 +26,7 @@ const ProductCard: FC<TreeCard> = ({
             in_stock && `group-hover:opacity-60`
           }`}
         >
-          <div className="relative w-full h-full mt-2 flex justify-center items-center rounded-lg bg-slate-600">
+          <div className="relative w-full h-full mt-2 flex justify-center items-center rounded-lg bg-[#d4cec9]">
             {image ? (
               <Image
                 className="rounded-lg"
@@ -35,7 +35,9 @@ const ProductCard: FC<TreeCard> = ({
                 src={`${image}`}
               />
             ) : (
-              <Frown className="h-10 w-10 text-white" />
+              <div className="relative h-16 w-32">
+                <Image alt="no pictures found" fill src={"/icon.png"} />
+              </div>
             )}
           </div>
           <div className="flex flex-col my-3 justify-center">

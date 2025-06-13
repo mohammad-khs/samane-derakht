@@ -10,14 +10,18 @@ interface HeaderImagesProps {
 }
 
 export const FallbackImage = () => (
-  <div className="bg-slate-600 w-full rounded-lg h-full items-center justify-center flex">
-    <Frown className="text-white h-14 w-14" />
+  <div className="bg-[#d4cec9] w-full rounded-lg h-full items-center justify-center flex">
+    <div className="relative h-16 w-32">
+      <Image alt="no pictures found" fill src={"/icon.png"} />
+    </div>
   </div>
 );
 
 const FallbackThumbnail = () => (
-  <div className="relative h-[73px] w-full sm:w-[94px] sm:h-[94px] rounded-lg border bg-slate-600 items-center justify-center flex">
-    <Frown className="text-white h-6 w-6" />
+  <div className="relative h-[73px] w-full sm:w-[94px] sm:h-[94px] rounded-lg border bg-[#d4cec9] items-center justify-center flex">
+    <div className="relative h-8 w-16">
+      <Image alt="no pictures found" fill src={"/icon.png"} />
+    </div>
   </div>
 );
 
