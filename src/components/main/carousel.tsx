@@ -60,7 +60,7 @@ const Carousel: FC<CarouselProps> = ({
             {cardsData?.map((item) => (
               <div className=" relative mx-2" key={item.id}>
                 <div
-                  className={`flex flex-col rounded-xl ${background} justify-center items-center`}
+                  className={`flex flex-col rounded-[20px] ${background} justify-center items-center`}
                 >
                   <div className="m-2 w-[278px] h-[165px] relative">
                     {item.image ? (
@@ -177,7 +177,7 @@ const Carousel: FC<CarouselProps> = ({
               return (
                 <div className=" relative mx-2" key={item.id}>
                   <div
-                    className={`flex flex-col rounded-xl ${background} justify-center items-center`}
+                    className={`flex flex-col rounded-[20px] ${background} justify-center items-center`}
                   >
                     <div className="m-2 w-[278px] h-[165px] relative">
                       {item.image ? (

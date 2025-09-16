@@ -8,7 +8,7 @@ const VideoSection: FC = () => {
     <>
       <section className="flex flex-col md:flex-row justify-center mx-5 md:mx-10 items-center my-20">
         <div className="w-full  flex justify-center">
-          <div className="w-full lg:w-10/12 border-2 p-3 rounded-[40px] shadow-2xl">
+          <div className="w-full lg:w-10/12 border-2 p-3 rounded-[36px] shadow-2xl">
             <Suspense fallback={<Loader2Icon />}>
               <Video vidoAddress="/sampleVideo.mp4" />
             </Suspense>

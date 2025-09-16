@@ -22,7 +22,7 @@ const ModalMap: FC<ModalMapProps> = ({ mapCenter }) => {
   });
   return (
     <>
-      <div className="w-full border-2 p-3 rounded-[40px]">
+      <div className="w-full border-2 p-3 rounded-[36px]">
         <MapContainer
           ref={mapRef}
           className="w-full rounded-3xl z-50 h-80"

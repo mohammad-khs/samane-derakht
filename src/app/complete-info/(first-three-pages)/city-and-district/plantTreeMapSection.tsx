@@ -105,7 +105,7 @@ const PlantTreeMapSection: FC<PlantTreeMapSectionProps> = ({
             کنید <sup>*</sup>
           </p>
         </div>
-        <div className="w-full border-2 p-3 rounded-[40px]">
+        <div className="w-full border-2 p-3 rounded-[36px]">
           <DynamicPlantTreeMap
             emptyTreeAllowed={data?.empty_tree_allowed}
             session={session}

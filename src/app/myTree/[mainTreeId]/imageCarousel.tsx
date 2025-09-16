@@ -46,9 +46,9 @@ const ImageCarousel: FC<ImageCarouselProps> = ({
       >
         <div className="flex h-full  w-[500px]">
           {cardsData?.map((item) => (
-            <div className=" relative mx-2   flex: 0 0 78%;" key={item.id}>
+            <div className=" relative mx-2 flex: 0 0 78%;" key={item.id}>
               <div
-                className={`flex rounded-xl ${background} justify-center items-center`}
+                className={`flex rounded-[20px] ${background} justify-center items-center`}
               >
                 <div className="m-2 w-[278px] h-[170px] relative">
                   {item.image ? (

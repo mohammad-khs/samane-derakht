@@ -35,7 +35,7 @@ const CustomMapbox: FC<CustomMapboxProps> = ({
       {/* Button to open modal */}
 
       {/* Initial map with original sizing */}
-      <div className="w-full border-2 p-3 rounded-[40px]">
+      <div className="w-full border-2 p-3 rounded-[36px]">
         <div className="relative rounded-3xl w-full z-40 h-80">
           <Button
             className="absolute top-4 right-4 z-50"

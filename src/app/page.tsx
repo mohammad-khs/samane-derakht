@@ -32,7 +32,7 @@ export default function Home() {
         </Suspense>
         <Suspense
           fallback={
-            <div className="h-20 z-50 w-full bg-red-800">
+            <div className="h-20 z-50 w-full">
               <Loader2 className="animate-spin z-50 flex justify-center items-center h-20 w-20 relative" />
             </div>
           }

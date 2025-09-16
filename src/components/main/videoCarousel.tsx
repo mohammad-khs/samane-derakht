@@ -54,7 +54,7 @@ const VideoCarousel: FC<VideoCarouselProps> = ({
                   <div className="flex flex-col w-[280px] md:w-[320px]   justify-center items-center">
                     <div className=" m-2 w-[275px] md:w-[305px]  relative">
                       <div className="flex flex-col justify-center items-center">
-                        <div className="m-2 border-2 border-[#E3E5E9] p-1 rounded-3xl relative">
+                        <div className="m-2 border-2 border-[#E3E5E9] p-1 rounded-[28px] relative">
                           <Suspense fallback={<Loader2Icon />}>
                             <Video
                               vidoAddress={`${process.env.NEXT_PUBLIC_API_BASE_URL}/${item.film}`}
