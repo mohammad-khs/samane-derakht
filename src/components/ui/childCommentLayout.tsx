@@ -3,7 +3,7 @@ import { Button } from "./button";
 import Image from "next/image";
 import { FaUser } from "react-icons/fa";
 import { ReplyIcon } from "lucide-react";
-import { handleReply } from "@/lib/utils";
+import { handleReply, getImageUrl } from "@/lib/utils";
 import { DateFormatDMY } from "@/helper/dateHandler";
 import { TreeChildComment } from "@/types/products";
 import { useCommentAndChatSectionContext } from "@/app/products/[productName]/commentAndChatSection";
@@ -116,7 +116,7 @@ const ChildCommentLayout: FC<ChildCommentLayoutProps> = ({
                         alt={`پروفایل ${childComment.user_username}`}
                         fill
                         className="w-full h-full rounded-full"
-                        src={`${process.env.NEXT_PUBLIC_API_BASE_URL}${childComment.user_profileimage}`}
+                        src={getImageUrl(childComment.user_profileimage)}
                         style={{ objectFit: "cover" }}
                       />
                     </div>

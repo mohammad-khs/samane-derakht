@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, Suspense } from "react";
-import axios from "axios";
 import { useRouter, useSearchParams } from "next/navigation";
 import toast from "react-hot-toast";
+import { fetcher } from "@/lib/utils";
 
 // Main component content wrapped in Suspense
 const OrderCallBackContent = () => {
@@ -15,14 +15,12 @@ const OrderCallBackContent = () => {
 
   useEffect(() => {
     if ((or_id || tr_id) && token) {
-      axios
-        .get(
-          `${process.env.NEXT_PUBLIC_API_BASE_URL}/${
-            or_id ? "order/api/orderCallBack" : "account/api/callback"
-          }/${or_id || tr_id}/${token}`
-        )
-        .then((res) => {
-          const data = res.data;
+      fetcher(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/${
+          or_id ? "order/api/orderCallBack" : "account/api/callback"
+        }/${or_id || tr_id}/${token}`
+      )
+        .then((data) => {
           if (data.confirmed) {
             router.push("/order/transaction-state/success");
           } else {

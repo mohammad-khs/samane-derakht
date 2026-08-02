@@ -3,6 +3,7 @@
 import { FC, useEffect, useState } from "react";
 import Carousel from "./carousel";
 import { mainCarouselCardData } from "@/types/mainCarousels";
+import { fetcher } from "@/lib/utils";
 
 interface MainCarouselProps {
   data?: mainCarouselCardData[];
@@ -12,12 +13,7 @@ interface MainCarouselProps {
 
 const fetchCarouselData = async (): Promise<mainCarouselCardData[]> => {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/`);
-
-    if (!res.ok) {
-      throw new Error("Failed to fetch data");
-    }
-    const data = await res.json();
+    const data = await fetcher(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/`);
     return data;
   } catch (error) {
     console.error("Error fetching carousel data:", error);

@@ -7,6 +7,7 @@ import useEmblaCarousel from "embla-carousel-react";
 import Image from "next/image";
 import { FC, useState } from "react";
 import StoryModal from "./storyModal";
+import { fetcher } from "@/lib/utils";
 
 interface StoryCarouselProps {
   stories: Story[];
@@ -34,15 +35,9 @@ const StoryCarousel: FC<StoryCarouselProps> = ({ stories }) => {
     setCurrentStory(null);
     setIsModalOpen(false);
     try {
-      const res = await fetch(
+      const data = await fetcher(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/story/${story.id}/`
       );
-      if (res.status === 429) {
-        console.log("Rate limit exceeded. Please try again later.");
-        return;
-      }
-
-      const data = await res.json();
       setImagesId(data);
       setStoryId(story.id);
       setCurrentStory(story);

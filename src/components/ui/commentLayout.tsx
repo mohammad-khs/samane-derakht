@@ -8,7 +8,7 @@ import { TreeComment } from "@/types/products";
 import { ReplyIcon } from "lucide-react";
 import Image from "next/image";
 import { FaUser } from "react-icons/fa";
-import { handleReply } from "@/lib/utils";
+import { handleReply, getImageUrl } from "@/lib/utils";
 import LikeDislikeButtons from "./LikeDislikeButtons";
 
 interface CommentLayoutProps {
@@ -94,7 +94,7 @@ const CommentLayout: FC<CommentLayoutProps> = ({ comment }) => {
               alt={`پروفایل ${comment.user_username}`}
               fill
               className="w-full h-full rounded-full"
-              src={`${process.env.NEXT_PUBLIC_API_BASE_URL}${comment.user_profileimage}`}
+              src={getImageUrl(comment.user_profileimage)}
               style={{ objectFit: "cover" }}
             />
             </div>

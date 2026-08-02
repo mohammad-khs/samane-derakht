@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import CommentLayout from "@/components/ui/commentLayout";
 import { useCommentAndChatSectionContext } from "@/app/products/[productName]/commentAndChatSection";
 import ChildComment from "@/components/ui/childComment";
-import { Fetcher } from "swr";
+import { fetcher } from "@/lib/utils";
 
 interface CommentPage {
   comments: TreeComment[];
@@ -15,7 +15,7 @@ interface CommentPage {
 export function useComments(
   productSlug: string,
   parentCommentApi: string,
-  fetcher: Fetcher<CommentPage, string>
+  fetcherFn: (url: string) => Promise<any>
 ) {
   const getKey = (pageIndex: number, previousPageData: CommentPage | null) => {
     if (previousPageData && previousPageData.comments.length === 0) return null;
@@ -35,14 +35,7 @@ const CommentSection: FC = () => {
   const { userComment, productSlug, parentCommentApi, session } =
     useCommentAndChatSectionContext();
 
-  const customFetcher = (url: string) =>
-    fetch(url, {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: session?.access ? `Bearer ${session.access}` : "",
-        TOKEN: session?.token ?? "",
-      },
-    }).then((res) => res.json() as Promise<CommentPage>);
+  const customFetcher = (url: string) => fetcher(url);
 
   const { data, setSize, size, isLoading } = useComments(
     productSlug || "",

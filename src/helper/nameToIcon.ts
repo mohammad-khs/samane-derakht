@@ -30,6 +30,9 @@ export const apiNameToIconName = (name: string) => {
     case "تولد پدر ومادر":
       return "parentsBirthday";
 
+    case "مقدس":
+      return "nature";
+
     default:
       return "nature";
   }

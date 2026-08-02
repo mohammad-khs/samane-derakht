@@ -6,8 +6,8 @@ import { FC, useEffect, useState } from "react";
 import RightSideShoppingCart from "./rightSideShoppingCart";
 import { useSession } from "next-auth/react";
 import toast from "react-hot-toast";
-import axios from "axios";
 import LeftSideShoppingCart from "./leftSideShoppingCart";
+import { getMockResponse } from "@/mocks/mockSetup";
 
 export interface TreeType {
   id: string;
@@ -56,26 +56,17 @@ const ShoppingCart: FC = () => {
       try {
         setIsloading(true);
         if (session.status === "loading") return;
-        const response = await axios.get(
+        const mockData = getMockResponse(
           `${process.env.NEXT_PUBLIC_API_BASE_URL}/cart/api/mycart/`,
-          {
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: session?.data?.access
-                ? `Bearer ${session?.data.access}`
-                : "",
-              TOKEN: session?.data?.token ?? "",
-            },
-          }
-        );
-
-        if (response.status === 200) {
-          setCartData(response.data);
-          if (response.data.all_products_count !== 0) {
-            setResCount(response.data.all_products_count);
+          "GET"
+        ) as CartData | null;
+        if (mockData !== null) {
+          setCartData(mockData);
+          if (mockData.all_products_count !== 0) {
+            setResCount(mockData.all_products_count);
           }
         } else {
-          throw new Error(`Unexpected response status: ${response.status}`);
+          throw new Error("No mock data for cart");
         }
       } catch (error) {
         console.error("fetch cart data error: ", error);

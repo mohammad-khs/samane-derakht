@@ -7,10 +7,10 @@ import { FC, useRef, useState } from "react";
 import TextareaAutosize from "react-textarea-autosize";
 import TicketImageUploader from "./ticketImageUploader";
 import toast from "react-hot-toast";
-import axios from "axios";
+import { useRouter } from "next/navigation";
+import { fetcher } from "@/lib/utils";
 import { Session } from "next-auth";
 import { FileStatus } from "@/types/complete-info";
-import { useRouter } from "next/navigation";
 
 interface AddTicketSectionProps {
   session: Session | null;
@@ -44,38 +44,16 @@ const AddTicketSection: FC<AddTicketSectionProps> = ({ session }) => {
 
     try {
       console.log(imageFiles[0]?.file);
-      const response = await axios.post(
+      const data = await fetcher(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/account/api/sendTicket/`,
-        formData,
-        {
-          headers: {
-            Authorization: session?.access ? `Bearer ${session.access}` : "",
-            TOKEN: session?.token || "",
-          },
-        }
+        "POST"
       );
-
-      if (response.status === 200) {
-        toast.success("با موفقیت انجام شد");
-        console.log(response.data);
-        router.replace("/dashboard/tickets");
-      }
-      if (response.status === 404) {
-        toast.error("منطقه مورد نظر یافت نشد");
-        return;
-      }
+      console.log(data);
+      toast.success("با موفقیت انجام شد");
+      router.replace("/dashboard/tickets");
     } catch (error: unknown) {
-      console.error("Error in sending tikcet:", error);
-
-      if (axios.isAxiosError(error)) {
-        if (error.response && error.response.status === 404) {
-          toast.error("منطقه مورد نظر یافت نشد");
-        } else {
-          toast.error("خطا در بارگذاری اطلاعات");
-        }
-      } else {
-        toast.error("خطای غیرمنتظره‌ای رخ داد");
-      }
+      console.error("Error in sending ticket:", error);
+      toast.error("خطا در بارگذاری اطلاعات");
     }
   };
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);

@@ -1,16 +1,14 @@
 import { FC } from "react";
 import VideoCarousel from "./videoCarousel";
+import { fetcher } from "@/lib/utils";
+import { videoCarouselCardData } from "@/types/mainCarousels";
 
-const fetchVideos = async (): Promise<[]> => {
+const fetchVideos = async (): Promise<videoCarouselCardData[]> => {
   try {
-    const res = await fetch(
+    const data = await fetcher(
       `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/videos/`
     );
-
-    if (!res.ok) {
-      throw new Error("Failed to fetch videos data");
-    }
-    return await res.json();
+    return data;
   } catch (error) {
     console.error("Error fetching videos data:", error);
     return [];

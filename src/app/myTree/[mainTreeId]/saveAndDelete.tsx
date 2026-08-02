@@ -1,11 +1,11 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import axios from "axios";
 import { Session } from "next-auth";
 import { FC, useState } from "react";
 import { FaHeart } from "react-icons/fa";
 import { MyMainTreeData } from "./page";
+import { fetcher } from "@/lib/utils";
 
 interface SaveAndDeleteProps {
   data: MyMainTreeData;
@@ -18,25 +18,17 @@ const SaveAndDelete: FC<SaveAndDeleteProps> = ({ data, session }) => {
   const handleDeleteFavorite = async (id: string) => {
     setLoading(true);
     try {
-      const response = await axios.post(
+const response = await fetcher(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/account/api/remove-fav/${id}/`,
-        { id },
-        {
-          headers: {
-            Authorization: `Bearer ${session?.access}`,
-            TOKEN: session?.token,
-          },
-        }
+        "POST"
       );
 
-      if (response.status === 200) {
-        if (response.data?.removed === true && response.data.added === false) {
-          setIsSaved(false);
-        } else {
-          setIsSaved(true);
-        }
-        console.log(response.data);
+      if (response?.removed === true && response.added === false) {
+        setIsSaved(false);
+      } else {
+        setIsSaved(true);
       }
+      console.log(response);
     } catch (error) {
       console.error("Error fetching favorite:", error);
     } finally {

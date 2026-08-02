@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 import { useCompleteInfoContext } from "@/context/completeInfo";
 import { formatNumberWithCommas } from "@/helper/formatNumberWithCommas";
 import { CoponDetails } from "@/types/complete-info";
-import axios from "axios";
+import { fetcher } from "@/lib/utils";
 import { Loader2 } from "lucide-react";
 import { Session } from "next-auth";
 import { FC, useState } from "react";
@@ -35,25 +35,17 @@ const RightsidePayment: FC<RightsidePaymentProps> = ({ session }) => {
     }
     setLoading(true);
     try {
-      const response = await axios.post(
+      const data = await fetcher(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/order/api/addCopon/${authority?.order_id}/`,
-        { copon },
-        {
-          headers: {
-            Authorization: session.access ? `Bearer ${session.access}` : "",
-            TOKEN: session.token || "",
-          },
-        }
-      );
+        "POST"
+      ) as CoponDetails;
 
-      if (response.status === 200) {
-        console.log(response.data);
-        const data = response.data as CoponDetails;
-        setCoponDetails(response.data as CoponDetails);
+      if (data) {
+        setCoponDetails(data);
         setAuthority((prev) => {
-          if (!prev) return null; // Handle the case where prev is null
+          if (!prev) return null;
           return {
-            ...prev, // Keep other properties of the state
+            ...prev,
             all_price_with_off: data?.final_price ?? prev.all_price_with_off,
           };
         });
@@ -61,24 +53,7 @@ const RightsidePayment: FC<RightsidePaymentProps> = ({ session }) => {
         setCopon("");
       }
     } catch (error) {
-      if (axios.isAxiosError(error)) {
-        if (
-          error.response?.data.detail === "copon is not valid" ||
-          error.response?.data.detail === "No Copon matches the given query."
-        ) {
-          console.log(error.response?.data.detail);
-
-          toast.error("کد تخفیف صحیح نمی باشد");
-        } else if (
-          error.response?.data.detail === "No Order matches the given query."
-        ) {
-          toast.error("No Order matches the given query.");
-        } else {
-          console.error("Axios error:", error.response?.data || error.message);
-        }
-      } else {
-        console.error("Unexpected error:", error);
-      }
+      console.error("Error adding coupon:", error);
     } finally {
       setLoading(false);
     }

@@ -10,6 +10,7 @@ import { mainCarouselCardData } from "@/types/mainCarousels";
 import { apiNameToIconName } from "@/helper/nameToIcon";
 import { DateFormatDMY, monthNumToMonthName } from "@/helper/dateHandler";
 import Link from "next/link";
+import { getImageUrl } from "@/lib/utils";
 
 interface CarouselProps {
   hasPrevNextBtn: boolean;
@@ -69,10 +70,10 @@ const Carousel: FC<CarouselProps> = ({
                         fill
                         referrerPolicy="no-referrer"
                         unoptimized
-                        src={
-                          `${process.env.NEXT_PUBLIC_API_BASE_URL}${item?.image}` ||
-                          "#"
-                        }
+                          src={
+                            getImageUrl(item?.image) ||
+                            "#"
+                          }
                         alt={"null"}
                       />
                     ) : (
@@ -187,7 +188,7 @@ const Carousel: FC<CarouselProps> = ({
                           referrerPolicy="no-referrer"
                           unoptimized
                           src={
-                            `${process.env.NEXT_PUBLIC_API_BASE_URL}${item?.image}` ||
+                            getImageUrl(item?.image) ||
                             "#"
                           }
                           alt={"null"}

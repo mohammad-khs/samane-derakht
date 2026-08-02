@@ -3,6 +3,7 @@
 import { TreeData } from "@/types/products";
 import Image from "next/image";
 import { FC, useState } from "react";
+import { getImageUrl } from "@/lib/utils";
 
 interface HeaderImagesProps {
   treeData: TreeData;
@@ -26,20 +27,20 @@ const FallbackThumbnail = () => (
 
 const HeaderImages: FC<HeaderImagesProps> = ({ treeData }) => {
   const mainImageUrl = treeData.tree?.image
-    ? `${process.env.NEXT_PUBLIC_API_BASE_URL}/${treeData.tree.image}`
+    ? getImageUrl(treeData.tree.image)
     : null;
 
   const [selectedImage, setSelectedImage] = useState(mainImageUrl);
   const [thumbnailImages, setThumbnailImages] = useState(
     treeData.images?.map((image) => ({
       id: image.id,
-      url: `${process.env.NEXT_PUBLIC_API_BASE_URL}/${image.image}`,
-    })) || []
+      url: getImageUrl(image.image),
+    })) || [],
   );
 
   const handleThumbnailClick = (imageId: string, imageUrl: string) => {
     const updatedThumbnails = thumbnailImages.map((thumb) =>
-      thumb.id === imageId ? { ...thumb, url: selectedImage! } : thumb
+      thumb.id === imageId ? { ...thumb, url: selectedImage! } : thumb,
     );
     setThumbnailImages(updatedThumbnails);
     setSelectedImage(imageUrl);
@@ -74,12 +75,16 @@ const HeaderImages: FC<HeaderImagesProps> = ({ treeData }) => {
                   key={image.id}
                   onClick={() => handleThumbnailClick(image.id, image.url)}
                 >
-                  <Image
-                    fill
-                    className="rounded-lg"
-                    alt={`${treeData.tree?.name} تصویر ${image.id}`}
-                    src={image.url}
-                  />
+                  {image.url != null && image.url.length > 0 ? (
+                    <Image
+                      fill
+                      className="rounded-lg"
+                      alt={`${treeData.tree?.name} تصویر ${image.id}`}
+                      src={image.url}
+                    />
+                  ) : (
+                    <FallbackImage />
+                  )}
                 </div>
               ))
             : Array(4)

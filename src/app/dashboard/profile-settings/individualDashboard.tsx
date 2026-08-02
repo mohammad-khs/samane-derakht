@@ -8,7 +8,7 @@ import TextareaAutosize from "react-textarea-autosize";
 import { useDashboardIdentityContext } from "@/context/dashboardIdentity";
 import CorporateModal from "./corporateModal";
 import { Session } from "next-auth";
-import axios from "axios";
+import { fetcher } from "@/lib/utils";
 import { UserIdentity } from "./page";
 import toast from "react-hot-toast";
 import TreeUserIcon from "@/components/ui/treeUserIcon";
@@ -28,77 +28,32 @@ const IndividualDashboard: FC<IndividualDashboardProps> = ({ session }) => {
 
   const handleUpdateHAIdentity = async () => {
     setLoading(true);
-    try {
+try {
       console.log(userIdentity?.first_last_name);
-      const response = await axios.put(
+      const data = await fetcher(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/account/api/update-dashboard/`,
-        {
-          user_type: "HA",
-          city: userIdentity?.city,
-          birthday: userIdentity?.birthday,
-          phone: userIdentity?.phone,
-          bio: userIdentity?.bio,
-          email: userIdentity?.email,
-          username: userIdentity?.username,
-          name: userIdentity?.first_last_name,
-          ////// this should not be null its just temp
-          image: null,
-        },
-        {
-          headers: {
-            Authorization: session?.access ? `Bearer ${session.access}` : "",
-            TOKEN: session?.token || "",
-          },
-        }
+        "PUT"
       );
 
-      if (response.status === 200) {
-        console.log(response.data);
-        const data = response.data as UserIdentity;
-        setUserIdentity({
-          city: data?.city,
-          zipcode: data?.zipcode,
-          user_type: "HA",
-          organization: data?.organization,
-          email: data?.email,
-          bio: data?.bio,
-          birthday: data?.birthday,
-          phone: data?.phone,
-          username: data?.username,
-          first_last_name: data?.first_last_name,
-          image: "",
-        });
-        console.log(data);
-        toast.success("تغییرات شما با موفقیت ثبت گردید");
-      }
+      console.log(data);
+      const updatedData = data as UserIdentity;
+      setUserIdentity({
+        city: updatedData?.city,
+        zipcode: updatedData?.zipcode,
+        user_type: "HA",
+        organization: updatedData?.organization,
+        email: updatedData?.email,
+        bio: updatedData?.bio,
+        birthday: updatedData?.birthday,
+        phone: updatedData?.phone,
+        username: updatedData?.username,
+        first_last_name: updatedData?.first_last_name,
+        image: "",
+      });
+      toast.success("تغییرات شما با موفقیت ثبت گردید");
     } catch (error) {
-      if (axios.isAxiosError(error)) {
-        if (error.response?.data?.phone?.[0] === "phone already taken") {
-          toast.error(
-            "این سازمان قبلا استفاده ثبت نام شده لطفا سازمان دیگری را انتخاب کنید"
-          );
-        }
-        if (
-          error.response?.data?.email?.[0] === "Enter a valid email address."
-        ) {
-          toast.error("لطفا ایمیلی با فرمت درست وارد کنید", { duration: 7000 });
-        }
-        if (error.response?.data?.email?.[0] === "email already exist") {
-          toast.error("این ایمیل قبلا استفاده شده لطفا ایمیل دیگری وارد کنید", {
-            duration: 7000,
-          });
-        }
-        if (error.response?.data?.username?.[0] === "username already exist") {
-          toast.error(
-            "این نام کاربری قبلا استفاده شده لطفا ایمیل دیگری وارد کنید",
-            {
-              duration: 7000,
-            }
-          );
-        }
-        toast.error("ثبت تغییرات شما با شکست مواجه شد لطفا دوباره امتحان کنید");
-        console.log(error);
-      }
+      console.error("Error updating identity:", error);
+      toast.error("ثبت تغییرات شما با شکست مواجه شد لطفا دوباره امتحان کنید");
     } finally {
       setLoading(false);
     }

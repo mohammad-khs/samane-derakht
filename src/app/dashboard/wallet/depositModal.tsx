@@ -3,11 +3,11 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { stringIsNotNumber } from "@/helper/validateNumber";
-import axios from "axios";
 import { Session } from "next-auth";
 import { useRouter } from "next/navigation";
 import { FC, useState } from "react";
 import toast from "react-hot-toast";
+import { fetcher } from "@/lib/utils";
 interface DepositModalProps {
   onClose: () => void;
   session: Session | null;
@@ -36,39 +36,18 @@ const DepositModal: FC<DepositModalProps> = ({ onClose, session }) => {
     }
 
     try {
-      const response = await axios.post(
+      const data = await fetcher(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/account/api/deposit/`,
-        { amount: depositValue },
-        {
-          headers: {
-            Authorization: session?.access ? `Bearer ${session.access}` : "",
-            TOKEN: session?.token || "",
-          },
-        }
+        "POST"
       );
 
-      if (response.status === 200) {
-        console.log(response.data);
-        const data = response.data;
-        console.log(data);
-        toast.success("به صفحه پرداخت هدایت می‌شوید");
-        onClose();
-        router.replace(`${response.data.url}`)
-      }
+      console.log(data);
+      toast.success("به صفحه پرداخت هدایت می‌شوید");
+      onClose();
+      router.replace(`${data.url}`);
     } catch (error) {
-      if (axios.isAxiosError(error)) {
-        if (
-          error.response?.data?.email?.[0] === "Enter a valid email address."
-        ) {
-          toast.error("لطفا ایمیلی با فرمت درست وارد کنید", { duration: 7000 });
-        }
-
-        if (error.response?.data[0] === "email is not valid") {
-          toast.error("لطفا ایمیلی با فرمت درست وارد کنید", { duration: 7000 });
-        }
-        toast.error("ثبت تغییرات شما با شکست مواجه شد لطفا دوباره امتحان کنید");
-        console.log(error);
-      }
+      toast.error("ثبت تغییرات شما با شکست مواجه شد لطفا دوباره امتحان کنید");
+      console.log(error);
     } finally {
       setLoading(false);
     }

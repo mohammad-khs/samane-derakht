@@ -6,6 +6,7 @@ import { StoryImageId } from "./storyCarousel";
 import { ArrowRight, EyeIcon, MapPin } from "lucide-react";
 import { CaretLeftIcon, CaretRightIcon } from "@radix-ui/react-icons";
 import TreeIcon from "../ui/treeIcon";
+import { fetcher, getImageUrl } from "@/lib/utils";
 
 interface ImageData {
   id: string;
@@ -37,10 +38,9 @@ const StoryModal: React.FC<StoryModalProps> = ({
   const fetchImageData = useCallback(async () => {
     setIsLoading(true);
     try {
-      const res = await fetch(
+      const data = await fetcher(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/image/${storyId}/${currentImageId.id}`
       );
-      const data = await res.json();
       setImageData(data);
     } catch (error) {
       console.error("Error fetching image data:", error);
@@ -110,7 +110,7 @@ const StoryModal: React.FC<StoryModalProps> = ({
                   <Image
                     fill
                     className="rounded-lg animate-in fade-in duration-300"
-                    src={`${process.env.NEXT_PUBLIC_API_BASE_URL}/${imageData.image}`}
+                    src={getImageUrl(imageData.image)}
                     alt={imageData.title}
                   />
                   <div className="absolute right-14 flex items-center justify-center gap-4">

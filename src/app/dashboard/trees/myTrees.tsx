@@ -1,11 +1,11 @@
 "use client";
-import axios from "axios";
 import { Loader2 } from "lucide-react";
 import { Session } from "next-auth";
 import useSWRInfinite from "swr/infinite";
 import { FC } from "react";
 import MyTreesSection from "./myTreesSection";
 import { Button } from "@/components/ui/button";
+import { getMockResponse } from "@/mocks/mockSetup";
 
 interface MyTreesProps {
   session: Session;
@@ -34,15 +34,13 @@ interface MyTrees {
   offset: number;
 }
 
-export const fetcher = (url: string, session: Session) =>
-  axios
-    .get(url, {
-      headers: {
-        Authorization: `Bearer ${session?.access}`,
-        TOKEN: session?.token,
-      },
-    })
-    .then((res) => res.data);
+export const fetcher = (url: string): Promise<any> => {
+  const mockData = getMockResponse(url);
+  if (mockData !== null) {
+    return Promise.resolve(mockData);
+  }
+  return Promise.reject(new Error(`No mock data found for ${url}`));
+};
 
 const MyTrees: FC<MyTreesProps> = ({ session }) => {
   const getKey = (pageIndex: number, previousPageData: { data: [] }) => {
@@ -62,7 +60,7 @@ const MyTrees: FC<MyTreesProps> = ({ session }) => {
 
   const { data, error, size, setSize, isLoading } = useSWRInfinite(
     (pageIndex, previousPageData) => getKey(pageIndex, previousPageData),
-    (url) => fetcher(url, session),
+    (url) => fetcher(url),
     {
       revalidateOnFocus: false,
       revalidateIfStale: false,

@@ -2,13 +2,13 @@
 import SignInModal from "@/components/authentication/signInModal";
 import { Button } from "@/components/ui/button";
 import { TreeData } from "@/types/products";
-import axios from "axios";
 import { Loader2, PlusCircleIcon } from "lucide-react";
 import { Session } from "next-auth";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FC, useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { fetcher } from "@/lib/utils";
 
 interface AddToCardButtonProps {
   session: Session | null;
@@ -28,17 +28,11 @@ const AddToCardButton: FC<AddToCardButtonProps> = ({ treeData, session }) => {
           setIsInCart(false);
           return;
         }
-        const response = await axios.get(
-          `${process.env.NEXT_PUBLIC_API_BASE_URL}/order/api/checkInCart/${treeData.tree?.slug}/`,
-          {
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: session?.access ? `Bearer ${session.access}` : "",
-              TOKEN: session?.token ?? "",
-            },
-          }
-        );
-        setIsInCart(response.data.in_cart);
+      const data = await fetcher(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/order/api/checkInCart/${treeData.tree?.slug}/`,
+        "GET"
+      );
+      setIsInCart(data.in_cart);
       } catch  {
         toast.error(
           "مشکلی در دریافت محتویات سبد خرید پیش آمده لطفا صفحه را رفرش کنید"
@@ -53,28 +47,14 @@ const AddToCardButton: FC<AddToCardButtonProps> = ({ treeData, session }) => {
   const handleAddProduct = async () => {
     setIsLoading(true);
     try {
-      await axios.post(
+      await fetcher(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/cart/api/add/${treeData.tree?.id}/`,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${session?.access}`,
-            TOKEN: session?.token,
-          },
-        }
+        "POST"
       );
       toast.success("کالای شما با موفقیت ثبت شد");
       router.push("/shopping-cart");
     } catch (error: unknown) {
-      if (
-        axios.isAxiosError(error) &&
-        error.response?.data[0] === "Token is required"
-      ) {
-        toast.error("لطفا احراز هویت فرمایید");
-        setIsModalOpen(true);
-      } else {
-        toast.error("مشکلی پیش آمد. لطفاً بعداً دوباره تلاش کنید");
-      }
+      toast.error("مشکلی پیش آمد. لطفاً بعداً دوباره تلاش کنید");
     } finally {
       setIsLoading(false);
     }

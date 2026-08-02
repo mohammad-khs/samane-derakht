@@ -5,6 +5,7 @@ import { Session } from "next-auth";
 import { Loader2Icon } from "lucide-react";
 import useSWR from "swr";
 import { TicketType } from "../myTickets";
+import { fetcher as mockFetcher } from "@/lib/utils";
 
 interface MessagesProps {
   session: Session | null;
@@ -36,20 +37,9 @@ const Messages: FC<MessagesProps> = ({
   setTicketStatus,
   ticketStatus,
 }) => {
-  const fetcher = async (url: string) => {
-    const response = await fetch(url, {
-      headers: {
-        Authorization: session?.access ? `Bearer ${session.access}` : "",
-        TOKEN: session?.token || "",
-      },
-    });
-    if (!response.ok) throw new Error("Failed to fetch messages");
-    return response.json();
-  };
-
   const { data: chatData, isLoading } = useSWR<TicketMessages>(
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/account/api/myticketmessage/${ticketChat}`,
-    fetcher,
+    mockFetcher,
     {
       revalidateOnFocus: true,
     }

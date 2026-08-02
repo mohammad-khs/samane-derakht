@@ -6,6 +6,7 @@ import { Button } from "../ui/button";
 import { CaretLeftIcon } from "@radix-ui/react-icons";
 import { formatMinutes, stringIsNotNumber } from "@/helper/validateNumber";
 import TermsAndConditions from "./termsAndConditions";
+import { fetcher } from "@/lib/utils";
 
 interface SignInModalProps {
   isOpen: boolean;
@@ -55,27 +56,12 @@ const SignInModal: FC<SignInModalProps> = ({ isOpen, onClose }) => {
     }
     setLoading(true);
     try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/account/api/`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            phone: phone[0] === "0" ? `${phone}` : `0${phone}`,
-          }),
-        }
-      );
-
-      if (response.ok) {
-        const data = await response.json();
-        setAuthResponse(data); // Store the token in authResponse
-        setStep("otp");
-        setTimer(120); // Start 1-minute countdown
-        setError(undefined);
-        console.log("Auth response received:", data);
-      } else {
-        toast.error("ارور در فرستادن کد ارسالی");
-      }
+      const data = await fetcher(`${process.env.NEXT_PUBLIC_API_BASE_URL}/account/api/`, "POST");
+      setAuthResponse(data);
+      setStep("otp");
+      setTimer(120);
+      setError(undefined);
+      console.log("Auth response received:", data);
     } catch (error) {
       console.error("Error:", error);
     } finally {

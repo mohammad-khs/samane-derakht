@@ -1,9 +1,9 @@
 "use client";
 import { useState, useEffect } from "react";
-import axios from "axios";
 import { ThumbsDown, ThumbsUp } from "lucide-react";
 import { Session } from "next-auth";
 import toast from "react-hot-toast";
+import { fetcher } from "@/lib/utils";
 
 interface LikeDislikeButtonsProps {
   commentId: string;
@@ -36,34 +36,28 @@ const LikeDislikeButtons = ({
     }
 
     try {
-      const response = await axios.post(
+      const result = await fetcher(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/tree/api/${
           isInTree ? "tree" : ""
         }${action}/${commentId}/`,
-        null,
-        {
-          headers: {
-            Authorization: `Bearer ${session.access}`,
-            TOKEN: session.token,
-          },
-        }
+        "POST"
       );
 
       // Update state based on API response
       if (action === "like") {
-        setIsLiked(response.data.liked);
-        if (response.data.liked) {
-          setIsDisliked(false); // Like action cancels any existing dislike
+        setIsLiked(result.liked);
+        if (result.liked) {
+          setIsDisliked(false);
           setDislikeCount((prev) => prev - (isDisliked ? 1 : 0));
         }
-        setLikeCount(response.data.likes);
+        setLikeCount(result.likes);
       } else {
-        setIsDisliked(response.data.disliked);
-        if (response.data.disliked) {
-          setIsLiked(false); // Dislike action cancels any existing like
+        setIsDisliked(result.disliked);
+        if (result.disliked) {
+          setIsLiked(false);
           setLikeCount((prev) => prev - (isLiked ? 1 : 0));
         }
-        setDislikeCount(response.data.dislikes);
+        setDislikeCount(result.dislikes);
       }
     } catch (error) {
       console.error(`${action} error:`, error);

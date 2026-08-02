@@ -1,4 +1,5 @@
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
+import { mainCarouselCardData } from "@/types/mainCarousels";
 import { TreeComment } from "@/types/products";
 import { getServerSession } from "next-auth";
 import { FunctionComponent } from "react";
@@ -12,6 +13,7 @@ import {
   TwitterIcon,
   WhatsappIcon,
 } from "@/app/company/Icons";
+import { fetcher } from "@/lib/utils";
 
 interface MainTreeProps {
   params: { mainTreeId: string };
@@ -28,7 +30,7 @@ export interface MyMainTreeData {
     scan_numbers: number;
     time_joined: string;
     comment_numbers: number;
-    images_list: [][];
+    images_list: mainCarouselCardData[][];
     voice: string;
     video: string;
     description: string;
@@ -47,21 +49,9 @@ const MainTree: FunctionComponent<MainTreeProps> = async ({
   let data: MyMainTreeData | null = null;
 
   try {
-    const resp = await fetch(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}/account/api/mytree/${mainTreeId}/`,
-      {
-        headers: {
-          Authorization: session?.access ? `Bearer ${session?.access}` : "",
-          TOKEN: session?.token ?? "",
-        },
-      }
+    data = await fetcher(
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}/account/api/mytree/${mainTreeId}/`
     );
-
-    if (!resp.ok) {
-      throw new Error(`Request failed with status ${resp.status}`);
-    }
-
-    data = await resp.json();
   } catch (error) {
     console.error("Error fetching main tree data:", error);
     return (

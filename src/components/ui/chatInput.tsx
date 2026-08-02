@@ -2,7 +2,6 @@
 
 import { Button } from "@/components/ui/button";
 import { CaretLeftIcon } from "@radix-ui/react-icons";
-import axios from "axios";
 import { FC, useState } from "react";
 import toast from "react-hot-toast";
 import TextareaAutosize from "react-textarea-autosize";
@@ -10,6 +9,7 @@ import SignInModal from "../authentication/signInModal";
 import { useCommentAndChatSectionContext } from "@/app/products/[productName]/commentAndChatSection";
 import { useSession } from "next-auth/react";
 import { X } from "lucide-react";
+import { fetcher } from "@/lib/utils";
 
 
 const ChatInput: FC = () => {
@@ -49,17 +49,11 @@ const ChatInput: FC = () => {
     setIsLoading(true);
 
     try {
-      await axios.post(
+      await fetcher(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}${inputCommentApi}${
           commentToreplyId ? `replyComment` : `addComment`
         }/${productId}/${commentToreplyId ? `${commentToreplyId}/` : ""}`,
-        { text: input, profile_id: profileId },
-        {
-          headers: {
-            Authorization: `Bearer ${session?.data?.access}`,
-            TOKEN: session?.data?.token,
-          },
-        }
+        "POST"
       );
 
       setUserComment({
@@ -83,15 +77,7 @@ const ChatInput: FC = () => {
       setProfileId("");
       toast.success("پیام شما با موفقیت ثبت شد");
     } catch (error: unknown) {
-      if (
-        axios.isAxiosError(error) &&
-        error.response?.data[0] === "Token is required"
-      ) {
-        toast.error("لطفا احراز هویت فرمایید");
-        setIsModalOpen(true);
-      } else {
-        toast.error("مشکلی پیش آمد. لطفاً بعداً دوباره تلاش کنید");
-      }
+      toast.error("مشکلی پیش آمد. لطفاً بعداً دوباره تلاش کنید");
     } finally {
       setIsLoading(false);
     }

@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { Session } from "next-auth";
 import toast from "react-hot-toast";
 import { UserIdentity } from "@/types/dashboard";
+import { fetcher } from "@/lib/utils";
 
 export const useDashboardUser = (session: Session | null) => {
   const [user, setUser] = useState<UserIdentity | null>(null);
@@ -14,20 +15,9 @@ export const useDashboardUser = (session: Session | null) => {
       if (!session) return;
 
       try {
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_API_BASE_URL}/account/api/dashboard/`,
-          {
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${session.access}`,
-              TOKEN: session.token,
-            },
-          }
+        const data = await fetcher(
+          `${process.env.NEXT_PUBLIC_API_BASE_URL}/account/api/dashboard/`
         );
-
-        if (!response.ok)
-          throw new Error(`HTTP error! status: ${response.status}`);
-        const data: UserIdentity = await response.json();
         setUser(data);
       } catch (error) {
         console.error("Failed to fetch dashboard data:", error);
@@ -59,20 +49,10 @@ export const useDashboardUser = (session: Session | null) => {
     formData.append("image", file);
 
     try {
-      const response = await fetch(
+      const data = await fetcher(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/account/api/change-image/`,
-        {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${session.access}`,
-            TOKEN: session.token,
-          },
-          body: formData,
-        }
-      );
-
-      if (!response.ok) throw new Error("Failed to upload image");
-      const data: { image: string } = await response.json();
+        "POST"
+      ) as { image: string };
       setUser((prev) => (prev ? { ...prev, image: data.image } : null));
       toast.success("تصویر پروفایل با موفقیت بروزرسانی شد");
     } catch (error) {

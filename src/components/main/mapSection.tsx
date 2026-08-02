@@ -3,6 +3,7 @@
 import { FC, useEffect, useState } from "react";
 import { Loader2Icon } from "lucide-react";
 import dynamic from "next/dynamic";
+import { fetcher } from "@/lib/utils";
 
 const DynamicCustomLeafletMap = dynamic(
   () => import("@/components/customLeafletMap"),
@@ -27,13 +28,7 @@ export type MainMapType = {
 
 const fetchMapData = async (): Promise<MainMapType[]> => {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/map/`);
-
-    if (!res.ok) {
-      throw new Error("Failed to fetch map data");
-    }
-    const data = await res.json();
-    console.log(data);
+    const data = await fetcher(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/map/`);
     return data;
   } catch (error) {
     console.error("Error fetching map data:", error);

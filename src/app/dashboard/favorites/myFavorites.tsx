@@ -1,7 +1,7 @@
 "use client";
 
 import { DateFormatDMY, monthNumToMonthName } from "@/helper/dateHandler";
-import axios from "axios";
+import { fetcher } from "@/lib/utils";
 import { Loader2, ScanQrCode, Trash2 } from "lucide-react";
 import { Session } from "next-auth";
 import Link from "next/link";
@@ -26,25 +26,17 @@ const MyFavorites: FC<MyFavoritesProps> = ({ session }) => {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState<favoriteType[]>([]);
 
-  const handleDeleteFavorite = async (id: string) => {
+const handleDeleteFavorite = async (id: string) => {
     try {
-      const response = await axios.post(
+      const data = await fetcher(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/account/api/remove-fav/${id}/`,
-        { id },
-        {
-          headers: {
-            Authorization: `Bearer ${session?.access}`,
-            TOKEN: session?.token,
-          },
-        }
+        "POST"
       );
 
-      if (response.status === 200) {
-        if (response.data?.removed === true && response.data.added === false) {
-          setData((prev) => {
-            return prev.filter((favorite) => favorite.id !== id);
-          });
-        }
+      if (data?.removed === true && data.added === false) {
+        setData((prev) => {
+          return prev.filter((favorite) => favorite.id !== id);
+        });
       }
     } catch (error) {
       console.error("Error fetching favorite:", error);
@@ -56,19 +48,11 @@ const MyFavorites: FC<MyFavoritesProps> = ({ session }) => {
   const savedTrees = async () => {
     setLoading(true);
     try {
-      const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/account/api/mysaved/`,
-        {
-          headers: {
-            Authorization: `Bearer ${session?.access}`,
-            TOKEN: session?.token,
-          },
-        }
+      const data = await fetcher(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/account/api/mysaved/`
       );
-      if (response.status === 200) {
-        setData(response.data);
-        console.log("this is data of favorite", response.data);
-      }
+      setData(data);
+      console.log("this is data of favorite", data);
     } catch (error) {
       console.error("Error fetching favorite:", error);
     } finally {

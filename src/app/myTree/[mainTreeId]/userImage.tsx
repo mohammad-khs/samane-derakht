@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { FC } from "react";
 import { FaUserCircle } from "react-icons/fa";
+import { getImageUrl } from "@/lib/utils";
 
 interface UserImageProps {
   imageUrl: string;
@@ -11,7 +12,7 @@ const UserImage: FC<UserImageProps> = ({ imageUrl }) => {
     <>
       {imageUrl ? (
         <Image
-          src={`${process.env.NEXT_PUBLIC_API_BASE_URL}${imageUrl}`}
+          src={getImageUrl(imageUrl)}
           alt="Profile"
           fill
           className="w-full h-full rounded-full object-cover"

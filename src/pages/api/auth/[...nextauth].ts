@@ -1,4 +1,4 @@
-import axios from "axios";
+import { getMockResponse } from "@/mocks/mockSetup";
 import NextAuth, { AuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
@@ -16,21 +16,14 @@ export const authOptions: AuthOptions = {
         console.log("credentials:", credentials?.phone);
         const otp = credentials?.otp;
         try {
-          const otpResponse = await axios.post(
-            `${process.env.NEXT_PUBLIC_API_BASE_URL}/account/api/verify/`,
-            { otp },
-            {
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: `Token ${credentials?.token}`,
-              },
-            }
-          );
-
-          if (!otpResponse.data) throw new Error("Failed to verify OTP");
-
-          const { access, token } = await otpResponse.data;
-          return { id: "placeholder-id", access, token };
+          const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || "";
+          const verifyUrl = `${baseUrl}/account/api/verify/`;
+          const mockData = getMockResponse(verifyUrl, "POST");
+          if (mockData !== null) {
+            const { access, token } = mockData as { access: string; token: string };
+            return { id: "placeholder-id", access, token };
+          }
+          throw new Error("Failed to verify OTP");
         } catch (error) {
           console.error("Error in authorize function:", error);
           return null;

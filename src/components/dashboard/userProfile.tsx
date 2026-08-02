@@ -3,6 +3,7 @@
 import { FaUserCircle } from "react-icons/fa";
 import { UserIdentity } from "@/types/dashboard";
 import Image from "next/image";
+import { getImageUrl } from "@/lib/utils";
 
 interface UserProfileProps {
   user: UserIdentity | null;
@@ -23,7 +24,7 @@ export const UserProfile = ({
       {user?.image ? (
         <div className="relative h-[75px] rounded-full w-[75px]">
           <Image
-            src={`${process.env.NEXT_PUBLIC_API_BASE_URL}/${user.image}`}
+            src={getImageUrl(user.image)}
             alt="Profile"
             fill
             className="w-full h-full rounded-full"

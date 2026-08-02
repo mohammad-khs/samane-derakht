@@ -5,6 +5,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import { redirect } from "next/navigation";
 import DecoyForSettingCustomer from "./decoyForSettingCustomer";
+import { fetcher } from "@/lib/utils";
 
 
 const CompleteInfo: FC = async () => {
@@ -12,19 +13,9 @@ const CompleteInfo: FC = async () => {
   if (session === null) {
     redirect("/");
   }
-  const response = await fetch(
+  const data = await fetcher(
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/order/api/firstData/`,
-    {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: session?.access ? `Bearer ${session?.access}` : "",
-        TOKEN: session?.token ?? "",
-      },
-      cache: "no-store",
-    }
-  );
-  const data = (await response.json()) as {
+  ) as {
     exists: boolean;
     user_type: "HA" | "HO";
   };

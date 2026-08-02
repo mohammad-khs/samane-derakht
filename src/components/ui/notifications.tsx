@@ -2,10 +2,10 @@
 
 import { FC, useEffect, useState, useRef } from "react";
 import { Button } from "./button";
-import axios from "axios";
 import { useSession } from "next-auth/react";
 import { MailIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { getMockResponse } from "@/mocks/mockSetup";
 
 interface NotificationType {
   id: string;
@@ -39,47 +39,25 @@ const Notifications: FC = () => {
       router.replace(`/dashboard/tickets/${notification.url_for_ticket}`);
     }
     if (notification.url_for_reply_comment) {
-      const fetchData = async () => {
-        try {
-          const response = await axios.get(
-            `${process.env.NEXT_PUBLIC_API_BASE_URL}${notification.url_for_reply_comment}`,
-            {
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: session?.access
-                  ? `Bearer ${session.access}`
-                  : "",
-                TOKEN: session?.token ?? "",
-              },
-            }
-          );
-          console.log(response);
-        } catch (error) {
-          console.error("Failed to fetch notifications:", error);
-        }
-      };
-
-      if (status === "authenticated") {
-        fetchData();
-      }
+      const mockData = getMockResponse(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}${notification.url_for_reply_comment}`,
+        "GET"
+      );
+      console.log(mockData);
     }
   };
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(
+        const mockData = getMockResponse(
           `${process.env.NEXT_PUBLIC_API_BASE_URL}/account/api/mynotifications/`,
-          {
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: session?.access ? `Bearer ${session.access}` : "",
-              TOKEN: session?.token ?? "",
-            },
-          }
-        );
-        setCount(response.data.count);
-        setNotifications(response.data.data);
+          "GET"
+        ) as { count: number; data: NotificationType[] } | null;
+        if (mockData !== null) {
+          setCount(mockData.count);
+          setNotifications(mockData.data);
+        }
       } catch (error) {
         console.error("Failed to fetch notifications:", error);
       }

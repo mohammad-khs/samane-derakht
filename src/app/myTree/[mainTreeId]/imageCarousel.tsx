@@ -3,6 +3,7 @@
 import Autoplay from "embla-carousel-autoplay";
 import useEmblaCarousel from "embla-carousel-react";
 import { FC, useCallback } from "react";
+import { getImageUrl } from "@/lib/utils";
 import Image from "next/image";
 import { CaretLeftIcon, CaretRightIcon } from "@radix-ui/react-icons";
 import { mainCarouselCardData } from "@/types/mainCarousels";
@@ -57,7 +58,7 @@ const ImageCarousel: FC<ImageCarouselProps> = ({
                       fill
                       referrerPolicy="no-referrer"
                       unoptimized
-                      src={`${process.env.NEXT_PUBLIC_API_BASE_URL}/${item?.image}` || "#"}
+                      src={getImageUrl(item?.image) || "#"}
                       alt="Carousel image"
                     />
                   ) : (

@@ -1,6 +1,5 @@
 "use client";
 
-import axios, { AxiosError } from "axios";
 import { Session } from "next-auth";
 import { FC, useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
@@ -9,6 +8,7 @@ import TextareaAutosize from "react-textarea-autosize";
 import ThemeSelector from "./themeSelector";
 import { useCompleteInfoContext } from "@/context/completeInfo";
 import { TreeOccasionType } from "@/types/complete-info";
+import { fetcher } from "@/lib/utils";
 
 interface TreeOccasionProps {
   session: Session;
@@ -26,38 +26,16 @@ const TreeOccasion: FC<TreeOccasionProps> = ({ session }) => {
   useEffect(() => {
     try {
       const fetchTreeOccasion = async () => {
-        const res = await axios.get(
-          `${process.env.NEXT_PUBLIC_API_BASE_URL}/order/api/thirdData/`,
-          {
-            headers: {
-              Authorization: session.access ? `Bearer ${session.access}` : "",
-              TOKEN: session.token || "",
-            },
-          }
+        const res = await fetcher(
+          `${process.env.NEXT_PUBLIC_API_BASE_URL}/order/api/thirdData/`
         );
-        if (res.status !== 200) {
-          throw new AxiosError();
-        } else {
-          setThemes(res.data);
-          setCurrentTheme(res.data[0]);
-        }
+        setThemes(res);
+        setCurrentTheme(res[0]);
       };
       fetchTreeOccasion();
     } catch (error: unknown) {
-      console.log(typeof error);
-
       console.error("Error fetching treeTheme:", error);
-
-      if (axios.isAxiosError(error)) {
-        if (error.response && error.response.status === 404) {
-          toast.error("تم درختان یافت نشد");
-        } else {
-          toast.error("خطا در بارگذاری اطلاعات");
-        }
-      } else {
-        toast.error("خطای غیرمنتظره‌ای رخ داد");
-      }
-
+      toast.error("خطا در بارگذاری اطلاعات");
       setThemes([]);
     }
   }, []);

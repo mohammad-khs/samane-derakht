@@ -1,6 +1,5 @@
 "use client";
 
-import axios from "axios";
 import { Session } from "next-auth";
 import { FC, useRef, useState } from "react";
 import { toast } from "react-hot-toast";
@@ -10,6 +9,7 @@ import { FileStatus } from "@/types/complete-info";
 import { PaperPlaneIcon } from "@radix-ui/react-icons";
 import { Loader2 } from "lucide-react";
 import { mutate } from "swr";
+import { fetcher } from "@/lib/utils";
 
 interface TicketChatInputProps {
   chatId: string;
@@ -35,26 +35,18 @@ const TicketChatInput: FC<TicketChatInputProps> = ({ chatId, session }) => {
     }
 
     try {
-      const res = await axios.post(
+      await fetcher(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/account/api/sendticketMessage/${chatId}/`,
-        formData,
-        {
-          headers: {
-            Authorization: session?.access ? `Bearer ${session.access}` : "",
-            TOKEN: session?.token || "",
-          },
-        }
+        "POST"
       );
 
-      if (res.status === 200) {
-        // Trigger SWR revalidation
-        mutate(
-          `${process.env.NEXT_PUBLIC_API_BASE_URL}/account/api/myticketmessage/${chatId}`
-        );
-        setInput("");
-        setFiles([]);
-        textareaRef.current?.focus();
-      }
+      // Trigger SWR revalidation
+      mutate(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/account/api/myticketmessage/${chatId}`
+      );
+      setInput("");
+      setFiles([]);
+      textareaRef.current?.focus();
     } catch {
       toast.error("مشکلی پیش آمد لطفا دوباره سعی کنید");
     } finally {

@@ -1,9 +1,9 @@
 "use client";
 
-import axios from "axios";
 import { Session } from "next-auth";
 import { FC, useEffect, useState } from "react";
 import Ticket from "./ticket";
+import { fetcher } from "@/lib/utils";
 
 interface MyTicketsProps {
   session: Session;
@@ -32,20 +32,11 @@ const MyTickets: FC<MyTicketsProps> = ({ session }) => {
 
   const fetchTickets = async () => {
     try {
-      const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/account/api/mytickets/`,
-        {
-          headers: {
-            Authorization: `Bearer ${session?.access}`,
-            TOKEN: session?.token,
-          },
-        }
+      const data = await fetcher(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/account/api/mytickets/`
       );
-
-      if (response.status === 200) {
-        setAllData(response.data);
-      }
-      console.log("response : ", response.data);
+      setAllData(data);
+      console.log("response : ", data);
     } catch (error) {
       console.error("Error fetching tickets:", error);
     }

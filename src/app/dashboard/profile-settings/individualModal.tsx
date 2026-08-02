@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useDashboardIdentityContext } from "@/context/dashboardIdentity";
 import { validatePhoneNumber } from "@/helper/validateNumber";
-import axios from "axios";
+import { fetcher } from "@/lib/utils";
 import { Session } from "next-auth";
 import { FC, useState } from "react";
 import toast from "react-hot-toast";
@@ -18,9 +18,7 @@ const IndividualModal: FC<IndividualModalProps> = ({ onClose, session }) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
-
   const [username, setUsername] = useState("");
-
   const [city, setCity] = useState("تهران");
 
   const handleChangeIdentityToHO = async () => {
@@ -34,62 +32,30 @@ const IndividualModal: FC<IndividualModalProps> = ({ onClose, session }) => {
     }
 
     try {
-      const response = await axios.put(
+      const data = await fetcher(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/account/api/update-dashboard/`,
-        {
-          user_type: "HA",
-          phone: phoneResult.phone,
-          city: city,
-          username: username,
-          email: email,
-        },
-        {
-          headers: {
-            Authorization: session?.access ? `Bearer ${session.access}` : "",
-            TOKEN: session?.token || "",
-          },
-        }
+        "PUT"
       );
 
-      if (response.status === 200) {
-        console.log(response.data);
-        const data = response.data;
-        setUserIdentity({
-          city: data?.city,
-          zipcode: data?.zipcode,
-          user_type: "HA",
-          organization: data?.organization,
-          email: data?.email,
-          bio: data?.bio,
-          birthday: data?.birthday,
-          phone: data?.phone,
-          username: data?.username,
-          first_last_name: data?.first_last_name,
-          image: data?.image || null,
-        });
-        console.log(data);
-        toast.success("تغییرات شما با موفقیت ثبت گردید");
-        onClose();
-      }
+      console.log(data);
+      setUserIdentity({
+        city: data?.city,
+        zipcode: data?.zipcode,
+        user_type: "HA",
+        organization: data?.organization,
+        email: data?.email,
+        bio: data?.bio,
+        birthday: data?.birthday,
+        phone: data?.phone,
+        username: data?.username,
+        first_last_name: data?.first_last_name,
+        image: data?.image || null,
+      });
+      toast.success("تغییرات شما با موفقیت ثبت گردید");
+      onClose();
     } catch (error) {
-      if (axios.isAxiosError(error)) {
-        if (error.response?.data?.phone?.[0] === "phone already taken") {
-          toast.error(
-            "این سازمان قبلا استفاده ثبت نام شده لطفا سازمان دیگری را انتخاب کنید"
-          );
-        }
-        if (
-          error.response?.data?.email?.[0] === "Enter a valid email address."
-        ) {
-          toast.error("لطفا ایمیلی با فرمت درست وارد کنید", { duration: 7000 });
-        }
-
-        if (error.response?.data[0] === "email is not valid") {
-          toast.error("لطفا ایمیلی با فرمت درست وارد کنید", { duration: 7000 });
-        }
-        toast.error("ثبت تغییرات شما با شکست مواجه شد لطفا دوباره امتحان کنید");
-        console.log(error);
-      }
+      console.error("Error updating identity:", error);
+      toast.error("ثبت تغییرات شما با شکست مواجه شد لطفا دوباره امتحان کنید");
     } finally {
       setLoading(false);
     }

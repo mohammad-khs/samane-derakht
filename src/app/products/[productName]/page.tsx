@@ -8,6 +8,8 @@ import MainCarousel from "@/components/main/mainCarousel";
 import TreeMainInfo from "./treeMainInfo";
 import { getServerSession, Session } from "next-auth";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
+import { fetcher } from "@/lib/utils";
+import { mockProductDataArray } from "@/mocks/productData";
 
 interface ProductProps {
   params: {
@@ -18,32 +20,15 @@ interface ProductProps {
 const Product: FC<ProductProps> = async ({ params }) => {
   const session = await getServerSession(authOptions);
 
-  const fetchProductData = async (
+   const fetchProductData = async (
     session: Session | null,
     productName: string
   ) => {
     try {
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/order/api/tree/${productName}`,
-        {
-          headers: {
-            Authorization: session?.access ? `Bearer ${session?.access}` : "",
-            TOKEN: session?.token ?? "",
-          },
-        }
+      const data = await fetcher(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/order/api/tree/${productName}`
       );
-
-      if (res.ok) {
-        const data = await res.json();
-        console.log("this is data inside the function : ", data);
-        return data;
-      }
-
-      if (!res.ok) {
-        throw new Error(
-          `Failed to fetch the product data : ${res.status} ${res.statusText}`
-        );
-      }
+      return data;
     } catch (err) {
       console.log("Error fetching product data:", err);
     }
@@ -51,7 +36,7 @@ const Product: FC<ProductProps> = async ({ params }) => {
 
   const data = await fetchProductData(session, params.productName);
 
-  if (data === undefined) {
+  if (!data || !data[0]?.tree) {
     return (
       <>
         <div className="mt-3">
@@ -68,8 +53,6 @@ const Product: FC<ProductProps> = async ({ params }) => {
       </>
     );
   }
-
-  //this is the data that made app crash if i would have disabled cash
 
   const treeData: TreeData = {
     tree: data[0]?.tree,

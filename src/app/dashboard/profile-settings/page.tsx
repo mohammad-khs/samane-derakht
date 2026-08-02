@@ -4,6 +4,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import { redirect } from "next/navigation";
 import { DateFormatDMY } from "@/helper/dateHandler";
+import { fetcher } from "@/lib/utils";
 
 export type UserIdentity = {
   username: string;
@@ -26,24 +27,11 @@ const Dashboard = async () => {
     redirect("/");
   }
 
-  let userIdentity: UserIdentity | null = null;
+  let userIdentity = null;
   try {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}/account/api/dashboard/`,
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${session.access}`,
-          TOKEN: session.token,
-        },
-      }
+    userIdentity = await fetcher(
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}/account/api/dashboard/`
     );
-
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-
-    userIdentity = (await response.json()) as UserIdentity;
   } catch (error) {
     console.error("Failed to fetch dashboard data:", error);
   }

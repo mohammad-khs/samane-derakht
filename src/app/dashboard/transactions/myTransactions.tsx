@@ -1,11 +1,11 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import axios from "axios";
 import { Loader2 } from "lucide-react";
 import { Session } from "next-auth";
 import { FC, useState } from "react";
 import Transaction from "./transaction";
 import useSWRInfinite from "swr/infinite";
+import { getMockResponse } from "@/mocks/mockSetup";
 
 interface MyTransactionsProps {
   session: Session;
@@ -28,15 +28,13 @@ interface ResponseData {
 type SortByOption = "create" | "-create" | "amount" | "-amount" | "default";
 type TransactionSortType = "default" | number;
 
-export const fetcher = (url: string, session: Session) =>
-  axios
-    .get(url, {
-      headers: {
-        Authorization: `Bearer ${session?.access}`,
-        TOKEN: session?.token,
-      },
-    })
-    .then((res) => res.data);
+export const fetcher = (url: string): Promise<any> => {
+  const mockData = getMockResponse(url);
+  if (mockData !== null) {
+    return Promise.resolve(mockData);
+  }
+  return Promise.reject(new Error(`No mock data found for ${url}`));
+};
 
 export function useFinishedOrders(
   session: Session,
@@ -63,7 +61,7 @@ export function useFinishedOrders(
 
   const { data, error, size, setSize, mutate } = useSWRInfinite(
     getKey,
-    (url) => fetcher(url, session),
+    (url) => fetcher(url),
     {
       revalidateOnFocus: false,
       revalidateIfStale: false,

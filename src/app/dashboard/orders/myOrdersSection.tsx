@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { formatNumberWithCommas } from "@/helper/formatNumberWithCommas";
 import Image from "next/image";
 import Link from "next/link";
+import { getImageUrl } from "@/lib/utils";
 import { FC, useState } from "react";
 import { FaCaretDown, FaCaretUp } from "react-icons/fa";
 import { Order } from "./myOrders";
@@ -101,7 +102,7 @@ const MyOrdersSection: FC<MyOrdersSectionProps> = ({ data, isWaitingData }) => {
                         <div className="relative w-[148px] h-[100px]  border-2 rounded-lg border-[#D2D2D2]">
                           {item.tree_type.image ? (
                             <Image
-                              src={`${process.env.NEXT_PUBLIC_API_BASE_URL}/${item.tree_type.image}`}
+                              src={getImageUrl(item.tree_type.image)}
                               alt={`عکس درخت ${item.tree_type.image}`}
                               fill
                               className="rounded-lg"

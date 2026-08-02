@@ -3,12 +3,14 @@ import { FallbackImage } from "@/components/products/product/headerImages";
 import { Minus, Plus } from "lucide-react";
 import Image from "next/image";
 import { FC } from "react";
+import { getImageUrl } from "@/lib/utils";
 import { FaCommentAlt, FaStar } from "react-icons/fa";
 import { TreeItem } from "./page";
 import Link from "next/link";
 import { formatNumberWithCommas } from "@/helper/formatNumberWithCommas";
 import { Session } from "next-auth";
 import toast from "react-hot-toast";
+import { fetcher } from "@/lib/utils";
 
 interface RightSideShoppingCartProps {
   treeItem: TreeItem;
@@ -23,20 +25,11 @@ const RightSideShoppingCart: FC<RightSideShoppingCartProps> = ({
 }) => {
   const handleDecrement = async () => {
     try {
-      const response = await fetch(
+      await fetcher(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/cart/api/reduce/${treeItem.id}/`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: session?.access ? `Bearer ${session.access}` : "",
-            TOKEN: session?.token ?? "",
-          },
-        }
+        "POST"
       );
-      if (response.ok) {
-        onQuantityChange(); // trigger re-fetch on successful decrement
-      }
+      onQuantityChange();
     } catch {
       toast.error("مشکلی پیش آمد لطفا دوباره تلاش کنید");
     }
@@ -44,20 +37,11 @@ const RightSideShoppingCart: FC<RightSideShoppingCartProps> = ({
 
   const handleIncrement = async () => {
     try {
-      const response = await fetch(
+      await fetcher(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/cart/api/increase/${treeItem.id}/`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: session?.access ? `Bearer ${session.access}` : "",
-            TOKEN: session?.token ?? "",
-          },
-        }
+        "POST"
       );
-      if (response.ok) {
-        onQuantityChange(); // trigger re-fetch on successful increment
-      }
+      onQuantityChange();
     } catch {
       toast.error("مشکلی پیش آمد لطفا دوباره تلاش کنید");
     }
@@ -70,7 +54,7 @@ const RightSideShoppingCart: FC<RightSideShoppingCartProps> = ({
           <div className="relative w-[188px] h-[140px]  border-2 rounded-lg border-[#D2D2D2]">
             {treeItem.tree_type.image ? (
               <Image
-                src={`${process.env.NEXT_PUBLIC_API_BASE_URL}/${treeItem.tree_type.image}`}
+                src={getImageUrl(treeItem.tree_type.image)}
                 alt={`عکس درخت ${treeItem.tree_type.image}`}
                 fill
                 className="rounded-lg"

@@ -3,14 +3,15 @@
 import { FallbackImage } from "@/components/products/product/headerImages";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import { getImageUrl } from "@/lib/utils";
 import Link from "next/link";
 import { FC, useEffect, useRef, useState } from "react";
 import { MyTreeItem } from "./myTrees";
 import dynamic from "next/dynamic";
 import { Loader2Icon } from "lucide-react";
-import axios, { AxiosError } from "axios";
-import { Session } from "next-auth";
 import { useRouter } from "next/navigation";
+import { fetcher } from "@/lib/utils";
+import { Session } from "next-auth";
 
 const DynamicModalMap = dynamic(() => import("./modalMap"), {
   ssr: false,
@@ -27,19 +28,24 @@ interface MyTreesSectionProps {
 }
 
 function extractTimeComponent(timeString: string): string {
-  // Split the days and time parts
+  if (typeof timeString !== "string" || !timeString.includes(",")) {
+    return "۱۰ ساعت";
+  }
+
   const [daysPart, timePart] = timeString
     .split(", ")
     .map((part) => part.trim());
 
-  // Extract the number of days
   const days = parseInt(daysPart.split(" ")[0], 10);
 
   if (days >= 1) {
     return `${days} روز`;
   }
 
-  // Extract hours from the time part if days < 1
+  if (!timePart || !timePart.includes(":")) {
+    return "۱۰ ساعت";
+  }
+
   const [hours] = timePart.split(":").map(Number);
   return `${hours} ساعت`;
 }
@@ -56,30 +62,14 @@ const MyTreesSection: FC<MyTreesSectionProps> = ({ item, session }) => {
   const handleStatusRequest = async (id: string) => {
     setLoading(true);
     try {
-      const response = await axios.post(
+      const data = await fetcher(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/account/api/request-status/${id}/`,
-        {
-          id,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${session?.access}`,
-            TOKEN: session?.token,
-          },
-        }
+        "POST"
       );
-      console.log("this is resp of fav delete : ", response.data);
+      console.log("this is resp of status request : ", data);
 
-      if (response.status === 200) {
-        console.log("this is delete favorite", response.data);
-        setRequestStatues(response.data);
-      }
+      setRequestStatues(data);
     } catch (error) {
-      const axiosError = error as AxiosError<string[]>; // Proper typing
-      if (axiosError.response?.data?.[0]?.includes("user has not permission")) {
-        setRequestStatues({ requestSend: true });
-      }
-
       console.error("Error fetching favorite:", error);
     } finally {
       setLoading(false);
@@ -125,7 +115,7 @@ const MyTreesSection: FC<MyTreesSectionProps> = ({ item, session }) => {
             <div className="relative w-[148px] h-[100px]  border-2 rounded-lg border-[#D2D2D2]">
               {item.tree_type_image ? (
                 <Image
-                  src={`${process.env.NEXT_PUBLIC_API_BASE_URL}/${item.tree_type_image}`}
+                  src={getImageUrl(item.tree_type_image)}
                   alt={`عکس درخت ${item.tree_type_image}`}
                   fill
                   className="rounded-lg"

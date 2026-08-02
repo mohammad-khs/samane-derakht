@@ -1,7 +1,7 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { formatNumberWithCommas } from "@/helper/formatNumberWithCommas";
-import axios from "axios";
+import { fetcher } from "@/lib/utils";
 import { ArrowDownToLine, ArrowUpToLine, Loader2 } from "lucide-react";
 import { Session } from "next-auth";
 import { FC, useEffect, useState } from "react";
@@ -25,19 +25,10 @@ const MyWallet: FC<MyWalletProps> = ({ session }) => {
   const fetchFinishedOrders = async () => {
     setLoading(true);
     try {
-      const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/account/api/mywallet/`,
-        {
-          headers: {
-            Authorization: `Bearer ${session?.access}`,
-            TOKEN: session?.token,
-          },
-        }
+      const data = await fetcher(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/account/api/mywallet/`
       );
-      if (response.status === 200) {
-        setData(response.data as BalanceType);
-        console.log(response.data);
-      }
+      setData(data as BalanceType);
     } catch (error) {
       console.error("Error fetching Orders:", error);
     } finally {

@@ -4,7 +4,6 @@ import { FC, useEffect, useState } from "react";
 
 import { Session } from "next-auth";
 import { redirect } from "next/navigation";
-import axios from "axios";
 import { FaFlag } from "react-icons/fa";
 import PlantTreeMapSection from "./plantTreeMapSection";
 import Link from "next/link";
@@ -16,6 +15,7 @@ import { Loader2Icon } from "lucide-react";
 import { useCompleteInfoContext } from "@/context/completeInfo";
 import { City, ProvinceData } from "@/types/complete-info";
 import { useRouter } from "next/navigation";
+import { fetcher } from "@/lib/utils";
 
 const DynamicMarkerList = dynamic(() => import("./MarkerList"), {
   ssr: false,
@@ -108,52 +108,27 @@ const SelectAddress: FC<SelectAddressProps> = ({ session }) => {
 
     const fetchCityAndDistrict = async () => {
       try {
-        const response = await axios.get<ProvinceData>(
-          `${process.env.NEXT_PUBLIC_API_BASE_URL}/order/api/secondData/`,
-          {
-            params: {
-              province: provinceName === "" ? "شهریار" : provinceName,
-              map_province: mapProvince === "" ? "" : mapProvince,
-            },
-            headers: {
-              Authorization: session.access ? `Bearer ${session.access}` : "",
-              TOKEN: session.token || "",
-            },
-          }
-        );
+        const data = (await fetcher(
+          `${process.env.NEXT_PUBLIC_API_BASE_URL}/order/api/secondData/`
+        )) as ProvinceData;
+        setData(data);
 
-        if (response.status === 404) {
-          toast.error("منطقه مورد نظر یافت نشد");
-          return;
-        }
-        setData(response.data);
-
-        if (response?.data?.province?.id) {
-          setProvinceId(response.data.province.id);
+        if (data?.province?.id) {
+          setProvinceId(data.province.id);
         }
 
         if (cityName === "") {
-          setCityName(response?.data?.cities[0]?.name);
+          setCityName(data?.cities[0]?.name);
         }
-        // Map over the cities to get the cityId
-        const selectedCity = response?.data?.cities?.find(
-          (city) => city.name === cityName
+        const selectedCity = data?.cities?.find(
+          (city: City) => city.name === cityName
         );
         if (selectedCity) {
           setCityId(selectedCity.id);
         }
       } catch (error: unknown) {
         console.error("Error fetching city and district:", error);
-        if (axios.isAxiosError(error)) {
-          if (error.response && error.response.status === 404) {
-            toast.error("منطقه مورد نظر یافت نشد");
-          } else {
-            toast.error("خطا در بارگذاری اطلاعات");
-          }
-        } else {
-          toast.error("خطای غیرمنتظره‌ای رخ داد");
-        }
-
+        toast.error("خطا در بارگذاری اطلاعات");
         setData({
           province: { id: "", name: "", longtitud: "", latitud: "" },
           cities: [],

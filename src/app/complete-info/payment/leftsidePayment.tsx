@@ -2,7 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { useCompleteInfoContext } from "@/context/completeInfo";
 import { formatNumberWithCommas } from "@/helper/formatNumberWithCommas";
-import axios from "axios";
+import { fetcher } from "@/lib/utils";
 import { Loader2 } from "lucide-react";
 import { Session } from "next-auth";
 import { useRouter } from "next/navigation";
@@ -32,28 +32,19 @@ const LeftsidePayment: FC<LeftsidePaymentProps> = ({ session }) => {
     }
     setLoading(true);
     try {
-      const response = await axios.get(
+      const data = await fetcher(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/order/api/payOrder/${authority?.order_id}/?method=${method}`,
-        {
-          headers: {
-            Authorization: session.access ? `Bearer ${session.access}` : "",
-            TOKEN: session.token || "",
-          },
-        }
+        "GET"
       );
-      if (response.status === 200) {
-        console.log("this is data: ", response.data);
-        router.replace(`${response.data.authority}`);
-      }
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        if ((error.message = "not enough balance")) {
-          toast.error("موجودی شما کافی نمی باشد");
-        } else {
-          console.error("Axios error:", error.response?.data || error.message);
-        }
+      console.log("this is data: ", data);
+      router.replace(`${data.authority}`);
+    } catch (error: unknown) {
+      const err = error as { message?: string };
+      if (err?.message === "not enough balance") {
+        toast.error("موجودی شما کافی نمی باشد");
       } else {
-        console.error("Unexpected error:", error);
+        console.error("Error paying order:", error);
+        toast.error("خطا در پرداخت سفارش");
       }
     } finally {
       setLoading(false);

@@ -4,10 +4,10 @@ import Link from "next/link";
 import { FC, useEffect, useState } from "react";
 import { Button } from "./button";
 import Image from "next/image";
-import axios from "axios";
 import { useSession } from "next-auth/react";
 import SignInModal from "../authentication/signInModal";
 import { ShoppingCart } from "lucide-react";
+import { getMockResponse } from "@/mocks/mockSetup";
 
 interface ShoppingCartButtonProps {
   propCount?: number | undefined;
@@ -36,18 +36,12 @@ const ShoppingCartButton: FC<ShoppingCartButtonProps> = ({
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(
+const mockData = getMockResponse(
           `${process.env.NEXT_PUBLIC_API_BASE_URL}/cart/api/cartcount/`,
-          {
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: session?.access ? `Bearer ${session.access}` : "",
-              TOKEN: session?.token ?? "",
-            },
-          }
-        );
-        if (propCount === undefined && response.data.count !== 0) {
-          setCount(response.data.count);
+          "GET"
+        ) as { count: number } | null;
+        if (mockData !== null && propCount === undefined && mockData.count !== 0) {
+          setCount(mockData.count);
         }
       } catch (error) {
         console.error("Failed to fetch cart count:", error);

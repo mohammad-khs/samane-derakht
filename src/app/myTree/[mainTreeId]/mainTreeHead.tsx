@@ -2,8 +2,7 @@ import { DateFormatDMY, monthNumToMonthName } from "@/helper/dateHandler";
 import {
   Clock,
   ImageIcon,
-  Loader2Icon,
-  PlayCircle,
+  Loader2Icon, PlayCircle,
   ScanQrCode,
 } from "lucide-react";
 import { FC } from "react";
@@ -17,6 +16,7 @@ import dynamic from "next/dynamic";
 import { Session } from "next-auth";
 import SaveAndDelete from "./saveAndDelete";
 import EditButton from "./editButton";
+import { getImageUrl } from "@/lib/utils";
 
 const DynamicModalMap = dynamic(
   () => import("@/app/dashboard/trees/modalMap"),
@@ -107,7 +107,7 @@ const MainTreeHead: FC<MainTreeHeadProps> = ({ data, session }) => {
               alt={`تصویر درخت ${data.data.user_username}`}
               fill
               className="rounded-3xl object-cover"
-              src={`${process.env.NEXT_PUBLIC_API_BASE_URL}${data.data.image}`}
+              src={getImageUrl(data.data.image)}
             />
           </div>{" "}
         </div>

@@ -10,11 +10,11 @@ import { Icon, latLng, LatLng, Map } from "leaflet";
 import { FullscreenIcon, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-import axios from "axios";
 import { Session } from "next-auth";
 import { redirect } from "next/navigation";
 import { useCompleteInfoContext } from "@/context/completeInfo";
 import { Province, ProvinceMarker } from "@/types/complete-info";
+import { fetcher } from "@/lib/utils";
 
 interface PlantTreeMapProps {
   zoom?: number;
@@ -40,25 +40,14 @@ export const handleMarkerClick = async (
   const isAlreadySelected = selectedMarkers.some((m) => m.id === marker.id);
 
   if (isAlreadySelected) {
-    // If clicked twice, toggle off the marker
     setSelectedMarkers((prev) => prev.filter((m) => m.id !== marker.id));
   } else if (selectedMarkers.length < emptyTreeAllowed) {
     try {
-      const response = await axios.get(
+      await fetcher(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/order/api/clickArea/${marker.id}/`,
-        {
-          headers: {
-            Authorization: session.access ? `Bearer ${session.access}` : "",
-            TOKEN: session.token || "",
-          },
-        }
+        "GET"
       );
-
-      if (response.status === 200) {
-        setSelectedMarkers((prev) => [...prev, marker]); // Add the marker
-      } else {
-        console.error("Failed to fetch data for marker", marker.id);
-      }
+      setSelectedMarkers((prev) => [...prev, marker]);
     } catch (error) {
       console.error("Error fetching data for marker", marker.id, error);
     }

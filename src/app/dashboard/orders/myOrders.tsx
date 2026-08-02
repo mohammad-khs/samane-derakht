@@ -1,6 +1,6 @@
 "use client";
 import { TreeItem } from "@/app/shopping-cart/page";
-import axios from "axios";
+import { fetcher } from "@/lib/utils";
 import { Loader2 } from "lucide-react";
 import { Session } from "next-auth";
 
@@ -34,18 +34,10 @@ const MyOrders: FC<MyOrdersProps> = ({ session }) => {
   const fetchFinishedOrders = async () => {
     setLoading(true);
     try {
-      const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/account/api/myorders/`,
-        {
-          headers: {
-            Authorization: `Bearer ${session?.access}`,
-            TOKEN: session?.token,
-          },
-        }
+      const data = await fetcher(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/account/api/myorders/`
       );
-      if (response.status === 200) {
-        setFinishedData(response.data);
-      }
+      setFinishedData(data.finished);
     } catch (error) {
       console.error("Error fetching Orders:", error);
     } finally {
@@ -56,21 +48,10 @@ const MyOrders: FC<MyOrdersProps> = ({ session }) => {
   const fetchWaitingOrders = async () => {
     setLoading(true);
     try {
-      const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/account/api/myorders/`,
-        {
-          params: {
-            NP: true,
-          },
-          headers: {
-            Authorization: `Bearer ${session?.access}`,
-            TOKEN: session?.token,
-          },
-        }
+      const data = await fetcher(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/account/api/myorders/`
       );
-      if (response.status === 200) {
-        setWaitingData(response.data);
-      }
+      setWaitingData(data.waiting);
     } catch (error) {
       console.error("Error fetching Orders:", error);
     } finally {

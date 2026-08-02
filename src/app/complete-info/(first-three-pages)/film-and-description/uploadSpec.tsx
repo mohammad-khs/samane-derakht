@@ -11,6 +11,7 @@ import toast from "react-hot-toast";
 import { Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { Authority } from "@/types/complete-info";
+import { fetcher } from "@/lib/utils";
 
 interface UploadSpecProps {
   session: Session;
@@ -93,38 +94,16 @@ const UploadSpec: FC<UploadSpecProps> = ({ session }) => {
       }
 
       // Send API request
-      const response = await fetch(
+      const data = await fetcher(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/order/api/addOrder/`,
-        {
-          method: "POST",
-          body: formData,
-          headers: {
-            Authorization: session.access ? `Bearer ${session.access}` : "",
-            TOKEN: session.token || "",
-          },
-        }
-      );
+        "POST"
+      ) as Authority;
 
-      if (response.status !== 200) {
-        const data = await response.json();
-        if (data[0] === "cooardinates not equall ot quantity orders") {
-          toast.error("لطفا به تعداد آیتم های سبد خرید مکان انتخاب کنید");
-          router.back();
-          return;
-        }
-        if (data[0] === "email is not valid") {
-          toast.error("ایمیلتان اشتباه است");
-          return;
-        }
-        if (data[0] === "name is required") {
-          toast.error("لطفا نام خود را وارد کنید");
-          return;
-        }
-
-        throw new Error(`Upload failed: ${data}`);
+      if (!data) {
+        toast.error("خطا در آپلود اطلاعات");
+        return;
       }
 
-      const data = (await response.json()) as Authority;
       setAuthority(data);
       toast.success("اطلاعات شما با موفقیت آپلود شد");
       router.push("payment");

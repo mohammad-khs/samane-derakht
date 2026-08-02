@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { fetcher } from "@/lib/utils";
 
 interface FeatureSectionProps {
   all: number;
@@ -8,16 +9,12 @@ interface FeatureSectionProps {
 
 const fetchTreeData = async (): Promise<FeatureSectionProps> => {
   try {
-    const res = await fetch(
+    const data = await fetcher(
       `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/tree_data/`
     );
-
-    if (!res.ok) {
-      throw new Error("Failed to fetch tree data");
-    }
-    return await res.json();
+    return data;
   } catch (error) {
-    console.error("Error fetching map data:", error);
+    console.error("Error fetching tree data:", error);
     return { air: 0, all: 0, green_land: 0 };
   }
 };
